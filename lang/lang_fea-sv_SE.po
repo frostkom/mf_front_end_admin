@@ -1,0 +1,481 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-21 11:40+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Martin Fors\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: sv_SE\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: esc_html__;esc_html_e;esc_attr__;esc_attr_e;__;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../include/classes.php:30
+msgid "Not Published"
+msgstr "Inte publicerad"
+
+#: ../include/classes.php:57
+msgid "Pages"
+msgstr "Sidor"
+
+#: ../include/classes.php:67
+msgid "Front-End Admin"
+msgstr ""
+
+#: ../include/classes.php:180
+msgid "Change Password"
+msgstr "Byt lösenord"
+
+#: ../include/api/index.php:34
+msgid "First Name"
+msgstr "Förnamn"
+
+#: ../include/api/index.php:35
+msgid "Last Name"
+msgstr "Efternamn"
+
+#: ../include/api/index.php:38
+msgid "E-mail"
+msgstr "E-post"
+
+#: ../include/api/index.php:39
+msgid "Password"
+msgstr "Lösenord"
+
+#: ../include/api/index.php:121
+msgid "I have saved the information for you"
+msgstr "Jag har sparat informationen åt dig"
+
+#: ../include/api/index.php:126
+msgid "I could not update the information for you"
+msgstr "Jag kunde inte uppdatera informationen åt dig"
+
+#: ../include/templates/template_admin.php:37
+msgid "Log Out"
+msgstr "Logga ut"
+
+#~ msgid "Every 2 Minutes"
+#~ msgstr "Varannan minut"
+
+#~ msgid "Every 10 Minutes"
+#~ msgstr "Var tionde minut"
+
+#~ msgid "Weekly"
+#~ msgstr "Varje vecka"
+
+#~ msgid "Monthly"
+#~ msgstr "Varje månad"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "Scheduled to run"
+#~ msgstr "Schemalagd att köras"
+
+#~ msgid "Recommendations"
+#~ msgstr "Rekommendationer"
+
+#~ msgid "Common"
+#~ msgstr "Gemensamt"
+
+#~ msgid "Requirements"
+#~ msgstr "Krav"
+
+#~ msgid "Time on Server"
+#~ msgstr "Tid på servern"
+
+#~ msgid "Disc Space"
+#~ msgstr "Diskutrymme"
+
+#~ msgid "Memory Limit"
+#~ msgstr "Minnesgräns"
+
+#~ msgid "Load"
+#~ msgstr "Belastning"
+
+#~ msgid "Next scheduled %s"
+#~ msgstr "Nästa schemaläggning %s"
+
+#~ msgid "Run schedule manually"
+#~ msgstr "Kör schemaläggning manuellt"
+
+#~ msgid "Last run %s"
+#~ msgstr "Kördes senast %s"
+
+#~ msgid "Last started %s but has not finished"
+#~ msgstr "Startades senast %s men har inte avslutats"
+
+#~ msgid "Has never been run"
+#~ msgstr "Har inte körts tidigare"
+
+#~ msgid "to debug Cron"
+#~ msgstr "för att felsöka Cron"
+
+#~ msgid "to get a graphical interface to the database"
+#~ msgstr "för att kunna använda ett grafiskt gränssnitt mot databasen"
+
+#~ msgid "to backup all files and database to an external source"
+#~ msgstr ""
+#~ "för att ta backup av alla filer och databasen, och skicka till en extern "
+#~ "plats"
+
+#~ msgid "to be able to replace existing files by uploading a replacement"
+#~ msgstr ""
+#~ "för att kunna ersätta befintliga filer genom att ladda upp en ny fil"
+
+#~ msgid "to add all the favicons needed"
+#~ msgstr "för att kunna lägga till alla sk. favicons som kan behövas"
+
+#~ msgid ""
+#~ "to display which plugin dependencies there are and prevent accidental "
+#~ "deactivation of plugins that others depend on"
+#~ msgstr ""
+#~ "för att kunna visa plugin-beroenden och förhindra inaktivering av plugin "
+#~ "som andra är beroende av"
+
+#~ msgid "to send notifications to users when new posts are published"
+#~ msgstr ""
+#~ "för att skicka med meddelande till användare när nya inlägg publiceras"
+
+#~ msgid "to redirect pages to internal or external URLs"
+#~ msgstr "för att kunna dirigera om sidor till interna och externa URLer"
+
+#~ msgid "to reorder posts with drag & drop"
+#~ msgstr "för att sortera om sidor med musen"
+
+#~ msgid "to be able to add tables to posts"
+#~ msgstr "för att kunna lägga in tabeller i texter"
+
+#~ msgid "to be able to change usernames"
+#~ msgstr "för att kunna ändra användarnamn"
+
+#~ msgid "to be able to view video clips in modals"
+#~ msgstr "för att kunna se videoklipp i popups"
+
+#~ msgid ""
+#~ "to losslessly compress all uploaded images (Max 500 for free / month)"
+#~ msgstr ""
+#~ "för att komprimera bilder utan förlust av kvalité (Max 500 gratis / månad)"
+
+#~ msgid "to losslessly compress all uploaded images (Max 100kB/file for free)"
+#~ msgstr ""
+#~ "för att komprimera bilder utan förlust av kvalité (Max 100kb/fil gratis)"
+
+#~ msgid "to losslessly compress all uploaded images"
+#~ msgstr "för att komprimera bilder utan förlust av kvalité"
+
+#~ msgid "Toggle All Data"
+#~ msgstr "Visa/dölj all data"
+
+#~ msgid "Add Content"
+#~ msgstr "Lägg till innehåll"
+
+#~ msgid "Insert"
+#~ msgstr "Lägg till"
+
+#~ msgid "Cancel"
+#~ msgstr "Avbryt"
+
+#~ msgid "Added Content"
+#~ msgstr "Tilllagt innehåll"
+
+#~ msgid "Are you sure?"
+#~ msgstr "Är du säker?"
+
+#~ msgid "Read More"
+#~ msgstr "Läs mer"
+
+#~ msgid "Add this to the beginning of %s"
+#~ msgstr "Lägg till detta i början av %s"
+
+#~ msgid "Lost Connection"
+#~ msgstr "Tappade uppkopplingen"
+
+#~ msgid ""
+#~ "I could not create %s, please make sure that I have access to create this "
+#~ "file in order for schedules to work as intended"
+#~ msgstr ""
+#~ "Jag kunde inte skapa %s, var vänlig se till så att jag har behörighet att "
+#~ "lägga till denna fil för att schemaläggning ska funkera som det är tänkt"
+
+#~ msgid "%s has been running since %s"
+#~ msgstr "%s har körts sedan %s"
+
+#~ msgid "We highly recommend that you install %s aswell"
+#~ msgstr "Vi rekommenderar att du installerar %s också"
+
+#~ msgid "Use %s on %s"
+#~ msgstr "Använd %s på %s"
+
+#~ msgid "Delete"
+#~ msgstr "Radera"
+
+#~ msgid "Filter"
+#~ msgstr "Filtrera"
+
+#~ msgid "Empty Trash"
+#~ msgstr "Töm papperskorgen"
+
+#~ msgid "Search"
+#~ msgstr "Sök"
+
+#~ msgid "Rows"
+#~ msgstr "Rader"
+
+#~ msgid "Sorting"
+#~ msgstr "Sortering"
+
+#~ msgid "001-888-342-324"
+#~ msgstr "0701-23 45 67"
+
+#~ msgid "My Settings"
+#~ msgstr "Mina inställningar"
+
+#~ msgid "Choose Here"
+#~ msgstr "Välj här"
+
+#~ msgid "Download the exported file here"
+#~ msgstr "Ladda ner den exporterade filen här"
+
+#~ msgid "It was not possible to export"
+#~ msgstr "Det gick inte att exportera"
+
+#~ msgid "There was nothing to export"
+#~ msgstr "Det finns inget att exportera"
+
+#~ msgid "You have to choose a file type to export to"
+#~ msgstr "Du måste välja en filtyp att exportera till"
+
+#~ msgid "Settings"
+#~ msgstr "Inställningar"
+
+#~ msgid "File type"
+#~ msgstr "Filtyp"
+
+#~ msgid "Run"
+#~ msgstr "Kör"
+
+#~ msgid "Check"
+#~ msgstr "Kolla"
+
+#~ msgid "Import"
+#~ msgstr "Importera"
+
+#~ msgid "Action"
+#~ msgstr "Åtgärd"
+
+#~ msgid "Value 1\tValue 2\tValue 3"
+#~ msgstr "Värde 1\tVärde 2\tVärde 3"
+
+#~ msgid "File"
+#~ msgstr "Fil"
+
+#~ msgid "Skip first row"
+#~ msgstr "Hoppa över första raden"
+
+#~ msgid "Column"
+#~ msgstr "Kolumn"
+
+#~ msgid "Example"
+#~ msgstr "Exempel"
+
+#~ msgid "There was no display name for %s (%d)"
+#~ msgstr "Det finns inget visningsnamn för %s (%d)"
+
+#~ msgid "The message had no recipient so '%s' could not be sent"
+#~ msgstr "Meddelandet hade ingen mottagare så '%s' kunde inte skickas"
+
+#~ msgid "The message was empty so I could not send '%s' to '%s'"
+#~ msgstr "Meddelandet var tomt så jag kunde inte skicka '%s' till '%s'"
+
+#~ msgid "Message sent: %s"
+#~ msgstr "Meddelande skickat: %s"
+
+#~ msgid "I was not allowed to drop %s and it still has data"
+#~ msgstr ""
+#~ "Jag var inte tillåten att släppa %s och den innehåller fortfarande data"
+
+#~ msgid "Yesterday"
+#~ msgstr "Igår"
+
+#~ msgid ""
+#~ "Could not create %s in uploads. Please add the correct rights for the "
+#~ "script to create a new subfolder"
+#~ msgstr ""
+#~ "Det gick inte att skapa mappen %s i uploads. Lägg till rätt behörigheter "
+#~ "för att kunna skapa en undermapp"
+
+#~ msgid ""
+#~ "Well, we tried to save the file but something went wrong internally in "
+#~ "Wordpress"
+#~ msgstr ""
+#~ "Hmmm, vi försökte spara filen men något gick snett internt i Wordpress"
+
+#~ msgid "Add File"
+#~ msgstr "Lägg till fil"
+
+#~ msgid "Change File"
+#~ msgstr "Byt fil"
+
+#~ msgid "Insert File"
+#~ msgstr "Lägg in fil"
+
+#~ msgid "Add Attachment"
+#~ msgstr "Bifoga fil"
+
+#~ msgid ""
+#~ "The Media Library did not return a link to the file you added. Please try "
+#~ "again and make sure that 'Link To' is set to 'Media File'"
+#~ msgstr ""
+#~ "Mediabiblioteket skickade inte tillbaka en länk till den fil som du la "
+#~ "till. Var vänlig försök igen och se till att 'Länk till' är satt till "
+#~ "'Mediafil'"
+
+#~ msgid "Unknown title"
+#~ msgstr "Okänt namn"
+
+#~ msgid "The file '%s' could not be found in the DB"
+#~ msgstr "Filen '%s' kunde inte hittas i databasen"
+
+#~ msgid "You need to install the plugin %s%s%s first"
+#~ msgstr "Du måste installera pluginet %s%s%s först"
+
+#~ msgid "Unknown"
+#~ msgstr "Okänt"
+
+#~ msgid "in %d minute"
+#~ msgstr "om %d minut"
+
+#~ msgid "in %d minutes"
+#~ msgstr "om %d minuter"
+
+#~ msgid "at any moment"
+#~ msgstr "alldeles strax"
+
+#~ msgid "I could not find any roles for this site...?"
+#~ msgstr "Jag kunde inte hitta någon roll till denna webbplats...?"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nej"
+
+#~ msgid "Super Admin"
+#~ msgstr "Superadmin"
+
+#~ msgid "Post Types"
+#~ msgstr "Sidtyper"
+
+#~ msgid "Category"
+#~ msgstr "Kategori"
+
+#~ msgid "Categories"
+#~ msgstr "Kategorier"
+
+#~ msgid "Home"
+#~ msgstr "Hem"
+
+#~ msgid "your-name"
+#~ msgstr "ditt-namn"
+
+#~ msgid "The file could not be opened"
+#~ msgstr "Filen kunde inte öppnas"
+
+#~ msgid "I am sorry but I did not have permission to access %s"
+#~ msgstr "Jag är ledsen men jag är inte tillåten att komma åt %s"
+
+#~ msgid "no title"
+#~ msgstr "ingen titel"
+
+#~ msgid "Jan"
+#~ msgstr "Jan"
+
+#~ msgid "Mar"
+#~ msgstr "Mar"
+
+#~ msgid "May"
+#~ msgstr "Maj"
+
+#~ msgid "Jun"
+#~ msgstr "Jun"
+
+#~ msgid "Jul"
+#~ msgstr "Jul"
+
+#~ msgid "Aug"
+#~ msgstr "Aug"
+
+#~ msgid "Oct"
+#~ msgstr "Okt"
+
+#~ msgid "Nov"
+#~ msgstr "Nov"
+
+#~ msgid "January"
+#~ msgstr "Januari"
+
+#~ msgid "February"
+#~ msgstr "Februari"
+
+#~ msgid "March"
+#~ msgstr "Mars"
+
+#~ msgid "June"
+#~ msgstr "Juni"
+
+#~ msgid "July"
+#~ msgstr "Juli"
+
+#~ msgid "August"
+#~ msgstr "Augusti"
+
+#~ msgid "October"
+#~ msgstr "Oktober"
+
+#~ msgid "Sun"
+#~ msgstr "Sön"
+
+#~ msgid "Mon"
+#~ msgstr "Mån"
+
+#~ msgid "Tue"
+#~ msgstr "Tis"
+
+#~ msgid "Wed"
+#~ msgstr "Ons"
+
+#~ msgid "Thu"
+#~ msgstr "Tors"
+
+#~ msgid "Fri"
+#~ msgstr "Fre"
+
+#~ msgid "Sat"
+#~ msgstr "Lör"
+
+#~ msgid "Sunday"
+#~ msgstr "Söndag"
+
+#~ msgid "Monday"
+#~ msgstr "Måndag"
+
+#~ msgid "Tuesday"
+#~ msgstr "Tisdag"
+
+#~ msgid "Wednesday"
+#~ msgstr "Onsdag"
+
+#~ msgid "Thursday"
+#~ msgstr "Torsdag"
+
+#~ msgid "Friday"
+#~ msgstr "Fredag"
+
+#~ msgid "Saturday"
+#~ msgstr "Lördag"
