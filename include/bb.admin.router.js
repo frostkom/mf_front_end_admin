@@ -2,9 +2,8 @@ var AdminApp = Backbone.Router.extend(
 {
 	routes:
 	{
-		/*"admin/base/:actions": "handle",
-		"admin/profile/:actions": "handle",
-		"admin/internal/:action": "handle",*/
+		/*"admin/profile/:action": "handle",
+		"admin/registration/:action": "handle",*/
 	},
 
 	handle: function(action)

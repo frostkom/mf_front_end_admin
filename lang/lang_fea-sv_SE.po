@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-21 11:40+0100\n"
+"POT-Creation-Date: 2019-03-30 07:38+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -15,19 +15,44 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../include/classes.php:30
+#: ../include/classes.php:10
+msgid "Name"
+msgstr "Namn"
+
+#: ../include/classes.php:11
+msgid "Role"
+msgstr "Roll"
+
+#: ../include/classes.php:12
+#: ../include/templates/template_admin.php:56
+msgid "Log Out"
+msgstr "Logga ut"
+
+#: ../include/classes.php:55
 msgid "Not Published"
 msgstr "Inte publicerad"
 
-#: ../include/classes.php:57
+#: ../include/classes.php:81
+msgid "User Info"
+msgstr "Användarinfo"
+
+#: ../include/classes.php:82
 msgid "Pages"
 msgstr "Sidor"
 
-#: ../include/classes.php:67
+#: ../include/classes.php:83
+msgid "Redirect After Login"
+msgstr "Omdirigera efter inloggning"
+
+#: ../include/classes.php:94
 msgid "Front-End Admin"
 msgstr ""
 
-#: ../include/classes.php:180
+#: ../include/classes.php:118
+msgid "Users with these roles will be redirected after login"
+msgstr "Användare med dessa roller kommer att dirigeras efter inloggning"
+
+#: ../include/classes.php:200
 msgid "Change Password"
 msgstr "Byt lösenord"
 
@@ -55,9 +80,9 @@ msgstr "Jag har sparat informationen åt dig"
 msgid "I could not update the information for you"
 msgstr "Jag kunde inte uppdatera informationen åt dig"
 
-#: ../include/templates/template_admin.php:37
-msgid "Log Out"
-msgstr "Logga ut"
+#: ../include/templates/template_admin.php:72
+msgid "Home"
+msgstr "Hem"
 
 #~ msgid "Every 2 Minutes"
 #~ msgstr "Varannan minut"
@@ -377,9 +402,6 @@ msgstr "Logga ut"
 
 #~ msgid "Categories"
 #~ msgstr "Kategorier"
-
-#~ msgid "Home"
-#~ msgstr "Hem"
 
 #~ msgid "your-name"
 #~ msgstr "ditt-namn"

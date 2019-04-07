@@ -122,6 +122,9 @@ class mf_fea
 	{
 		$admin_url = admin_url();
 
+		// Just in case we have sent this var along with the URL
+		$redirect_to = check_var('redirect_to', 'char', true, $redirect_to);
+
 		if($redirect_to == $admin_url)
 		{
 			$setting_fea_redirect_after_login = get_option('setting_fea_redirect_after_login');
@@ -194,12 +197,12 @@ class mf_fea
 								.show_textfield(array('type' => 'number', 'name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
 							."<% break;
 
-							case 'password': %>
-								<div class='form_button'>
+							case 'password': %>"
+								.show_password_field(array('name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'placeholder' => __("Enter a New Password Here", 'lang_fea')))
+								/*."<div class='form_button'>
 									<label><%= field.text %></label>
 									<a href='".admin_url("profile.php")."' class='button'>".__("Change Password", 'lang_fea')."</a></div>
-								</div>"
-								//.show_password_field(array('name' => "<%= field.name %>", 'text' => "<%= field.text %>"))
+								</div>"*/
 							."<% break;
 
 							case 'select': %>
@@ -241,6 +244,18 @@ class mf_fea
 					."</div>
 				</form>
 			</script>";
+
+			/*if(IS_ADMIN)
+			{
+				$templates .= "<script type='text/template' id='template_admin_registration_create'>
+					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/registration/save'>
+						Test...
+						<div class='form_button'>"
+							.show_button(array('text' => __("Submit", 'lang_fea')))
+						."</div>
+					</form>
+				</script>";
+			}*/
 		}
 
 		$arr_views['profile'] = array(
@@ -256,6 +271,22 @@ class mf_fea
 			'api_url' => $plugin_include_url,
 		);
 
+		/*if(IS_ADMIN)
+		{
+			$arr_views['registration'] = array(
+				'name' => __("Registration", 'lang_fea'),
+				'icon' => "fas fa-user-plus",
+				'items' => array(
+					array(
+						'id' => 'create',
+						'name' => __("Register User", 'lang_fea'),
+					),
+				),
+				'templates' => $templates,
+				'api_url' => $plugin_include_url,
+			);
+		}*/
+
 		return $arr_views;
 	}
 
@@ -267,7 +298,7 @@ class mf_fea
 			//$plugin_include_url = plugin_dir_url(__FILE__);
 			$plugin_version = get_plugin_version(__FILE__);
 
-			mf_enqueue_script('script_base_init', $plugin_base_include_url."bb.init.js", $plugin_version);
+			mf_enqueue_script('script_base_init', $plugin_base_include_url."backbone/bb.init.js", $plugin_version);
 
 			$setting_fea_pages = get_option_or_default('setting_fea_pages', array());
 

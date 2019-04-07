@@ -105,11 +105,25 @@ switch($type_action)
 
 								if($user_meta != '' || isset($value['required']) && $value['required'] == false)
 								{
-									$meta_id = update_user_meta($user_id, $value['name'], $user_meta);
-
-									if($meta_id > 0)
+									switch($arr_fields[$key]['type'])
 									{
-										$updated = true;
+										case 'password':
+											if($user_meta != '')
+											{
+												wp_set_password($user_meta, $user_id);
+
+												$updated = true;
+											}
+										break;
+
+										default:
+											$meta_id = update_user_meta($user_id, $value['name'], $user_meta);
+
+											if($meta_id > 0)
+											{
+												$updated = true;
+											}
+										break;
 									}
 								}
 							}
@@ -128,6 +142,33 @@ switch($type_action)
 					break;
 				}
 			break;
+
+			/*case 'registration':
+				switch($type_class)
+				{
+					case 'create':
+						$json_output['admin_response'] = array(
+							'template' => str_replace("/", "_", $type),
+							'container' => str_replace("/", "_", $type),
+						);
+					break;
+
+					case 'save':
+						$updated = false;
+
+						if($updated == true)
+						{
+							$json_output['success'] = true;
+							$json_output['message'] = __("I have updated the information for you", 'lang_fea');
+						}
+
+						else
+						{
+							$json_output['message'] = __("I could not update the information for you", 'lang_fea');
+						}
+					break;
+				}
+			break;*/
 		}
 	break;
 }
