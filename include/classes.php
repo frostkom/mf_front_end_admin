@@ -154,15 +154,15 @@ class mf_fea
 
 		if(!is_admin())
 		{
-			mf_enqueue_style('style_base_admin', $plugin_include_url."style_admin.css", $plugin_version);
+			mf_enqueue_style('style_base_admin', $plugin_include_url."style.css", $plugin_version);
 
 			mf_enqueue_script('underscore');
 			mf_enqueue_script('backbone');
 			mf_enqueue_script('script_base_plugins', $plugin_base_include_url."backbone/bb.plugins.js", $plugin_version);
 
-			mf_enqueue_script('script_base_admin_router', $plugin_include_url."bb.admin.router.js", $plugin_version);
-			mf_enqueue_script('script_base_admin_models', $plugin_include_url."bb.admin.models.js", array('plugin_url' => $plugin_include_url), $plugin_version);
-			mf_enqueue_script('script_base_admin_views', $plugin_include_url."bb.admin.views.js", array(), $plugin_version);
+			mf_enqueue_script('script_fea_router', $plugin_include_url."bb.admin.router.js", $plugin_version);
+			mf_enqueue_script('script_fea_models', $plugin_include_url."bb.admin.models.js", $plugin_version);
+			mf_enqueue_script('script_fea_views', $plugin_include_url."bb.admin.views.js", $plugin_version);
 
 			$templates .= "<script type='text/template' id='template_admin_profile_edit'>
 				<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/profile/save'>
