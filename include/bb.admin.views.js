@@ -14,6 +14,7 @@ var AdminView = Backbone.View.extend(
 	{
 		"click nav li": "toggle_submenu",
 		"click nav a": "change_view",
+		"click .view_data i": "toggle_data_helper",
 		"submit form": "submit_form",
 	},
 
@@ -43,6 +44,19 @@ var AdminView = Backbone.View.extend(
 
 			/*return false;*/
 		}
+	},
+
+	toggle_data_helper: function(e)
+	{
+		var dom_obj = jQuery(e.currentTarget);
+
+		this.toggle_data(dom_obj.parents("tr").siblings("tr").find(".view_data .fa-eye-slash"));
+		this.toggle_data(dom_obj);
+	},
+
+	toggle_data: function(dom_obj)
+	{
+		dom_obj.toggleClass('fa-eye-slash fa-eye').parents("tr").next("tr").toggleClass('hide');
 	},
 
 	do_redirect: function()

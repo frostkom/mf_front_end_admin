@@ -81,6 +81,7 @@ class mf_fea
 				'setting_fea_user_info' => __("User Info", 'lang_fea'),
 				'setting_fea_pages' => __("Pages", 'lang_fea'),
 				'setting_fea_redirect_after_login' => __("Redirect After Login", 'lang_fea'),
+				'setting_fea_content_width' => __("Content Width", 'lang_fea'),
 			);
 
 			show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
@@ -116,6 +117,14 @@ class mf_fea
 		$option = get_option($setting_key);
 
 		echo show_select(array('data' => get_roles_for_select(array('add_choose_here' => false, 'use_capability' => false)), 'name' => $setting_key."[]", 'value' => $option, 'description' => __("Users with these roles will be redirected after login", 'lang_fea')));
+	}
+
+	function setting_fea_content_width_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key);
+
+		echo show_textfield(array('type' => 'number', 'name' => $setting_key, 'value' => $option, 'suffix' => "px"));
 	}
 
 	function login_redirect($redirect_to, $request, $user)
@@ -154,7 +163,7 @@ class mf_fea
 
 		if(!is_admin())
 		{
-			mf_enqueue_style('style_base_admin', $plugin_include_url."style.css", $plugin_version);
+			mf_enqueue_style('style_base_admin', $plugin_include_url."style.php", $plugin_version);
 
 			mf_enqueue_script('underscore');
 			mf_enqueue_script('backbone');
