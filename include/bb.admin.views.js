@@ -153,8 +153,6 @@ var AdminView = Backbone.View.extend(
 		{
 			this.model.submitForm(api_url, action, dom_obj.serialize());
 
-			/*dom_obj.find("button[type='submit']").addClass('disabled').attr('disabled', true);*/
-
 			return false;
 		}
 	},
