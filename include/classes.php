@@ -136,7 +136,7 @@ class mf_fea
 
 		if($redirect_to == $admin_url)
 		{
-			$setting_fea_redirect_after_login = get_option('setting_fea_redirect_after_login');
+			$setting_fea_redirect_after_login = get_option('setting_fea_redirect_after_login', array());
 
 			if(isset($user->roles) && is_array($user->roles) && count(array_intersect($setting_fea_redirect_after_login, $user->roles)) > 0)
 			{
