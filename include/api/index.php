@@ -56,6 +56,22 @@ switch($type_action)
 
 								switch($arr_fields[$key]['type'])
 								{
+									case 'email':
+										$new_email = get_user_meta($user_id, '_new_email', true);
+										$user_data = get_userdata($user_id);
+
+										if($new_email && $new_email['newemail'] != $user_data->user_email)
+										{
+											$arr_fields[$key]['description'] = " ".sprintf(__("There is a pending change of your email to %s.", 'lang_fea'), $new_email['newemail'])
+											." <a href='".esc_url(wp_nonce_url(self_admin_url("profile.php?dismiss=".$user_id."_new_email"), 'dismiss-'.$user_id.'_new_email'))."'>".__("Cancel", 'lang_fea')."</a>";
+										}
+
+										else
+										{
+											$arr_fields[$key]['description'] = sprintf(__("If you change this we will send you an email at your new address to confirm it. %sThe new address will not become active until confirmed.%s", 'lang_fea'), "<strong>", "</strong>");
+										}
+									break;
+
 									case 'select':
 										// Otherwise options might end up in the "wrong" order on the site
 										#######################
@@ -91,6 +107,7 @@ switch($type_action)
 							'template' => str_replace("/", "_", $type),
 							'container' => str_replace("/", "_", $type),
 							'fields' => $arr_fields,
+							'user_id' => $user_id,
 						);
 					break;
 
@@ -107,6 +124,26 @@ switch($type_action)
 								{
 									switch($arr_fields[$key]['type'])
 									{
+										case 'email':
+											if($user_meta != '')
+											{
+												$success = send_confirmation_on_profile_email();
+
+												if(isset($errors) && is_wp_error($errors))
+												{
+													foreach($errors->errors as $error)
+													{
+														$json_output['message'] = $error[0];
+													}
+												}
+
+												else
+												{
+													$updated = true;
+												}
+											}
+										break;
+
 										case 'password':
 											if($user_meta != '')
 											{
@@ -137,7 +174,10 @@ switch($type_action)
 
 						else
 						{
-							$json_output['message'] = __("I could not update the information for you", 'lang_fea');
+							if(!isset($json_output['message']) || $json_output['message'] == '')
+							{
+								$json_output['message'] = __("I could not update the information for you", 'lang_fea');
+							}
 						}
 					break;
 				}

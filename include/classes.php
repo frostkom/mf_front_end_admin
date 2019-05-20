@@ -184,7 +184,7 @@ class mf_fea
 							."<% break;
 
 							case 'email': %>"
-								.show_textfield(array('type' => 'email', 'name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
+								.show_textfield(array('type' => 'email', 'name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>", 'description' => "<%= field.description %>"))
 							."<% break;
 
 							case 'flex_start': %>
@@ -250,6 +250,7 @@ class mf_fea
 					}); %>
 					<div class='form_button'>"
 						.show_button(array('text' => __("Update", 'lang_fea')))
+						.input_hidden(array('name' => 'user_id', 'value' => "<%= user_id %>"))
 					."</div>
 				</form>
 			</script>";

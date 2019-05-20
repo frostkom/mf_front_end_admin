@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-22 09:52+0100\n"
+"POT-Creation-Date: 2019-05-16 14:45+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -14,6 +14,9 @@ msgstr ""
 "X-Poedit-KeywordsList: esc_html__;esc_html_e;esc_attr__;esc_attr_e;__;_e\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
+
+msgid "Log Out"
+msgstr "Logg ut"
 
 msgid "Pages"
 msgstr "Sider"
@@ -30,12 +33,6 @@ msgstr "Profil"
 msgid "Edit Profile"
 msgstr "Redigere profil"
 
-msgid "Log Out"
-msgstr "Logg ut"
-
-msgid "Home"
-msgstr "Hjem"
-
 msgid "First Name"
 msgstr "Fornavn"
 
@@ -45,6 +42,12 @@ msgstr "Etternavn"
 msgid "E-mail"
 msgstr "E-post"
 
+msgid "If you change this we will send you an email at your new address to confirm it. %sThe new address will not become active until confirmed.%s"
+msgstr "Hvis du endrer dette, vil vi sende deg en e-postmelding til den ny adressen din for å bekrefte den. %sDen nye adressen aktiveres ikke før den er bekreftet.%s"
+
 msgid "I could not update the information for you"
 msgstr "Jeg kunne ikke oppdatere informasjonen for deg"
+
+msgid "Home"
+msgstr "Hjem"
 
