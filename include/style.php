@@ -80,7 +80,7 @@ echo "@media all
 
 			.page-template-template_admin article nav > ul > li.active
 			{
-				background: #e6e6e6;
+				background: #d6d6d6;
 			}
 
 				.page-template-template_admin article nav li a, .page-template-template_admin article nav li > span
@@ -209,10 +209,10 @@ echo "@media all
 					padding: .5em;
 				}
 
-					.page-template-template_admin .admin_container .meta_box div:last-child > input, .page-template-template_admin .admin_container .meta_box div:last-child > select, .page-template-template_admin .admin_container .meta_box div:last-child > .multiSelect
+					/*.page-template-template_admin .admin_container .meta_box div:last-child > input:last-child, .page-template-template_admin .admin_container .meta_box div:last-child > select:last-child, .page-template-template_admin .admin_container .meta_box div:last-child > .multiSelect:last-child
 					{
 						margin-bottom: 0;
-					}
+					}*/
 
 					.page-template-template_admin .admin_container .description
 					{
