@@ -191,7 +191,7 @@ echo "@media all
 				width: calc(40% - .8em);
 			}
 
-			.is_mobile.page-template-template_admin .admin_container .meta_box
+			.is_mobile.page-template-template_admin .admin_container .context_normal, .is_mobile.page-template-template_admin .admin_container .context_side
 			{
 				width: 100%;
 			}
