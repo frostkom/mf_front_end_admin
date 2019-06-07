@@ -177,7 +177,7 @@ get_header();
 								@list($id, $rest) = explode("/", $item['id']);
 
 								$post_content .= "<div id='admin_".$key."_".$id."' class='hide'>
-									<h2>".$item['name']."</h2>
+									<h2>".$view['name']."</h2>
 									<div><i class='fa fa-spinner fa-spin fa-3x'></i></div>
 								</div>";
 							}
