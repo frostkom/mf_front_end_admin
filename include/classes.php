@@ -152,6 +152,12 @@ class mf_fea
 
 		return $redirect_to;
 	}
+	
+	function get_footer()
+	{
+		$obj_base = new mf_base();
+		echo $obj_base->get_templates(array('lost_connection', 'loading'));
+	}
 
 	function init_base_admin($arr_views)
 	{

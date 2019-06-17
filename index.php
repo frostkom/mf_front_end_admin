@@ -3,7 +3,7 @@
 Plugin Name: MF Front-End Admin
 Plugin URI: 
 Description: 
-Version: 1.0.16
+Version: 1.1.0
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://frostkom.se
@@ -33,6 +33,8 @@ if(is_admin())
 else
 {
 	add_filter('login_redirect', array($obj_fea, 'login_redirect'), 10, 3);
+
+	add_action('wp_footer', array($obj_fea, 'get_footer'), 0);
 }
 
 add_filter('init_base_admin', array($obj_fea, 'init_base_admin'));
