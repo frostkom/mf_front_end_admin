@@ -120,7 +120,7 @@ switch($type_action)
 							{
 								$user_meta = check_var($value['name']);
 
-								if($user_meta != '' || isset($value['required']) && $value['required'] == false)
+								if($user_meta != '' || !isset($value['required']) || $value['required'] == false)
 								{
 									switch($arr_fields[$key]['type'])
 									{

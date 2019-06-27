@@ -152,7 +152,7 @@ class mf_fea
 
 		return $redirect_to;
 	}
-	
+
 	function get_footer()
 	{
 		$obj_base = new mf_base();
@@ -176,7 +176,7 @@ class mf_fea
 			mf_enqueue_script('script_base_plugins', $plugin_base_include_url."backbone/bb.plugins.js", $plugin_version);
 
 			mf_enqueue_script('script_fea_router', $plugin_include_url."bb.admin.router.js", $plugin_version);
-			mf_enqueue_script('script_fea_models', $plugin_include_url."bb.admin.models.js", $plugin_version);
+			mf_enqueue_script('script_fea_models', $plugin_include_url."bb.admin.models.js", array('api_url' => $plugin_include_url), $plugin_version);
 			mf_enqueue_script('script_fea_views', $plugin_include_url."bb.admin.views.js", $plugin_version);
 
 			$templates .= "<script type='text/template' id='template_admin_profile_edit'>
@@ -331,6 +331,19 @@ class mf_fea
 		}
 
 		return $arr_views;
+	}
+
+	function edit_profile_url($url) //, $user_id, $scheme
+	{
+		$obj_base = new mf_base();
+		$post_id = $obj_base->has_page_template(array('template' => "/plugins/mf_front_end_admin/include/templates/template_admin.php"));
+
+		if($post_id > 0 && in_array('profile', get_option('setting_fea_pages', array())))
+		{
+			$url = get_permalink($post_id)."#admin/profile/edit";
+		}
+
+		return $url;
 	}
 
 	function get_page_templates($templates)

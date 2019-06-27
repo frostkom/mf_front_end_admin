@@ -2,13 +2,13 @@ var AdminApp = Backbone.Router.extend(
 {
 	routes:
 	{
-		/*"admin/profile/:action": "handle",
-		"admin/registration/:action": "handle",*/
+		"admin/profile/:action": "handle_profile",
+		/*"admin/registration/:action": "handle_registration",*/
 	},
 
-	handle: function(action)
+	handle_profile: function(action)
 	{
-		/*myAdminView.loadPage(action);*/
+		myAdminView.loadPage(script_fea_models.api_url, "admin/profile/" + action);
 	}
 });
 
