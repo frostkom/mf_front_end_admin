@@ -272,6 +272,54 @@ class mf_fea
 					</form>
 				</script>";
 			}*/
+
+			if(IS_EDITOR)
+			{
+				$templates .= "<script type='text/template' id='template_admin_posts_list'>
+					<table class='widefat striped'>
+						<thead>
+							<tr>
+								<th>".__("Name", 'lang_fea')."</th>
+								<th>".__("Author", 'lang_fea')."</th>
+								<th>".__("Categories", 'lang_fea')."</th>
+								<th>".__("Updated", 'lang_fea')."</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% _.each(list, function(posts)
+							{ %>
+								<tr id='posts_<%= posts.post_id %>'>
+									<td>
+										<%= posts.post_title %>
+										<div class='row-actions'>"
+											."<a href='#admin/posts/edit/<%= posts.post_id %>'>".__("Edit", 'lang_fea')."</a>"
+											.(IS_ADMIN ? "<a href='".admin_url("post.php?post=<%= posts.post_id %>&action=edit")."'>".__("Edit in Admin", 'lang_fea')."</a>" : "")
+											."<a href='<%= posts.post_url %>'>".__("View", 'lang_fea')."</a>"
+										."</div>
+									</td>
+									<td><%= posts.post_author %></td>
+									<td><%= posts.categories %></td>
+									<td><%= posts.post_modified %></td>
+								</tr>
+							<% }); %>
+						</tbody>
+					</table>
+				</script>
+
+				<script type='text/template' id='template_admin_posts_list_message'>
+					<p>".__("You have not added anything yet", 'lang_fea')."</p>
+				</script>
+					
+				<script type='text/template' id='template_admin_posts_edit'>
+					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/posts/save'>
+						Test...
+						<div class='form_button'>"
+							.show_button(array('text' => __("Update", 'lang_fea')))
+							.input_hidden(array('name' => 'post_id', 'value' => "<%= post_id %>"))
+						."</div>
+					</form>
+				</script>";
+			}
 		}
 
 		$arr_views['profile'] = array(
@@ -302,6 +350,26 @@ class mf_fea
 				'api_url' => $plugin_include_url,
 			);
 		}*/
+
+		if(IS_EDITOR)
+		{
+			$arr_views['posts'] = array(
+				'name' => __("Posts", 'lang_fea'),
+				'icon' => "fas fa-edit",
+				'items' => array(
+					array(
+						'id' => 'list',
+						'name' => __("List", 'lang_fea'),
+					),
+					array(
+						'id' => 'edit',
+						'name' => __("Edit", 'lang_fea'),
+					),
+				),
+				'templates' => $templates,
+				'api_url' => $plugin_include_url,
+			);
+		}
 
 		return $arr_views;
 	}

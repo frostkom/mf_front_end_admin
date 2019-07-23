@@ -163,13 +163,74 @@ var AdminView = Backbone.View.extend(
 			template = response.template,
 			container = response.container,
 			dom_template = jQuery("#template_" + template),
-			dom_container = jQuery("#" + container);
+			dom_container = jQuery("#" + container),
+			html = '';
 
-		var html = _.template(dom_template.html())(response);
+		switch(template)
+		{
+			case 'admin_profile_edit':
+				var html = _.template(dom_template.html())(response);
 
-		dom_container.children("div").html(html);
+				dom_container.children("div").html(html);
 
-		this.display_container(dom_container);
+				this.display_container(dom_container);
+			break;
+
+			case 'admin_posts_list':
+				console.log("Test 1");
+
+				var amount = response.list.length,
+					dom_template = jQuery("#template_" + template),
+					dom_container = jQuery("#" + template);
+
+				console.log("Test 2" , amount , dom_template);
+
+				if(amount > 0)
+				{
+					html = _.template(dom_template.html())(response);
+				}
+
+				else
+				{
+					html = _.template(jQuery("#template_" + template + "_message").html())('');
+				}
+
+				dom_container.children("div").html(html);
+
+				myAdminView.display_container(dom_container);
+			break;
+
+			case 'admin_posts_edit':
+				var self = this,
+					dom_template = jQuery("#template_" + template),
+					dom_container = jQuery("#" + template);
+
+				html = _.template(dom_template.html())(response);
+
+				dom_container.children("div").html(html);
+
+				/* Hack as long as show_textfield() etc. is used */
+				/*dom_container.find(".description").each(function()
+				{
+					if(jQuery(this).is(":empty"))
+					{
+						jQuery(this).remove();
+					}
+				});*/
+
+				myAdminView.display_container(dom_container);
+
+				/*if(typeof select_option === 'function')
+				{
+					select_option();
+				}
+
+				if(typeof render_required === 'function')
+				{
+					render_required();
+				}*/
+			break;
+		}
 	}
 });
 

@@ -209,6 +209,94 @@ switch($type_action)
 					break;
 				}
 			break;*/
+
+			case 'posts':
+				switch($type_class)
+				{
+					case 'list':
+						$arr_list = array();
+
+						$query_where = "";
+
+						/*if(1 == 1 || !IS_ADMIN)
+						{
+							$query_where .= " AND post_author = '".get_current_user_id()."'";
+						}*/
+
+						$result = $wpdb->get_results($wpdb->prepare("SELECT ID, post_title, post_status, post_author, post_modified FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s)".$query_where." ORDER BY post_modified DESC", 'post', 'publish', 'draft'));
+
+						foreach($result as $r)
+						{
+							$user_data = get_userdata($r->post_author);
+
+							//$arr_categories = wp_get_post_categories($r->ID);
+
+							$categories = "";
+
+							$arr_categories = get_the_category($r->ID);
+
+							if(is_array($arr_categories) && count($arr_categories) > 0)
+							{
+								//$category_base_url = get_site_url()."/category/";
+
+								foreach($arr_categories as $category)
+								{
+									$categories .= ($categories != '' ? ", " : "").$category->name; //"<a href='".$category_base_url.$category->slug."'>".
+								}
+							}
+
+							$arr_list[] = array(
+								'post_id' => $r->ID,
+								'post_title' => $r->post_title.($r->post_status == 'draft' ? " (".__("Draft").")" : ""),
+								'post_url' => get_permalink($r->ID),
+								'post_author' => $user_data->display_name,
+								'categories' => $categories,
+								'post_modified' => format_date($r->post_modified),
+							);
+						}
+
+						$json_output['success'] = true;
+						$json_output['admin_response'] = array(
+							'template' => str_replace("/", "_", $type),
+							'list' => $arr_list,
+						);
+					break;
+
+					case 'edit':
+						$post_id = isset($arr_input[3]) ? $arr_input[3] : 0;
+
+						//Get edit info here
+
+						$json_output['success'] = true;
+						$json_output['admin_response'] = array(
+							'template' => str_replace(array("/", "_".$post_id), array("_", ""), $type),
+							'post_id' => $post_id,
+						);
+					break;
+
+					case 'save':
+						$post_id = check_var('post_id', 'int');
+
+						$updated = false;
+
+						//Add save here
+
+						if($updated == true)
+						{
+							$json_output['success'] = true;
+							$json_output['message'] = __("I have saved the information for you", 'lang_fea');
+						}
+
+						else
+						{
+							if(!isset($json_output['message']) || $json_output['message'] == '')
+							{
+								$json_output['message'] = __("I could not update the information for you", 'lang_fea');
+							}
+						}
+					break;
+				}
+			break;
 		}
 	break;
 }
