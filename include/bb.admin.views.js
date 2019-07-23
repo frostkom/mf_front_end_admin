@@ -177,13 +177,9 @@ var AdminView = Backbone.View.extend(
 			break;
 
 			case 'admin_posts_list':
-				console.log("Test 1");
-
 				var amount = response.list.length,
 					dom_template = jQuery("#template_" + template),
 					dom_container = jQuery("#" + template);
-
-				console.log("Test 2" , amount , dom_template);
 
 				if(amount > 0)
 				{
@@ -220,7 +216,7 @@ var AdminView = Backbone.View.extend(
 
 				myAdminView.display_container(dom_container);
 
-				/*if(typeof select_option === 'function')
+				if(typeof select_option === 'function')
 				{
 					select_option();
 				}
@@ -228,7 +224,7 @@ var AdminView = Backbone.View.extend(
 				if(typeof render_required === 'function')
 				{
 					render_required();
-				}*/
+				}
 			break;
 		}
 	}

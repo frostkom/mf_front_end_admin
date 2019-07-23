@@ -9,6 +9,8 @@ if(!defined('ABSPATH'))
 	require_once($folder."wp-load.php");
 }
 
+$obj_fea = new mf_fea();
+
 $json_output = array(
 	'success' => false,
 );
@@ -265,21 +267,43 @@ switch($type_action)
 					case 'edit':
 						$post_id = isset($arr_input[3]) ? $arr_input[3] : 0;
 
-						//Get edit info here
+						$result = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_excerpt, post_content, post_status, post_name FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s) AND ID = '%d'", 'post', 'publish', 'draft', $post_id));
 
-						$json_output['success'] = true;
-						$json_output['admin_response'] = array(
-							'template' => str_replace(array("/", "_".$post_id), array("_", ""), $type),
-							'post_id' => $post_id,
-						);
+						foreach($result as $r)
+						{
+							$json_output['success'] = true;
+							$json_output['admin_response'] = array(
+								'template' => str_replace(array("/", "_".$post_id), array("_", ""), $type),
+								'post_id' => $post_id,
+								'post_title' => $r->post_title,
+								'post_excerpt' => $r->post_excerpt,
+								'post_content' => $r->post_content,
+								'post_status' => $r->post_status,
+								'post_name' => $r->post_name,
+								'post_categories' => $obj_fea->get_post_categories(array('post_id' => $post_id)),
+							);
+						}
 					break;
 
 					case 'save':
 						$post_id = check_var('post_id', 'int');
+						$post_title = check_var('post_title');
+						$post_excerpt = check_var('post_excerpt');
+						$post_content = check_var('post_content');
+						$post_status = check_var('post_status');
+						$post_name = check_var('post_name');
+						$post_categories = check_var('post_categories', 'array');
 
 						$updated = false;
 
-						//Add save here
+						$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->posts." SET post_title = %s, post_excerpt = %s, post_content = %s, post_status = %s, post_name = %s WHERE ID = '%d'", $post_title, $post_excerpt, $post_content, $post_status, $post_name, $post_id));
+
+						if($wpdb->rows_affected > 0)
+						{
+							$updated = true;
+						}
+
+						//Update post_categories
 
 						if($updated == true)
 						{

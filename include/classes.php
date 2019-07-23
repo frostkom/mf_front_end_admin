@@ -2,7 +2,10 @@
 
 class mf_fea
 {
-	function __construct(){}
+	function __construct()
+	{
+		$this->meta_prefix = "mf_fea_";
+	}
 
 	function get_user_info_for_select()
 	{
@@ -27,6 +30,32 @@ class mf_fea
 		}
 
 		return $arr_data;
+	}
+
+	function get_post_status_for_select()
+	{
+		$arr_data = array();
+
+		$arr_data['publish'] = __("Publish", 'lang_fea');
+		$arr_data['draft'] = __("Draft", 'lang_fea');
+
+		return $arr_data;
+	}
+
+	function get_post_categories($data)
+	{
+		global $wpdb;
+
+		$array = array();
+
+		$result = $wpdb->get_results($wpdb->prepare("SELECT term_taxonomy_id FROM ".$wpdb->term_relationships." WHERE object_id = '%d'", $data['post_id']));
+
+		foreach($result as $r)
+		{
+			$array[] = $r->term_taxonomy_id;
+		}
+
+		return $array;
 	}
 
 	function wp_before_admin_bar_render()
@@ -161,6 +190,8 @@ class mf_fea
 
 	function init_base_admin($arr_views)
 	{
+		global $wpdb;
+
 		$templates = "";
 
 		$plugin_base_include_url = plugins_url()."/mf_base/include/";
@@ -309,10 +340,32 @@ class mf_fea
 				<script type='text/template' id='template_admin_posts_list_message'>
 					<p>".__("You have not added anything yet", 'lang_fea')."</p>
 				</script>
-					
+	
 				<script type='text/template' id='template_admin_posts_edit'>
 					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/posts/save'>
-						Test...
+						<div id='".$wpdb->meta_prefix."information' class='meta_box context_normal'>
+							<h2>".__("Information", 'lang_fea')."</h2>
+							<div>"
+								.show_textfield(array('name' => 'post_title', 'text' => __("Title", 'lang_fea'), 'value' => "<%= post_title %>", 'required' => true))
+								.show_textarea(array('name' => 'post_excerpt', 'text' => __("Excerpt", 'lang_fea'), 'value' => "<%= post_excerpt %>"))
+								.show_textarea(array('name' => 'post_content', 'text' => __("Content", 'lang_fea'), 'value' => "<%= post_content %>", 'required' => true))
+								/*.show_wp_editor(array('name' => 'post_content', 'value' => "<%= post_content %>",
+									//'class' => "hide_media_button hide_tabs",
+									'mini_toolbar' => true,
+									'editor_height' => 400,
+									//'statusbar' => false,
+								))*/
+
+							."</div>
+						</div>
+						<div id='".$wpdb->meta_prefix."settings' class='meta_box context_side'>
+							<h2>".__("Settings", 'lang_fea')."</h2>
+							<div>"
+								.show_select(array('data' => $this->get_post_status_for_select(), 'name' => 'post_status', 'text' => __("Status", 'lang_fea'), 'value' => "<%= post_status %>"))
+								.show_textfield(array('name' => 'post_name', 'text' => __("Slug", 'lang_fea'), 'value' => "<%= post_name %>"))
+								.show_select(array('data' => get_categories_for_select(), 'name' => 'post_categories', 'text' => __("Categories", 'lang_fea'), 'value' => "<%= post_categories %>"))
+							."</div>
+						</div>
 						<div class='form_button'>"
 							.show_button(array('text' => __("Update", 'lang_fea')))
 							.input_hidden(array('name' => 'post_id', 'value' => "<%= post_id %>"))
