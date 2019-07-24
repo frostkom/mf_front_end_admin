@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-22 15:47+0100\n"
+"POT-Creation-Date: 2019-07-24 08:30+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -23,6 +23,12 @@ msgstr "Roll"
 
 msgid "Log Out"
 msgstr "Logga ut"
+
+msgid "Publish"
+msgstr "Publicerad"
+
+msgid "Draft"
+msgstr "Utkast"
 
 msgid "Not Published"
 msgstr "Inte publicerad"
@@ -54,6 +60,12 @@ msgstr "Uppdatera"
 msgid "Submit"
 msgstr "Skicka"
 
+msgid "Author"
+msgstr "Författare"
+
+msgid "Category"
+msgstr "Kategori"
+
 msgid "Updated"
 msgstr "Uppdaterad"
 
@@ -68,6 +80,24 @@ msgstr "Visa"
 
 msgid "You have not added anything yet"
 msgstr "Du har inte lagt till något ännu"
+
+msgid "Title"
+msgstr "Rubrik"
+
+msgid "Excerpt"
+msgstr "Utdrag"
+
+msgid "Content"
+msgstr "Innehåll"
+
+msgid "Settings"
+msgstr "Inställningar"
+
+msgid "Slug"
+msgstr "URL"
+
+msgid "Allow Comments"
+msgstr "Tillåt kommentarer"
 
 msgid "Profile"
 msgstr "Profil"
@@ -86,6 +116,9 @@ msgstr "Inlägg"
 
 msgid "List"
 msgstr "Lista"
+
+msgid "Add New"
+msgstr "Lägg till ny"
 
 msgid "Home"
 msgstr "Hem"
@@ -116,4 +149,7 @@ msgstr "Jag kunde inte uppdatera informationen åt dig"
 
 msgid "I have updated the information for you"
 msgstr "Jag har uppdaterat informationen åt dig"
+
+msgid "I could not save the information for you"
+msgstr "Jag kunde inte spara informationen åt dig"
 

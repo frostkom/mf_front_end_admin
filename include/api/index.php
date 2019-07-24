@@ -267,7 +267,7 @@ switch($type_action)
 					case 'edit':
 						$post_id = isset($arr_input[3]) ? $arr_input[3] : 0;
 
-						$result = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_excerpt, post_content, post_status, post_name FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s) AND ID = '%d'", 'post', 'publish', 'draft', $post_id));
+						$result = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_excerpt, post_content, post_status, post_name, post_author, comment_status FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s) AND ID = '%d'", 'post', 'publish', 'draft', $post_id));
 
 						foreach($result as $r)
 						{
@@ -281,6 +281,8 @@ switch($type_action)
 								'post_status' => $r->post_status,
 								'post_name' => $r->post_name,
 								'post_categories' => $obj_fea->get_post_categories(array('post_id' => $post_id)),
+								'post_author' => $r->post_author,
+								'comment_status' => $r->comment_status,
 							);
 						}
 					break;
@@ -292,18 +294,62 @@ switch($type_action)
 						$post_content = check_var('post_content');
 						$post_status = check_var('post_status');
 						$post_name = check_var('post_name');
-						$post_categories = check_var('post_categories', 'array');
+						$post_categories = check_var('post_categories', 'int'); //, 'array'
+						$post_author = check_var('post_author', 'int');
+						$comment_status = check_var('comment_status');
+
+						if(!is_array($post_categories))
+						{
+							if($post_categories > 0)
+							{
+								$post_categories = array($post_categories);
+							}
+
+							else
+							{
+								$post_categories = array(get_option('default_category'));
+							}
+						}
+
+						if(!($post_author > 0))
+						{
+							$post_author = get_current_user_id();
+						}
+						
+						$post_data = array(
+							'post_title' => $post_title,
+							'post_excerpt' => $post_excerpt,
+							'post_content' => $post_content,
+							'post_status' => $post_status,
+							'post_name' => $post_name,
+							'post_category' => $post_categories,
+							'post_author' => $post_author,
+							'comment_status' => ($comment_status == 'yes' ? 'open' : 'closed'),
+						);
 
 						$updated = false;
 
-						$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->posts." SET post_title = %s, post_excerpt = %s, post_content = %s, post_status = %s, post_name = %s WHERE ID = '%d'", $post_title, $post_excerpt, $post_content, $post_status, $post_name, $post_id));
-
-						if($wpdb->rows_affected > 0)
+						if($post_id > 0)
 						{
-							$updated = true;
+							$post_data['ID'] = $post_id;
+
+							//$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->posts." SET post_title = %s, post_excerpt = %s, post_content = %s, post_status = %s, post_name = %s WHERE ID = '%d'", $post_title, $post_excerpt, $post_content, $post_status, $post_name, $post_id));
+
+							if(wp_update_post($post_data) > 0)
+							{
+								$updated = true;
+							}
 						}
 
-						//Update post_categories
+						else
+						{
+							$post_data['post_type'] = 'post';
+
+							if(wp_insert_post($post_data) > 0)
+							{
+								$updated = true;
+							}
+						}
 
 						if($updated == true)
 						{
@@ -315,7 +361,7 @@ switch($type_action)
 						{
 							if(!isset($json_output['message']) || $json_output['message'] == '')
 							{
-								$json_output['message'] = __("I could not update the information for you", 'lang_fea');
+								$json_output['message'] = __("I could not save the information for you", 'lang_fea');
 							}
 						}
 					break;

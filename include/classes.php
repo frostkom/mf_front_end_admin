@@ -312,7 +312,7 @@ class mf_fea
 							<tr>
 								<th>".__("Name", 'lang_fea')."</th>
 								<th>".__("Author", 'lang_fea')."</th>
-								<th>".__("Categories", 'lang_fea')."</th>
+								<th>".__("Category", 'lang_fea')."</th>
 								<th>".__("Updated", 'lang_fea')."</th>
 							</tr>
 						</thead>
@@ -343,7 +343,7 @@ class mf_fea
 	
 				<script type='text/template' id='template_admin_posts_edit'>
 					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/posts/save'>
-						<div id='".$wpdb->meta_prefix."information' class='meta_box context_normal'>
+						<div id='".$this->meta_prefix."information' class='meta_box context_normal'>
 							<h2>".__("Information", 'lang_fea')."</h2>
 							<div>"
 								.show_textfield(array('name' => 'post_title', 'text' => __("Title", 'lang_fea'), 'value' => "<%= post_title %>", 'required' => true))
@@ -355,15 +355,16 @@ class mf_fea
 									'editor_height' => 400,
 									//'statusbar' => false,
 								))*/
-
 							."</div>
 						</div>
-						<div id='".$wpdb->meta_prefix."settings' class='meta_box context_side'>
+						<div id='".$this->meta_prefix."settings' class='meta_box context_side'>
 							<h2>".__("Settings", 'lang_fea')."</h2>
 							<div>"
 								.show_select(array('data' => $this->get_post_status_for_select(), 'name' => 'post_status', 'text' => __("Status", 'lang_fea'), 'value' => "<%= post_status %>"))
+								.show_select(array('data' => get_users_for_select(array('add_choose_here' => false)), 'name' => 'post_author', 'text' => __("Author", 'lang_fea'), 'value' => "<%= post_author %>"))
 								.show_textfield(array('name' => 'post_name', 'text' => __("Slug", 'lang_fea'), 'value' => "<%= post_name %>"))
-								.show_select(array('data' => get_categories_for_select(), 'name' => 'post_categories', 'text' => __("Categories", 'lang_fea'), 'value' => "<%= post_categories %>"))
+								.show_select(array('data' => get_categories_for_select(), 'name' => 'post_categories', 'text' => __("Category", 'lang_fea'), 'value' => "<%= post_categories %>"))
+								.show_select(array('data' => get_yes_no_for_select(array('add_choose_here' => false)), 'name' => 'comment_status', 'text' => __("Allow Comments", 'lang_fea'), 'value' => "<%= comment_status %>"))
 							."</div>
 						</div>
 						<div class='form_button'>"
@@ -416,7 +417,7 @@ class mf_fea
 					),
 					array(
 						'id' => 'edit',
-						'name' => __("Edit", 'lang_fea'),
+						'name' => __("Add New", 'lang_fea'),
 					),
 				),
 				'templates' => $templates,
