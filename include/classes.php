@@ -46,16 +46,41 @@ class mf_fea
 	{
 		global $wpdb;
 
-		$array = array();
+		if(!isset($data['output'])){		$data['output'] = '';}
 
-		$result = $wpdb->get_results($wpdb->prepare("SELECT term_taxonomy_id FROM ".$wpdb->term_relationships." WHERE object_id = '%d'", $data['post_id']));
+		$arr_categories = get_the_category($data['post_id']);
 
-		foreach($result as $r)
+		if(is_array($arr_categories) && count($arr_categories) > 0)
 		{
-			$array[] = $r->term_taxonomy_id;
+			switch($data['output'])
+			{
+				case 'id':
+					$out = array();
+
+					foreach($arr_categories as $category)
+					{
+						$out[] = $category->term_taxonomy_id;
+					}
+				break;
+
+				case 'html':
+					$out = "";
+
+					//$category_base_url = get_site_url()."/category/";
+
+					foreach($arr_categories as $category)
+					{
+						$out .= ($out != '' ? ", " : "").$category->name; //"<a href='".$category_base_url.$category->slug."'>".
+					}
+				break;
+
+				default:
+					do_log("get_post_categories: No output type (".$data['output'].")");
+				break;
+			}
 		}
 
-		return $array;
+		return $out;
 	}
 
 	function wp_before_admin_bar_render()
@@ -307,6 +332,19 @@ class mf_fea
 			if(IS_EDITOR)
 			{
 				$templates .= "<script type='text/template' id='template_admin_posts_list'>
+					<form method='post' action='' class='mf_form' data-action='admin/posts/list'>
+						<div class='tablenav-pages'>
+							<span class='displaying-num'>".sprintf(__("%s posts", 'lang_fea'), "<%= pagination.list_amount %>")."</span>
+							<% if(Object.keys(pagination.pages).length > 1)
+							{ %>
+								<span class='pagination-links form_button'>
+									<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> disabled<% } %>' title='".__("Previous", 'lang_fea')."'>&laquo;</a>
+									<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>
+									<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> disabled<% } %>' title='".__("Next", 'lang_fea')."'>&raquo;</a>
+								</span>
+							<% } %>
+						</div>
+					</form>
 					<table class='widefat striped'>
 						<thead>
 							<tr>
@@ -319,9 +357,13 @@ class mf_fea
 						<tbody>
 							<% _.each(list, function(posts)
 							{ %>
-								<tr id='posts_<%= posts.post_id %>'>
+								<tr id='posts_<%= posts.post_id %>'<% if(posts.post_status == 'draft'){ %> class='inactive'<% } %>>
 									<td>
 										<%= posts.post_title %>
+										<% if(posts.post_status == 'draft')
+										{ %>
+											 (".__("Draft").")
+										<% } %>
 										<div class='row-actions'>"
 											."<a href='#admin/posts/edit/<%= posts.post_id %>'>".__("Edit", 'lang_fea')."</a>"
 											.(IS_ADMIN ? "<a href='".admin_url("post.php?post=<%= posts.post_id %>&action=edit")."'>".__("Edit in Admin", 'lang_fea')."</a>" : "")
@@ -330,7 +372,15 @@ class mf_fea
 									</td>
 									<td><%= posts.post_author %></td>
 									<td><%= posts.categories %></td>
-									<td><%= posts.post_modified %></td>
+									<td>
+										<%= posts.post_date %>
+										<% if(posts.post_modified != posts.post_date)
+										{ %>
+											<div class='row-actions'>
+												".__("Updated", 'lang_fea').": <%= posts.post_modified %>
+											</div>
+										<% } %>
+									</td>
 								</tr>
 							<% }); %>
 						</tbody>

@@ -16,357 +16,371 @@ $json_output = array(
 );
 
 $type = check_var('type', 'char');
-$arr_input = explode("/", $type);
+$arr_type = explode("/", $type);
 
-$type_action = $arr_input[0];
-$type_action_type = isset($arr_input[1]) ? $arr_input[1] : '';
-$type_class = isset($arr_input[2]) ? $arr_input[2] : '';
-
-switch($type_action)
+switch($arr_type[0])
 {
 	case 'admin':
-		switch($type_action_type)
+		if(isset($arr_type[1]))
 		{
-			case 'profile':
-				$user_id = get_current_user_id();
+			switch($arr_type[1])
+			{
+				case 'profile':
+					$user_id = get_current_user_id();
 
-				$arr_fields = array();
+					$arr_fields = array();
 
-				$arr_fields[] = array('type' => 'flex_start');
-					$arr_fields[] = array('type' => 'text', 'name' => 'first_name', 'text' => __("First Name", 'lang_fea'), 'required' => true);
-					$arr_fields[] = array('type' => 'text', 'name' => 'last_name', 'text' => __("Last Name", 'lang_fea'), 'required' => true);
-				$arr_fields[] = array('type' => 'flex_end');
-				$arr_fields[] = array('type' => 'flex_start');
-					$arr_fields[] = array('type' => 'email', 'name' => 'email', 'text' => __("E-mail", 'lang_fea'), 'required' => true);
-					$arr_fields[] = array('type' => 'password', 'name' => 'password', 'text' => __("Password"));
-				$arr_fields[] = array('type' => 'flex_end');
+					$arr_fields[] = array('type' => 'flex_start');
+						$arr_fields[] = array('type' => 'text', 'name' => 'first_name', 'text' => __("First Name", 'lang_fea'), 'required' => true);
+						$arr_fields[] = array('type' => 'text', 'name' => 'last_name', 'text' => __("Last Name", 'lang_fea'), 'required' => true);
+					$arr_fields[] = array('type' => 'flex_end');
+					$arr_fields[] = array('type' => 'flex_start');
+						$arr_fields[] = array('type' => 'email', 'name' => 'email', 'text' => __("E-mail", 'lang_fea'), 'required' => true);
+						$arr_fields[] = array('type' => 'password', 'name' => 'password', 'text' => __("Password"));
+					$arr_fields[] = array('type' => 'flex_end');
 
-				$arr_fields = apply_filters('filter_profile_fields', $arr_fields);
+					$arr_fields = apply_filters('filter_profile_fields', $arr_fields);
 
-				switch($type_class)
-				{
-					case 'edit':
-						foreach($arr_fields as $key => $value)
+					if(isset($arr_type[2]))
+					{
+						switch($arr_type[2])
 						{
-							if(isset($value['name']))
-							{
-								if(!isset($arr_fields[$key]['class'])){			$arr_fields[$key]['class'] = "";}
-								if(!isset($arr_fields[$key]['attributes'])){	$arr_fields[$key]['attributes'] = "";}
-								if(!isset($arr_fields[$key]['required'])){		$arr_fields[$key]['required'] = false;}
-
-								$arr_fields[$key]['value'] = get_the_author_meta($value['name'], $user_id);
-
-								switch($arr_fields[$key]['type'])
+							case 'edit':
+								foreach($arr_fields as $key => $value)
 								{
-									case 'email':
-										$new_email = get_user_meta($user_id, '_new_email', true);
-										$user_data = get_userdata($user_id);
-
-										if($new_email && $new_email['newemail'] != $user_data->user_email)
-										{
-											$arr_fields[$key]['description'] = " ".sprintf(__("There is a pending change of your email to %s.", 'lang_fea'), $new_email['newemail'])
-											." <a href='".esc_url(wp_nonce_url(self_admin_url("profile.php?dismiss=".$user_id."_new_email"), 'dismiss-'.$user_id.'_new_email'))."'>".__("Cancel", 'lang_fea')."</a>";
-										}
-
-										else
-										{
-											$arr_fields[$key]['description'] = sprintf(__("If you change this we will send you an email at your new address to confirm it. %sThe new address will not become active until confirmed.%s", 'lang_fea'), "<strong>", "</strong>");
-										}
-									break;
-
-									case 'select':
-										// Otherwise options might end up in the "wrong" order on the site
-										#######################
-										$arr_data_temp = array();
-
-										foreach($arr_fields[$key]['options'] as $option_key => $option_value)
-										{
-											$arr_data_temp[] = array(
-												'key' => $option_key,
-												'value' => $option_value,
-											);
-										}
-
-										$arr_fields[$key]['options'] = $arr_data_temp;
-										#######################
-
-										if(!isset($arr_fields[$key]['multiple']))
-										{
-											$arr_fields[$key]['multiple'] = false;
-										}
-
-										if($arr_fields[$key]['multiple'] == true)
-										{
-											$arr_fields[$key]['class'] .= " form_select_multiple";
-											$arr_fields[$key]['attributes'] .= " size='".get_select_size(array('count' => count($arr_fields[$key]['options'])))."'";
-										}
-									break;
-								}
-							}
-						}
-
-						$json_output['admin_response'] = array(
-							'template' => str_replace("/", "_", $type),
-							'container' => str_replace("/", "_", $type),
-							'fields' => $arr_fields,
-							'user_id' => $user_id,
-						);
-					break;
-
-					case 'save':
-						$updated = false;
-
-						foreach($arr_fields as $key => $value)
-						{
-							if(isset($value['name']))
-							{
-								$user_meta = check_var($value['name']);
-
-								if($user_meta != '' || !isset($value['required']) || $value['required'] == false)
-								{
-									switch($arr_fields[$key]['type'])
+									if(isset($value['name']))
 									{
-										case 'email':
-											if($user_meta != '')
-											{
-												$success = send_confirmation_on_profile_email();
+										if(!isset($arr_fields[$key]['class'])){			$arr_fields[$key]['class'] = "";}
+										if(!isset($arr_fields[$key]['attributes'])){	$arr_fields[$key]['attributes'] = "";}
+										if(!isset($arr_fields[$key]['required'])){		$arr_fields[$key]['required'] = false;}
 
-												if(isset($errors) && is_wp_error($errors))
+										$arr_fields[$key]['value'] = get_the_author_meta($value['name'], $user_id);
+
+										switch($arr_fields[$key]['type'])
+										{
+											case 'email':
+												$new_email = get_user_meta($user_id, '_new_email', true);
+												$user_data = get_userdata($user_id);
+
+												if($new_email && $new_email['newemail'] != $user_data->user_email)
 												{
-													foreach($errors->errors as $error)
-													{
-														$json_output['message'] = $error[0];
-													}
+													$arr_fields[$key]['description'] = " ".sprintf(__("There is a pending change of your email to %s.", 'lang_fea'), $new_email['newemail'])
+													." <a href='".esc_url(wp_nonce_url(self_admin_url("profile.php?dismiss=".$user_id."_new_email"), 'dismiss-'.$user_id.'_new_email'))."'>".__("Cancel", 'lang_fea')."</a>";
 												}
 
 												else
 												{
-													$updated = true;
+													$arr_fields[$key]['description'] = sprintf(__("If you change this we will send you an email at your new address to confirm it. %sThe new address will not become active until confirmed.%s", 'lang_fea'), "<strong>", "</strong>");
 												}
-											}
-										break;
+											break;
 
-										case 'password':
-											if($user_meta != '')
-											{
-												wp_set_password($user_meta, $user_id);
+											case 'select':
+												// Otherwise options might end up in the "wrong" order on the site
+												#######################
+												$arr_data_temp = array();
 
-												$updated = true;
-											}
-										break;
+												foreach($arr_fields[$key]['options'] as $option_key => $option_value)
+												{
+													$arr_data_temp[] = array(
+														'key' => $option_key,
+														'value' => $option_value,
+													);
+												}
 
-										default:
-											$meta_id = update_user_meta($user_id, $value['name'], $user_meta);
+												$arr_fields[$key]['options'] = $arr_data_temp;
+												#######################
 
-											if($meta_id > 0)
-											{
-												$updated = true;
-											}
-										break;
+												if(!isset($arr_fields[$key]['multiple']))
+												{
+													$arr_fields[$key]['multiple'] = false;
+												}
+
+												if($arr_fields[$key]['multiple'] == true)
+												{
+													$arr_fields[$key]['class'] .= " form_select_multiple";
+													$arr_fields[$key]['attributes'] .= " size='".get_select_size(array('count' => count($arr_fields[$key]['options'])))."'";
+												}
+											break;
+										}
 									}
 								}
-							}
-						}
 
-						if($updated == true)
-						{
-							$json_output['success'] = true;
-							$json_output['message'] = __("I have saved the information for you", 'lang_fea');
-						}
+								$json_output['admin_response'] = array(
+									'template' => str_replace("/", "_", $type),
+									'container' => str_replace("/", "_", $type),
+									'fields' => $arr_fields,
+									'user_id' => $user_id,
+								);
+							break;
 
-						else
-						{
-							if(!isset($json_output['message']) || $json_output['message'] == '')
-							{
-								$json_output['message'] = __("I could not update the information for you", 'lang_fea');
-							}
-						}
-					break;
-				}
-			break;
+							case 'save':
+								$updated = false;
 
-			/*case 'registration':
-				switch($type_class)
-				{
-					case 'create':
-						$json_output['admin_response'] = array(
-							'template' => str_replace("/", "_", $type),
-							'container' => str_replace("/", "_", $type),
-						);
-					break;
-
-					case 'save':
-						$updated = false;
-
-						if($updated == true)
-						{
-							$json_output['success'] = true;
-							$json_output['message'] = __("I have updated the information for you", 'lang_fea');
-						}
-
-						else
-						{
-							$json_output['message'] = __("I could not update the information for you", 'lang_fea');
-						}
-					break;
-				}
-			break;*/
-
-			case 'posts':
-				switch($type_class)
-				{
-					case 'list':
-						$arr_list = array();
-
-						$query_where = "";
-
-						/*if(1 == 1 || !IS_ADMIN)
-						{
-							$query_where .= " AND post_author = '".get_current_user_id()."'";
-						}*/
-
-						$result = $wpdb->get_results($wpdb->prepare("SELECT ID, post_title, post_status, post_author, post_modified FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s)".$query_where." ORDER BY post_modified DESC", 'post', 'publish', 'draft'));
-
-						foreach($result as $r)
-						{
-							$user_data = get_userdata($r->post_author);
-
-							//$arr_categories = wp_get_post_categories($r->ID);
-
-							$categories = "";
-
-							$arr_categories = get_the_category($r->ID);
-
-							if(is_array($arr_categories) && count($arr_categories) > 0)
-							{
-								//$category_base_url = get_site_url()."/category/";
-
-								foreach($arr_categories as $category)
+								foreach($arr_fields as $key => $value)
 								{
-									$categories .= ($categories != '' ? ", " : "").$category->name; //"<a href='".$category_base_url.$category->slug."'>".
+									if(isset($value['name']))
+									{
+										$user_meta = check_var($value['name']);
+
+										if($user_meta != '' || !isset($value['required']) || $value['required'] == false)
+										{
+											switch($arr_fields[$key]['type'])
+											{
+												case 'email':
+													if($user_meta != '')
+													{
+														$success = send_confirmation_on_profile_email();
+
+														if(isset($errors) && is_wp_error($errors))
+														{
+															foreach($errors->errors as $error)
+															{
+																$json_output['message'] = $error[0];
+															}
+														}
+
+														else
+														{
+															$updated = true;
+														}
+													}
+												break;
+
+												case 'password':
+													if($user_meta != '')
+													{
+														wp_set_password($user_meta, $user_id);
+
+														$updated = true;
+													}
+												break;
+
+												default:
+													$meta_id = update_user_meta($user_id, $value['name'], $user_meta);
+
+													if($meta_id > 0)
+													{
+														$updated = true;
+													}
+												break;
+											}
+										}
+									}
 								}
-							}
 
-							$arr_list[] = array(
-								'post_id' => $r->ID,
-								'post_title' => $r->post_title.($r->post_status == 'draft' ? " (".__("Draft").")" : ""),
-								'post_url' => get_permalink($r->ID),
-								'post_author' => $user_data->display_name,
-								'categories' => $categories,
-								'post_modified' => format_date($r->post_modified),
-							);
+								if($updated == true)
+								{
+									$json_output['success'] = true;
+									$json_output['message'] = __("I have saved the information for you", 'lang_fea');
+								}
+
+								else
+								{
+									if(!isset($json_output['message']) || $json_output['message'] == '')
+									{
+										$json_output['message'] = __("I could not update the information for you", 'lang_fea');
+									}
+								}
+							break;
 						}
+					}
+				break;
 
-						$json_output['success'] = true;
-						$json_output['admin_response'] = array(
-							'template' => str_replace("/", "_", $type),
-							'list' => $arr_list,
-						);
-					break;
-
-					case 'edit':
-						$post_id = isset($arr_input[3]) ? $arr_input[3] : 0;
-
-						$result = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_excerpt, post_content, post_status, post_name, post_author, comment_status FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s) AND ID = '%d'", 'post', 'publish', 'draft', $post_id));
-
-						foreach($result as $r)
+				/*case 'registration':
+					if(isset($arr_type[2]))
+					{
+						switch($arr_type[2])
 						{
-							$json_output['success'] = true;
-							$json_output['admin_response'] = array(
-								'template' => str_replace(array("/", "_".$post_id), array("_", ""), $type),
-								'post_id' => $post_id,
-								'post_title' => $r->post_title,
-								'post_excerpt' => $r->post_excerpt,
-								'post_content' => $r->post_content,
-								'post_status' => $r->post_status,
-								'post_name' => $r->post_name,
-								'post_categories' => $obj_fea->get_post_categories(array('post_id' => $post_id)),
-								'post_author' => $r->post_author,
-								'comment_status' => $r->comment_status,
-							);
+							case 'create':
+								$json_output['admin_response'] = array(
+									'template' => str_replace("/", "_", $type),
+									'container' => str_replace("/", "_", $type),
+								);
+							break;
+
+							case 'save':
+								$updated = false;
+
+								if($updated == true)
+								{
+									$json_output['success'] = true;
+									$json_output['message'] = __("I have updated the information for you", 'lang_fea');
+								}
+
+								else
+								{
+									$json_output['message'] = __("I could not update the information for you", 'lang_fea');
+								}
+							break;
 						}
-					break;
+					}
+				break;*/
 
-					case 'save':
-						$post_id = check_var('post_id', 'int');
-						$post_title = check_var('post_title');
-						$post_excerpt = check_var('post_excerpt');
-						$post_content = check_var('post_content');
-						$post_status = check_var('post_status');
-						$post_name = check_var('post_name');
-						$post_categories = check_var('post_categories', 'int'); //, 'array'
-						$post_author = check_var('post_author', 'int');
-						$comment_status = check_var('comment_status');
-
-						if(!is_array($post_categories))
+				case 'posts':
+					if(isset($arr_type[2]))
+					{
+						switch($arr_type[2])
 						{
-							if($post_categories > 0)
-							{
-								$post_categories = array($post_categories);
-							}
+							case 'list':
+								$current_page = isset($arr_type[3]) && is_numeric($arr_type[3]) ? $arr_type[3] : 1;
+								$edit_page_per_page = get_the_author_meta('edit_page_per_page', get_current_user_id());
 
-							else
-							{
-								$post_categories = array(get_option('default_category'));
-							}
+								$arr_pages = $arr_list = array();
+								$list_amount = 0;
+
+								$query_where = "";
+
+								/*if(1 == 1 || !IS_ADMIN)
+								{
+									$query_where .= " AND post_author = '".get_current_user_id()."'";
+								}*/
+
+								$result = $wpdb->get_results($wpdb->prepare("SELECT ID, post_title, post_status, post_author, post_date, post_modified FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s)".$query_where." ORDER BY post_date DESC", 'post', 'publish', 'draft'));
+
+								foreach($result as $r)
+								{
+									$list_amount++;
+									$page_number = ceil($list_amount / $edit_page_per_page);
+
+									if(($list_amount % $edit_page_per_page) == 1)
+									{
+										$arr_pages[] = $page_number;
+									}
+
+									if($current_page == $page_number)
+									{
+										$user_data = get_userdata($r->post_author);
+
+										$arr_list[] = array(
+											'post_id' => $r->ID,
+											'post_status' => $r->post_status,
+											'post_title' => $r->post_title,
+											'post_url' => get_permalink($r->ID),
+											'post_author' => $user_data->display_name,
+											'categories' => $obj_fea->get_post_categories(array('output' => 'html', 'post_id' => $r->ID)),
+											'post_date' => format_date($r->post_date),
+											'post_modified' => format_date($r->post_modified),
+										);
+									}
+								}
+
+								$json_output['success'] = true;
+								$json_output['admin_response'] = array(
+									'template' => $arr_type[0]."_".$arr_type[1]."_".$arr_type[2],
+									'pagination' => array(
+										'list_amount' => $list_amount,
+										'current_page' => $current_page,
+										'pages' => $arr_pages,
+									),
+									'list' => $arr_list,
+								);
+							break;
+
+							case 'edit':
+								$post_id = isset($arr_type[3]) ? $arr_type[3] : 0;
+
+								$result = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_excerpt, post_content, post_status, post_name, post_author, comment_status FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s) AND ID = '%d'", 'post', 'publish', 'draft', $post_id));
+
+								foreach($result as $r)
+								{
+									$json_output['success'] = true;
+									$json_output['admin_response'] = array(
+										'template' => $arr_type[0]."_".$arr_type[1]."_".$arr_type[2],
+										'post_id' => $post_id,
+										'post_title' => $r->post_title,
+										'post_excerpt' => $r->post_excerpt,
+										'post_content' => $r->post_content,
+										'post_status' => $r->post_status,
+										'post_name' => $r->post_name,
+										'post_categories' => $obj_fea->get_post_categories(array('output' => 'id', 'post_id' => $post_id)),
+										'post_author' => $r->post_author,
+										'comment_status' => $r->comment_status,
+									);
+								}
+							break;
+
+							case 'save':
+								$post_id = check_var('post_id', 'int');
+								$post_title = check_var('post_title');
+								$post_excerpt = check_var('post_excerpt');
+								$post_content = check_var('post_content');
+								$post_status = check_var('post_status');
+								$post_name = check_var('post_name');
+								$post_categories = check_var('post_categories', 'int'); //, 'array'
+								$post_author = check_var('post_author', 'int');
+								$comment_status = check_var('comment_status');
+
+								if(!is_array($post_categories))
+								{
+									if($post_categories > 0)
+									{
+										$post_categories = array($post_categories);
+									}
+
+									else
+									{
+										$post_categories = array(get_option('default_category'));
+									}
+								}
+
+								if(!($post_author > 0))
+								{
+									$post_author = get_current_user_id();
+								}
+								
+								$post_data = array(
+									'post_title' => $post_title,
+									'post_excerpt' => $post_excerpt,
+									'post_content' => $post_content,
+									'post_status' => $post_status,
+									'post_name' => $post_name,
+									'post_category' => $post_categories,
+									'post_author' => $post_author,
+									'comment_status' => ($comment_status == 'yes' ? 'open' : 'closed'),
+								);
+
+								$updated = false;
+
+								if($post_id > 0)
+								{
+									$post_data['ID'] = $post_id;
+
+									//$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->posts." SET post_title = %s, post_excerpt = %s, post_content = %s, post_status = %s, post_name = %s WHERE ID = '%d'", $post_title, $post_excerpt, $post_content, $post_status, $post_name, $post_id));
+
+									if(wp_update_post($post_data) > 0)
+									{
+										$updated = true;
+									}
+								}
+
+								else
+								{
+									$post_data['post_type'] = 'post';
+
+									if(wp_insert_post($post_data) > 0)
+									{
+										$updated = true;
+									}
+								}
+
+								if($updated == true)
+								{
+									$json_output['success'] = true;
+									$json_output['message'] = __("I have saved the information for you", 'lang_fea');
+								}
+
+								else
+								{
+									if(!isset($json_output['message']) || $json_output['message'] == '')
+									{
+										$json_output['message'] = __("I could not save the information for you", 'lang_fea');
+									}
+								}
+							break;
 						}
-
-						if(!($post_author > 0))
-						{
-							$post_author = get_current_user_id();
-						}
-						
-						$post_data = array(
-							'post_title' => $post_title,
-							'post_excerpt' => $post_excerpt,
-							'post_content' => $post_content,
-							'post_status' => $post_status,
-							'post_name' => $post_name,
-							'post_category' => $post_categories,
-							'post_author' => $post_author,
-							'comment_status' => ($comment_status == 'yes' ? 'open' : 'closed'),
-						);
-
-						$updated = false;
-
-						if($post_id > 0)
-						{
-							$post_data['ID'] = $post_id;
-
-							//$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->posts." SET post_title = %s, post_excerpt = %s, post_content = %s, post_status = %s, post_name = %s WHERE ID = '%d'", $post_title, $post_excerpt, $post_content, $post_status, $post_name, $post_id));
-
-							if(wp_update_post($post_data) > 0)
-							{
-								$updated = true;
-							}
-						}
-
-						else
-						{
-							$post_data['post_type'] = 'post';
-
-							if(wp_insert_post($post_data) > 0)
-							{
-								$updated = true;
-							}
-						}
-
-						if($updated == true)
-						{
-							$json_output['success'] = true;
-							$json_output['message'] = __("I have saved the information for you", 'lang_fea');
-						}
-
-						else
-						{
-							if(!isset($json_output['message']) || $json_output['message'] == '')
-							{
-								$json_output['message'] = __("I could not save the information for you", 'lang_fea');
-							}
-						}
-					break;
-				}
-			break;
+					}
+				break;
+			}
 		}
 	break;
 }

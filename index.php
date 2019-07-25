@@ -3,7 +3,7 @@
 Plugin Name: MF Front-End Admin
 Plugin URI: 
 Description: 
-Version: 1.1.5
+Version: 1.1.6
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://frostkom.se
