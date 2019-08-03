@@ -63,106 +63,109 @@ get_header();
 
 				if(count($arr_views) > 0)
 				{
-					$post_pre_content .= "<nav>
-						<ul>";
+					if(get_option('setting_fea_display_menu') != 'no')
+					{
+						$post_pre_content .= "<nav>
+							<ul>";
 
-							$post_pre_content .= "<li>
-								<a href=''>
-									<i class='fas fa-home'></i>
-									<span>".__("Home", 'lang_fea')."</span>
-								</a>
-							</li>";
+								$post_pre_content .= "<li>
+									<a href=''>
+										<i class='fas fa-home'></i>
+										<span>".__("Home", 'lang_fea')."</span>
+									</a>
+								</li>";
 
-							foreach($arr_views as $key => $view)
-							{
-								$post_pre_content .= "<li>";
+								foreach($arr_views as $key => $view)
+								{
+									$post_pre_content .= "<li>";
 
-									$i = 0;
+										$i = 0;
 
-									$count_temp = count($view['items']);
+										$count_temp = count($view['items']);
 
-									foreach($view['items'] as $item)
-									{
-										$item_url = "";
-
-										if(!isset($item['clickable']) || $item['clickable'] == true || $count_temp == 1)
+										foreach($view['items'] as $item)
 										{
-											$item_url = "#admin/".str_replace("_", "/", $key)."/".$item['id'];
-										}
+											$item_url = "";
 
-										$api_url = (isset($view['api_url']) ? $view['api_url'] : '');
-
-										if($i == 0)
-										{
-											if($item_url != '')
+											if(!isset($item['clickable']) || $item['clickable'] == true || $count_temp == 1)
 											{
-												$post_pre_content .= "<a href='".$item_url."'";
-
-													if($api_url != '')
-													{
-														$post_pre_content .= " data-api-url='".$api_url."'";
-													}
-
-												$post_pre_content .= ">";
+												$item_url = "#admin/".str_replace("_", "/", $key)."/".$item['id'];
 											}
 
-											else
-											{
-												$post_pre_content .= "<span>";
-											}
+											$api_url = (isset($view['api_url']) ? $view['api_url'] : '');
 
-												if(isset($view['icon']) && $view['icon'] != '')
+											if($i == 0)
+											{
+												if($item_url != '')
 												{
-													$post_pre_content .= "<i class='".$view['icon']."'></i>";
-												}
-
-												$post_pre_content .= "<span>".$view['name']."</span>";
-
-											if($item_url != '')
-											{
-												$post_pre_content .= "</a>";
-											}
-
-											else
-											{
-												$post_pre_content .= "</span>";
-											}
-										}
-
-										else
-										{
-											if($i == 1)
-											{
-												$post_pre_content .= "<ul>";
-											}
-
-												$post_pre_content .= "<li>
-													<a href='".$item_url."'";
+													$post_pre_content .= "<a href='".$item_url."'";
 
 														if($api_url != '')
 														{
 															$post_pre_content .= " data-api-url='".$api_url."'";
 														}
 
-													$post_pre_content .= ">
-														<span>".$item['name']."</span>
-													</a>
-												</li>";
+													$post_pre_content .= ">";
+												}
 
-											if($i == ($count_temp - 1))
-											{
-												$post_pre_content .= "</ul>";
+												else
+												{
+													$post_pre_content .= "<span>";
+												}
+
+													if(isset($view['icon']) && $view['icon'] != '')
+													{
+														$post_pre_content .= "<i class='".$view['icon']."'></i>";
+													}
+
+													$post_pre_content .= "<span>".$view['name']."</span>";
+
+												if($item_url != '')
+												{
+													$post_pre_content .= "</a>";
+												}
+
+												else
+												{
+													$post_pre_content .= "</span>";
+												}
 											}
+
+											else
+											{
+												if($i == 1)
+												{
+													$post_pre_content .= "<ul>";
+												}
+
+													$post_pre_content .= "<li>
+														<a href='".$item_url."'";
+
+															if($api_url != '')
+															{
+																$post_pre_content .= " data-api-url='".$api_url."'";
+															}
+
+														$post_pre_content .= ">
+															<span>".$item['name']."</span>
+														</a>
+													</li>";
+
+												if($i == ($count_temp - 1))
+												{
+													$post_pre_content .= "</ul>";
+												}
+											}
+
+											$i++;
 										}
 
-										$i++;
-									}
+									$post_pre_content .= "</li>";
+								}
 
-								$post_pre_content .= "</li>";
-							}
-
-						$post_pre_content .= "</ul>
-					</nav>";
+							$post_pre_content .= "</ul>
+						</nav>";
+					}
 
 					$post_content = "<div class='error hide'><p></p></div>
 					<div class='updated hide'><p></p></div>

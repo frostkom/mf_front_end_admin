@@ -132,6 +132,7 @@ class mf_fea
 			add_settings_section($options_area, "",	array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
 
 			$arr_settings = array(
+				'setting_fea_display_menu' => __("Display Menu", 'lang_fea'),
 				'setting_fea_user_info' => __("User Info", 'lang_fea'),
 				'setting_fea_pages' => __("Pages", 'lang_fea'),
 				'setting_fea_redirect_after_login' => __("Redirect After Login", 'lang_fea'),
@@ -147,6 +148,14 @@ class mf_fea
 		$setting_key = get_setting_key(__FUNCTION__);
 
 		echo settings_header($setting_key, __("Front-End Admin", 'lang_fea'));
+	}
+
+	function setting_fea_display_menu_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key, 'yes');
+
+		echo show_select(array('data' => get_yes_no_for_select(), 'name' => $setting_key, 'value' => $option));
 	}
 
 	function setting_fea_user_info_callback()

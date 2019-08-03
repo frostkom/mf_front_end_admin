@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-24 08:30+0100\n"
+"POT-Creation-Date: 2019-08-03 21:38+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -33,6 +33,9 @@ msgstr "Utkast"
 msgid "Not Published"
 msgstr "Inte publicerad"
 
+msgid "Display Menu"
+msgstr "Visa meny"
+
 msgid "User Info"
 msgstr "Användarinfo"
 
@@ -59,6 +62,18 @@ msgstr "Uppdatera"
 
 msgid "Submit"
 msgstr "Skicka"
+
+msgid "%s posts"
+msgstr "%s inlägg"
+
+msgid "Previous"
+msgstr "Föregående"
+
+msgid "Page %s of %s"
+msgstr "Sida %s av %s"
+
+msgid "Next"
+msgstr "Nästa"
 
 msgid "Author"
 msgstr "Författare"
