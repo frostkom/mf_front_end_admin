@@ -15,6 +15,11 @@ get_header();
 
 	if(have_posts())
 	{
+		if(!isset($obj_theme))
+		{
+			$obj_theme = new mf_theme();
+		}
+
 		echo "<article>";
 
 			while(have_posts())
@@ -24,7 +29,14 @@ get_header();
 				$post_title = $post->post_title;
 				$post_content = apply_filters('the_content', $post->post_content);
 
-				$post_pre_content = "<h1>".$post_title."</h1>";
+				$post_pre_content = "";
+
+				$is_heading_visible = $obj_theme->is_heading_visible($post);
+
+				if($is_heading_visible)
+				{
+					$post_pre_content .= "<h1>".$post_title."</h1>";
+				}
 
 				if(is_user_logged_in())
 				{
@@ -180,7 +192,7 @@ get_header();
 								@list($id, $rest) = explode("/", $item['id']);
 
 								$post_content .= "<div id='admin_".$key."_".$id."' class='hide'>
-									<h2>".$view['name']."</h2>
+									<".($is_heading_visible ? "h2" : "h1").">".$view['name']."</".($is_heading_visible ? "h2" : "h1").">
 									<div><i class='fa fa-spinner fa-spin fa-3x'></i></div>
 								</div>";
 							}

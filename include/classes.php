@@ -87,45 +87,45 @@ class mf_fea
 	{
 		global $wp_admin_bar;
 
-		$obj_base = new mf_base();
-		$post_id = $obj_base->has_page_template(array('template' => "/plugins/mf_front_end_admin/include/templates/template_admin.php"));
-
-		if($post_id > 0)
+		if(get_option('setting_fea_display_menu') != 'no')
 		{
-			$post_status = get_post_status($post_id);
+			$post_id = apply_filters('get_front_end_admin_id', 0);
 
-			$color = $title = "";
-
-			switch($post_status)
+			if($post_id > 0)
 			{
-				case 'publish':
-					$color = "color_green";
-				break;
+				$post_status = get_post_status($post_id);
 
-				case 'draft':
-					if(IS_ADMIN)
-					{
-						$color = "color_yellow";
-						$title = __("Not Published", 'lang_fea');
-					}
-				break;
-			}
+				$color = $title = "";
 
-			if($color != '')
-			{
-				$wp_admin_bar->add_node(array(
-					'id' => 'front-end',
-					'title' => "<a href='".get_permalink($post_id)."' class='".$color."'".($title != '' ? " title='".$title."'" : '').">".get_post_title($post_id)."</a>",
-				));
+				switch($post_status)
+				{
+					case 'publish':
+						$color = "color_green";
+					break;
+
+					case 'draft':
+						if(IS_ADMIN)
+						{
+							$color = "color_yellow";
+							$title = __("Not Published", 'lang_fea');
+						}
+					break;
+				}
+
+				if($color != '')
+				{
+					$wp_admin_bar->add_node(array(
+						'id' => 'front-end',
+						'title' => "<a href='".get_permalink($post_id)."' class='".$color."'".($title != '' ? " title='".$title."'" : '').">".get_post_title($post_id)."</a>",
+					));
+				}
 			}
 		}
 	}
 
 	function settings_fea()
 	{
-		$obj_base = new mf_base();
-
-		if($obj_base->has_page_template(array('template' => "/plugins/mf_front_end_admin/include/templates/template_admin.php")) > 0)
+		if(apply_filters('get_front_end_admin_id', 0) > 0)
 		{
 			$options_area = __FUNCTION__;
 
@@ -203,17 +203,56 @@ class mf_fea
 
 			if(isset($user->roles) && is_array($user->roles) && count(array_intersect($setting_fea_redirect_after_login, $user->roles)) > 0)
 			{
-				$obj_base = new mf_base();
-				$post_id = $obj_base->has_page_template(array('template' => "/plugins/mf_front_end_admin/include/templates/template_admin.php"));
+				$post_url = apply_filters('get_front_end_admin_url', '');
 
-				if($post_id > 0)
+				if($post_url != '')
 				{
-					$redirect_to = get_permalink($post_id);
+					$redirect_to = $post_url;
 				}
 			}
 		}
 
 		return $redirect_to;
+	}
+
+	function wp_nav_menu_objects($sorted_menu_items, $args)
+	{
+		$arr_views = apply_filters('init_base_admin', array());
+
+		foreach($sorted_menu_items as $item_key => $item_value)
+		{
+			$post_url = apply_filters('get_front_end_admin_url', '');
+
+			if(substr($item_value->url, 0, strlen($post_url)) == $post_url)
+			{
+				list($rest, $post_hash) = explode("#", $item_value->url);
+
+				$arr_hash = explode("/", $post_hash);
+
+				$is_allowed = false;
+
+				foreach($arr_views as $view_key => $view_value)
+				{
+					if($arr_hash[1] == $view_key)
+					{
+						foreach($view_value['items'] as $view_item_key => $view_item_value)
+						{
+							if($arr_hash[2] == $view_item_value['id'])
+							{
+								$is_allowed = true;
+							}
+						}
+					}
+				}
+
+				if($is_allowed == false)
+				{
+					unset($sorted_menu_items[$item_key]);
+				}
+			}
+		}
+
+		return $sorted_menu_items;
 	}
 
 	function get_footer()
@@ -399,7 +438,7 @@ class mf_fea
 				<script type='text/template' id='template_admin_posts_list_message'>
 					<p>".__("You have not added anything yet", 'lang_fea')."</p>
 				</script>
-	
+
 				<script type='text/template' id='template_admin_posts_edit'>
 					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/posts/save'>
 						<div id='".$this->meta_prefix."information' class='meta_box context_normal'>
@@ -492,14 +531,13 @@ class mf_fea
 		if(!is_admin())
 		{
 			$plugin_base_include_url = plugins_url()."/mf_base/include/";
-			//$plugin_include_url = plugin_dir_url(__FILE__);
 			$plugin_version = get_plugin_version(__FILE__);
 
 			mf_enqueue_script('script_base_init', $plugin_base_include_url."backbone/bb.init.js", $plugin_version);
 
 			$setting_fea_pages = get_option_or_default('setting_fea_pages', array());
 
-			if(is_array($setting_fea_pages)) // && count($setting_fea_pages) > 0
+			if(is_array($setting_fea_pages))
 			{
 				foreach($arr_views as $key => $view)
 				{
@@ -514,14 +552,39 @@ class mf_fea
 		return $arr_views;
 	}
 
+	function get_front_end_admin_id($post_id)
+	{
+		if(!($post_id > 0))
+		{
+			$obj_base = new mf_base();
+			$post_id = $obj_base->has_page_template(array('template' => "/plugins/mf_front_end_admin/include/templates/template_admin.php"));
+		}
+
+		return $post_id;
+	}
+
+	function get_front_end_admin_url($post_url)
+	{
+		if($post_url == '')
+		{
+			$post_id = apply_filters('get_front_end_admin_id', 0);
+
+			if($post_id > 0)
+			{
+				$post_url = get_permalink($post_id);
+			}
+		}
+
+		return $post_url;
+	}
+
 	function edit_profile_url($url) //, $user_id, $scheme
 	{
-		$obj_base = new mf_base();
-		$post_id = $obj_base->has_page_template(array('template' => "/plugins/mf_front_end_admin/include/templates/template_admin.php"));
+		$post_url = apply_filters('get_front_end_admin_url', '');
 
-		if($post_id > 0 && in_array('profile', get_option('setting_fea_pages', array())))
+		if($post_url != '' && in_array('profile', get_option('setting_fea_pages', array())))
 		{
-			$url = get_permalink($post_id)."#admin/profile/edit";
+			$url = $post_url."#admin/profile/edit";
 		}
 
 		return $url;

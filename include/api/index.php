@@ -327,7 +327,7 @@ switch($arr_type[0])
 								{
 									$post_author = get_current_user_id();
 								}
-								
+
 								$post_data = array(
 									'post_title' => $post_title,
 									'post_excerpt' => $post_excerpt,
