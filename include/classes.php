@@ -217,13 +217,12 @@ class mf_fea
 
 	function wp_nav_menu_objects($sorted_menu_items, $args)
 	{
+		$front_end_admin_url = apply_filters('get_front_end_admin_url', '');
 		$arr_views = apply_filters('init_base_admin', array());
 
 		foreach($sorted_menu_items as $item_key => $item_value)
 		{
-			$post_url = apply_filters('get_front_end_admin_url', '');
-
-			if(substr($item_value->url, 0, strlen($post_url)) == $post_url)
+			if(substr($item_value->url, 0, strlen($front_end_admin_url)) == $front_end_admin_url && strpos($item_value->url, "#") !== 0)
 			{
 				list($rest, $post_hash) = explode("#", $item_value->url);
 
