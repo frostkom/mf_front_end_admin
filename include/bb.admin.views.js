@@ -174,6 +174,11 @@ var AdminView = Backbone.View.extend(
 				dom_container.children("div").html(html);
 
 				this.display_container(dom_container);
+
+				if(typeof init_media_library === 'function')
+				{
+					init_media_library();
+				}
 			break;
 
 			case 'admin_posts_list':

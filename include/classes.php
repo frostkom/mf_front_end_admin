@@ -307,7 +307,7 @@ class mf_fea
 							case 'media_image': %>
 								<div>
 									<label for='<%= field.name %>'><%= field.text %></label>"
-									.get_media_library(array('name' => "<%= field.name %>", 'value' => "<%= field.value %>", 'type' => 'image'))
+									.get_media_library(array('type' => 'image', 'name' => "<%= field.name %>", 'value' => "<%= field.value %>"))
 								."</div>
 							<% break;
 
