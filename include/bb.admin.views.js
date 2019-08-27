@@ -41,8 +41,6 @@ var AdminView = Backbone.View.extend(
 			var action = dom_obj.attr('href').replace('#', '');
 
 			this.loadPage(api_url, action);
-
-			/*return false;*/
 		}
 	},
 
@@ -65,7 +63,7 @@ var AdminView = Backbone.View.extend(
 
 		if(response != '')
 		{
-			location.href = response; /* + (response.match(/\?/) ? "&" : "?") + "redirect_to=" + location.href*/
+			location.href = response;
 
 			this.model.set({'redirect': ''});
 		}
@@ -209,15 +207,6 @@ var AdminView = Backbone.View.extend(
 				html = _.template(dom_template.html())(response);
 
 				dom_container.children("div").html(html);
-
-				/* Hack as long as show_textfield() etc. is used */
-				/*dom_container.find(".description").each(function()
-				{
-					if(jQuery(this).is(":empty"))
-					{
-						jQuery(this).remove();
-					}
-				});*/
 
 				myAdminView.display_container(dom_container);
 

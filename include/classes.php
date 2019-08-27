@@ -352,6 +352,10 @@ class mf_fea
 								.show_textfield(array('name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
 							."<% break;
 
+							case 'textarea': %>"
+								.show_textarea(array('name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
+							."<% break;
+
 							default: %>
 								<strong><%= meta_field.type %></strong>: <%= meta_field.name %><br>
 							<% break;
