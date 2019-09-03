@@ -44,9 +44,7 @@ class mf_fea
 
 	function get_post_categories($data)
 	{
-		global $wpdb;
-
-		if(!isset($data['output'])){		$data['output'] = '';}
+		if(!isset($data['output'])){			$data['output'] = '';}
 
 		$arr_categories = get_the_category($data['post_id']);
 
@@ -280,7 +278,7 @@ class mf_fea
 
 			mf_enqueue_script('script_fea_router', $plugin_include_url."bb.admin.router.js", $plugin_version);
 			mf_enqueue_script('script_fea_models', $plugin_include_url."bb.admin.models.js", array('api_url' => $plugin_include_url), $plugin_version);
-			mf_enqueue_script('script_fea_views', $plugin_include_url."bb.admin.views.js", $plugin_version);
+			mf_enqueue_script('script_fea_views', $plugin_include_url."bb.admin.views.js", array('api_url' => $plugin_include_url), $plugin_version);
 
 			$templates .= "<script type='text/template' id='template_admin_profile_edit'>
 				<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/profile/save'>
@@ -422,7 +420,7 @@ class mf_fea
 										."</div>
 									</td>
 									<td><%= posts.post_author %></td>
-									<td><%= posts.categories %></td>
+									<td><%= posts.post_categories %></td>
 									<td>
 										<%= posts.post_date %>
 										<% if(posts.post_modified != posts.post_date)
@@ -464,12 +462,12 @@ class mf_fea
 								.show_select(array('data' => $this->get_post_status_for_select(), 'name' => 'post_status', 'text' => __("Status", 'lang_fea'), 'value' => "<%= post_status %>"))
 								.show_select(array('data' => get_users_for_select(array('add_choose_here' => false)), 'name' => 'post_author', 'text' => __("Author", 'lang_fea'), 'value' => "<%= post_author %>"))
 								.show_textfield(array('name' => 'post_name', 'text' => __("Slug", 'lang_fea'), 'value' => "<%= post_name %>"))
-								.show_select(array('data' => get_categories_for_select(), 'name' => 'post_categories', 'text' => __("Category", 'lang_fea'), 'value' => "<%= post_categories %>"))
+								.show_select(array('data' => get_categories_for_select(array('add_choose_here' => true)), 'name' => 'post_categories', 'text' => __("Category", 'lang_fea'), 'value' => "<%= post_categories %>"))
 								.show_select(array('data' => get_yes_no_for_select(array('add_choose_here' => false)), 'name' => 'comment_status', 'text' => __("Allow Comments", 'lang_fea'), 'value' => "<%= comment_status %>"))
 							."</div>
 						</div>
 						<div class='form_button'>"
-							.show_button(array('text' => __("Update", 'lang_fea')))
+							.show_button(array('text' => __("Save", 'lang_fea')))
 							.input_hidden(array('name' => 'post_id', 'value' => "<%= post_id %>"))
 						."</div>
 					</form>

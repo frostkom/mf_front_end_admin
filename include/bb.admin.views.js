@@ -106,7 +106,7 @@ var AdminView = Backbone.View.extend(
 
 		if(response != '')
 		{
-			var api_url = this.model.get("api_url") || '';
+			var api_url = this.model.get("api_url") || script_fea_views.api_url;
 
 			if(api_url != '')
 			{

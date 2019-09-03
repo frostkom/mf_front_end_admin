@@ -223,7 +223,7 @@ switch($arr_type[0])
 						{
 							case 'list':
 								$current_page = isset($arr_type[3]) && is_numeric($arr_type[3]) ? $arr_type[3] : 1;
-								$edit_page_per_page = get_the_author_meta('edit_page_per_page', get_current_user_id());
+								$edit_page_per_page = get_the_author_meta_or_default('edit_page_per_page', get_current_user_id(), 20);
 
 								$arr_pages = $arr_list = array();
 								$list_amount = 0;
@@ -257,7 +257,7 @@ switch($arr_type[0])
 											'post_title' => $r->post_title,
 											'post_url' => get_permalink($r->ID),
 											'post_author' => $user_data->display_name,
-											'categories' => $obj_fea->get_post_categories(array('output' => 'html', 'post_id' => $r->ID)),
+											'post_categories' => $obj_fea->get_post_categories(array('output' => 'html', 'post_id' => $r->ID)),
 											'post_date' => format_date($r->post_date),
 											'post_modified' => format_date($r->post_modified),
 										);
@@ -279,22 +279,42 @@ switch($arr_type[0])
 							case 'edit':
 								$post_id = isset($arr_type[3]) ? $arr_type[3] : 0;
 
-								$result = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_excerpt, post_content, post_status, post_name, post_author, comment_status FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s) AND ID = '%d'", 'post', 'publish', 'draft', $post_id));
+								if($post_id > 0)
+								{
+									$result = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_excerpt, post_content, post_status, post_name, post_author, comment_status FROM ".$wpdb->posts." WHERE post_type = %s AND (post_status = %s OR post_status = %s) AND ID = '%d'", 'post', 'publish', 'draft', $post_id));
 
-								foreach($result as $r)
+									foreach($result as $r)
+									{
+										$json_output['success'] = true;
+										$json_output['admin_response'] = array(
+											'template' => $arr_type[0]."_".$arr_type[1]."_".$arr_type[2],
+											'post_id' => $post_id,
+											'post_title' => $r->post_title,
+											'post_excerpt' => $r->post_excerpt,
+											'post_content' => $r->post_content,
+											'post_status' => $r->post_status,
+											'post_name' => $r->post_name,
+											'post_categories' => $obj_fea->get_post_categories(array('output' => 'id', 'post_id' => $post_id)),
+											'post_author' => $r->post_author,
+											'comment_status' => $r->comment_status,
+										);
+									}
+								}
+
+								else
 								{
 									$json_output['success'] = true;
 									$json_output['admin_response'] = array(
 										'template' => $arr_type[0]."_".$arr_type[1]."_".$arr_type[2],
-										'post_id' => $post_id,
-										'post_title' => $r->post_title,
-										'post_excerpt' => $r->post_excerpt,
-										'post_content' => $r->post_content,
-										'post_status' => $r->post_status,
-										'post_name' => $r->post_name,
-										'post_categories' => $obj_fea->get_post_categories(array('output' => 'id', 'post_id' => $post_id)),
-										'post_author' => $r->post_author,
-										'comment_status' => $r->comment_status,
+										'post_id' => 0,
+										'post_title' => "",
+										'post_excerpt' => "",
+										'post_content' => "",
+										'post_status' => 'draft',
+										'post_name' => "",
+										'post_categories' => array(),
+										'post_author' => get_current_user_id(),
+										'comment_status' => 'no',
 									);
 								}
 							break;
@@ -345,11 +365,11 @@ switch($arr_type[0])
 								{
 									$post_data['ID'] = $post_id;
 
-									//$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->posts." SET post_title = %s, post_excerpt = %s, post_content = %s, post_status = %s, post_name = %s WHERE ID = '%d'", $post_title, $post_excerpt, $post_content, $post_status, $post_name, $post_id));
-
 									if(wp_update_post($post_data) > 0)
 									{
 										$updated = true;
+
+										$json_output['message'] = __("I have saved the information for you", 'lang_fea');
 									}
 								}
 
@@ -357,16 +377,20 @@ switch($arr_type[0])
 								{
 									$post_data['post_type'] = 'post';
 
-									if(wp_insert_post($post_data) > 0)
+									$post_id = wp_insert_post($post_data);
+
+									if($post_id > 0)
 									{
 										$updated = true;
+
+										$json_output['message'] = __("I have saved the information for you", 'lang_fea')." (2)";
+										$json_output['next_request'] = "admin/posts/edit/".$post_id;
 									}
 								}
 
 								if($updated == true)
 								{
 									$json_output['success'] = true;
-									$json_output['message'] = __("I have saved the information for you", 'lang_fea');
 								}
 
 								else

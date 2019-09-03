@@ -80,12 +80,15 @@ get_header();
 						$post_pre_content .= "<nav>
 							<ul>";
 
-								$post_pre_content .= "<li>
-									<a href=''>
-										<i class='fas fa-home'></i>
-										<span>".__("Home", 'lang_fea')."</span>
-									</a>
-								</li>";
+								if($post_content != '')
+								{
+									$post_pre_content .= "<li>
+										<a href=''>
+											<i class='fas fa-home'></i>
+											<span>".__("Home", 'lang_fea')."</span>
+										</a>
+									</li>";
+								}
 
 								foreach($arr_views as $key => $view)
 								{
