@@ -254,7 +254,13 @@ class mf_fea
 
 	function get_footer()
 	{
-		$obj_base = new mf_base();
+		global $obj_base;
+
+		if(!isset($obj_base))
+		{
+			$obj_base = new mf_base();
+		}
+
 		echo $obj_base->get_templates(array('lost_connection', 'loading'));
 	}
 
