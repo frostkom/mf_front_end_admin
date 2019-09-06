@@ -264,6 +264,13 @@ class mf_fea
 		echo $obj_base->get_templates(array('lost_connection', 'loading'));
 	}
 
+	function after_setup_theme()
+	{
+		register_nav_menus(array(
+			'front_end_admin' => __("Front-End Admin", 'lang_fea'),
+		));
+	}
+
 	function init_base_admin($arr_views)
 	{
 		global $wpdb;

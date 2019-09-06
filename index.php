@@ -39,6 +39,8 @@ else
 	add_action('wp_footer', array($obj_fea, 'get_footer'), 0);
 }
 
+add_action('after_setup_theme', array($obj_fea, 'after_setup_theme'));
+
 add_filter('init_base_admin', array($obj_fea, 'init_base_admin'));
 add_filter('init_base_admin', array($obj_fea, 'init_base_admin_2'), 11);
 

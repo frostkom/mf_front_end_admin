@@ -77,6 +77,118 @@ get_header();
 				{
 					if(get_option('setting_fea_display_menu') != 'no')
 					{
+						/* Add Custom Menu */
+						#################################
+						$locations = get_nav_menu_locations();
+
+						if(isset($locations['front_end_admin']))
+						{
+							$post_url = apply_filters('get_front_end_admin_url', '');
+
+							$post_parent = '';
+
+							$arr_menu = wp_get_nav_menu_items($locations['front_end_admin']);
+
+							foreach($arr_menu as $menu_object)
+							{
+								$menu_object_title = $menu_object->post_title != '' ? $menu_object->post_title : $menu_object->title;
+								$menu_object_url = str_replace($post_url, "", $menu_object->url);
+								$menu_object_parent = $menu_object->post_parent;
+
+								if(substr($menu_object_url, 0, 7) == "#admin/")
+								{
+									$arr_menu_object_url_parts = explode("/", $menu_object_url);
+
+									if(isset($arr_views[$arr_menu_object_url_parts[1]]))
+									{
+										if($menu_object_parent == 0)
+										{
+											$post_parent = $arr_menu_object_url_parts[1];
+										}
+
+										else if($post_parent != '')
+										{
+											$arr_views[$arr_menu_object_url_parts[1]]['items'][] = array(
+												'id' => $arr_menu_object_url_parts[2],
+												'name' => $menu_object_title,
+											);
+										}
+									}
+
+									else
+									{
+										$arr_views[$arr_menu_object_url_parts[1]] = array(
+											'name' => $menu_object_title,
+											'icon' => "fas fa-arrow-alt-circle-right",
+											'items' => array(
+												array(
+													'id' => $arr_menu_object_url_parts[2],
+													'name' => $menu_object_title,
+												),
+											),
+										);
+
+										if($menu_object_parent == 0)
+										{
+											$post_parent = $arr_menu_object_url_parts[1];
+										}
+									}
+								}
+
+								else
+								{
+									if(isset($arr_views[$menu_object_url]))
+									{
+										if($menu_object_parent == 0)
+										{
+											$post_parent = $menu_object_url;
+										}
+
+										else if($post_parent != '')
+										{
+											$arr_views[$post_parent]['items'][] = array(
+												'id' => $menu_object_url,
+												'name' => $menu_object_title,
+											);
+										}
+									}
+
+									else
+									{
+										if($menu_object_parent == 0)
+										{
+											$arr_views[$menu_object_url] = array(
+												'name' => $menu_object_title,
+												'icon' => "fas fa-arrow-alt-circle-right",
+												'items' => array(
+													array(
+														'id' => $menu_object_url,
+														'name' => $menu_object_title,
+													),
+												),
+											);
+
+											$post_parent = $menu_object_url;
+										}
+
+										else if($post_parent != '')
+										{
+											$arr_views[$post_parent]['items'][] = array(
+												'id' => $menu_object_url,
+												'name' => $menu_object_title,
+											);
+										}
+
+										else
+										{
+											do_log("Nav Menu Item Error: ".$menu_object);
+										}
+									}
+								}
+							}
+						}
+						#################################
+
 						$post_pre_content .= "<nav>
 							<ul>";
 
@@ -104,7 +216,20 @@ get_header();
 
 											if(!isset($item['clickable']) || $item['clickable'] == true || $count_temp == 1)
 											{
-												$item_url = "#admin/".str_replace("_", "/", $key)."/".$item['id'];
+												if(filter_var($key, FILTER_VALIDATE_URL))
+												{
+													$item_url = $key;
+												}
+
+												else if(filter_var($item['id'], FILTER_VALIDATE_URL))
+												{
+													$item_url = $item['id'];
+												}
+
+												else
+												{
+													$item_url = "#admin/".str_replace("_", "/", $key)."/".$item['id'];
+												}
 											}
 
 											$api_url = (isset($view['api_url']) ? $view['api_url'] : '');
