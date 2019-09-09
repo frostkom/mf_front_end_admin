@@ -93,7 +93,7 @@ get_header();
 							{
 								$menu_object_title = $menu_object->post_title != '' ? $menu_object->post_title : $menu_object->title;
 								$menu_object_url = str_replace($post_url, "", $menu_object->url);
-								$menu_object_parent = $menu_object->post_parent;
+								$menu_object_parent = $menu_object->menu_item_parent; //post_parent
 
 								if(substr($menu_object_url, 0, 7) == "#admin/")
 								{
@@ -181,7 +181,7 @@ get_header();
 
 										else
 										{
-											do_log("Nav Menu Item Error: ".$menu_object);
+											do_log("Nav Menu Item Error: ".var_export($menu_object, true));
 										}
 									}
 								}
@@ -334,7 +334,10 @@ get_header();
 					{
 						if(!isset($view['templates_id']) || !in_array($view['templates_id'], $arr_templates_id))
 						{
-							$post_content .= $view['templates'];
+							if(isset($view['templates']))
+							{
+								$post_content .= $view['templates'];
+							}
 						}
 
 						if(isset($view['templates_id']))
