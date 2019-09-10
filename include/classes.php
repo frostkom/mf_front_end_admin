@@ -490,7 +490,7 @@ class mf_fea
 
 		$arr_views['profile'] = array(
 			'name' => __("Profile", 'lang_fea'),
-			'icon' => "far fa-user-circle",
+			'icon' => "far fa-address-card",
 			'items' => array(
 				array(
 					'id' => 'edit',

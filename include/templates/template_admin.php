@@ -91,9 +91,42 @@ get_header();
 
 							foreach($arr_menu as $menu_object)
 							{
+								$menu_object_id = $menu_object->ID;
 								$menu_object_title = $menu_object->post_title != '' ? $menu_object->post_title : $menu_object->title;
 								$menu_object_url = str_replace($post_url, "", $menu_object->url);
 								$menu_object_parent = $menu_object->menu_item_parent; //post_parent
+
+								$menu_object_icon = "fas fa-arrow-alt-circle-right";
+
+								$menu_icons = get_post_meta($menu_object_id, 'menu-icons', true);
+
+								if(isset($menu_icons['icon']) && $menu_icons['icon'] != '')
+								{
+									$found_icon = false;
+
+									$exclude = array("fa-bar-chart-o");
+									$include = array("fa-chart-bar");
+
+									$menu_icon = str_replace($exclude, $include, $menu_icons['icon']);
+
+									$obj_font_icons = new mf_font_icons();
+									$arr_icons = $obj_font_icons->get_array();
+
+									foreach($arr_icons as $key => $value)
+									{
+										if(strpos($value, $menu_icon))
+										{
+											$menu_object_icon = $value;
+
+											$found_icon = true;
+										}
+									}
+
+									if($found_icon == false)
+									{
+										do_log("No Icon Found: ".var_export($menu_icons, true));
+									}
+								}
 
 								if(substr($menu_object_url, 0, 7) == "#admin/")
 								{
@@ -119,7 +152,7 @@ get_header();
 									{
 										$arr_views[$arr_menu_object_url_parts[1]] = array(
 											'name' => $menu_object_title,
-											'icon' => "fas fa-arrow-alt-circle-right",
+											'icon' => $menu_object_icon,
 											'items' => array(
 												array(
 													'id' => $arr_menu_object_url_parts[2],
@@ -159,7 +192,7 @@ get_header();
 										{
 											$arr_views[$menu_object_url] = array(
 												'name' => $menu_object_title,
-												'icon' => "fas fa-arrow-alt-circle-right",
+												'icon' => $menu_object_icon,
 												'items' => array(
 													array(
 														'id' => $menu_object_url,
