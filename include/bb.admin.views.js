@@ -200,8 +200,7 @@ var AdminView = Backbone.View.extend(
 			break;
 
 			case 'admin_posts_edit':
-				var self = this,
-					dom_template = jQuery("#template_" + template),
+				var dom_template = jQuery("#template_" + template),
 					dom_container = jQuery("#" + template);
 
 				html = _.template(dom_template.html())(response);
@@ -219,6 +218,14 @@ var AdminView = Backbone.View.extend(
 				{
 					render_required();
 				}
+			break;
+
+			default:
+				var html = _.template(dom_template.html())(response);
+
+				dom_container.children("div").html(html);
+
+				this.display_container(dom_container);
 			break;
 		}
 	}

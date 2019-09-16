@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-03 21:38+0100\n"
+"POT-Creation-Date: 2019-09-13 11:17+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -113,6 +113,9 @@ msgstr "URL"
 
 msgid "Allow Comments"
 msgstr "Tillåt kommentarer"
+
+msgid "Save"
+msgstr "Spara"
 
 msgid "Profile"
 msgstr "Profil"
