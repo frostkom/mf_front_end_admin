@@ -123,12 +123,12 @@ class mf_fea
 
 	function settings_fea()
 	{
+		$options_area = __FUNCTION__;
+
+		add_settings_section($options_area, "",	array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
+
 		if(apply_filters('get_front_end_admin_id', 0) > 0)
 		{
-			$options_area = __FUNCTION__;
-
-			add_settings_section($options_area, "",	array($this, $options_area."_callback"), BASE_OPTIONS_PAGE);
-
 			$arr_settings = array(
 				'setting_fea_display_menu' => __("Display Menu", 'lang_fea'),
 				'setting_fea_user_info' => __("User Info", 'lang_fea'),
@@ -136,9 +136,16 @@ class mf_fea
 				'setting_fea_redirect_after_login' => __("Redirect After Login", 'lang_fea'),
 				'setting_fea_content_width' => __("Content Width", 'lang_fea'),
 			);
-
-			show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
 		}
+
+		else
+		{
+			$arr_settings = array(
+				'setting_fea_get_started' => __("Get Started", 'lang_fea'),
+			);
+		}
+
+		show_settings_fields(array('area' => $options_area, 'object' => $this, 'settings' => $arr_settings));
 	}
 
 	function settings_fea_callback()
@@ -186,6 +193,11 @@ class mf_fea
 		$option = get_option($setting_key);
 
 		echo show_textfield(array('type' => 'number', 'name' => $setting_key, 'value' => $option, 'suffix' => "px"));
+	}
+
+	function setting_fea_get_started_callback()
+	{
+		echo "<em>".sprintf(__("To use this functionality you have to %sAdd a new page%s and set %s as template", 'lang_fea'), "<a href='".admin_url("post-new.php?post_type=page")."'>", "</a>", __("Front-End Admin", 'lang_fea'))."</em>";
 	}
 
 	function login_redirect($redirect_to, $request, $user)
@@ -596,7 +608,7 @@ class mf_fea
 	{
 		$post_url = apply_filters('get_front_end_admin_url', '');
 
-		if($post_url != '' && in_array('profile', get_option('setting_fea_pages', array())))
+		if($post_url != '' && in_array('profile', get_option_or_default('setting_fea_pages', array())))
 		{
 			$url = $post_url."#admin/profile/edit";
 		}

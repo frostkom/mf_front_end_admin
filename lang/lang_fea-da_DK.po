@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-16 08:39+0100\n"
+"POT-Creation-Date: 2019-09-18 09:41+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -15,12 +15,57 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
+msgid "Name"
+msgstr "Navn"
+
+msgid "Draft"
+msgstr "Udkast"
+
+msgid "Display Menu"
+msgstr "Vis menu"
+
+msgid "Pages"
+msgstr "Sider"
+
 msgid "Update"
 msgstr "Opdater"
+
+msgid "Previous"
+msgstr "Forrige"
+
+msgid "Next"
+msgstr "Næste"
+
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Updated"
+msgstr "Opdateret"
+
+msgid "Edit in Admin"
+msgstr "Rediger i Admin"
+
+msgid "You have not added anything yet"
+msgstr "Du har endnu ikke tilføjet noget"
+
+msgid "Content"
+msgstr "Indhold"
+
+msgid "Settings"
+msgstr "Indstillinger"
+
+msgid "List"
+msgstr "Liste"
 
 msgid "E-mail"
 msgstr "E-mail adresse"
 
+msgid "Cancel"
+msgstr "Afslut"
+
 msgid "I could not update the information for you"
 msgstr "Jeg kunne ikke opdatere informationen for dig"
+
+msgid "Home"
+msgstr "Hjem"
 
