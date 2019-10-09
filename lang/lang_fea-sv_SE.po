@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-13 11:17+0100\n"
+"POT-Creation-Date: 2019-10-09 08:31+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -48,8 +48,14 @@ msgstr "Omdirigera efter inloggning"
 msgid "Content Width"
 msgstr "Bredd på innehåll"
 
+msgid "Get Started"
+msgstr "Kom igång"
+
 msgid "Users with these roles will be redirected after login"
 msgstr "Användare med dessa roller kommer att dirigeras efter inloggning"
+
+msgid "To use this functionality you have to %sAdd a new page%s and set %s as template"
+msgstr "För att använda denna funktionalitet så behöver du %sLägg till en ny sida%s och välja %s som mall"
 
 msgid "Enter a New Password Here"
 msgstr "Ange ett nytt lösenord här"

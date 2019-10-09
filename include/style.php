@@ -143,13 +143,13 @@ echo "@media all
 						padding-top: .5em;
 					}
 
-	.page-template-template_admin .admin_container
+	.admin_container
 	{
 		min-height: 10em;
 		position: relative;
 	}
 
-		.is_mobile.page-template-template_admin .admin_container form
+		.is_mobile .admin_container form
 		{
 			display: -webkit-box;
 			display: -ms-flexbox;
@@ -161,21 +161,21 @@ echo "@media all
 			flex-direction: column;
 		}
 
-			.page-template-template_admin .admin_container .context_normal
+			.admin_container .context_normal
 			{
 				clear: left;
 				float: left;
 				width: 60%;
 			}
 
-			.page-template-template_admin .admin_container .context_side
+			.admin_container .context_side
 			{
 				clear: right;
 				float: right;
 				width: calc(40% - .8em);
 			}
 
-			.is_mobile.page-template-template_admin .admin_container .context_normal, .is_mobile.page-template-template_admin .admin_container .context_side
+			.is_mobile .admin_container .context_normal, .is_mobile .admin_container .context_side
 			{
 				-webkit-box-ordinal-group: 1;
 				-webkit-order: 1;
@@ -184,7 +184,7 @@ echo "@media all
 				width: 100%;
 			}
 
-				.is_mobile.page-template-template_admin .admin_container .context_normal + .context_side
+				.is_mobile .admin_container .context_normal + .context_side
 				{
 					-webkit-box-ordinal-group: 2;
 					-webkit-order: 2;
@@ -192,7 +192,7 @@ echo "@media all
 					order: 2;
 				}
 
-				.page-template-template_admin .admin_container .meta_box
+				.admin_container .meta_box
 				{
 					border: 1px solid #ccc;
 					border-radius: .3em;
@@ -200,7 +200,7 @@ echo "@media all
 					overflow: hidden;
 				}
 
-					.page-template-template_admin .admin_container .meta_box h2
+					.admin_container .meta_box h2
 					{
 						border-bottom: 1px solid #ccc;
 						font-size: 1.2em;
@@ -208,12 +208,12 @@ echo "@media all
 						padding: .5em;
 					}
 
-					.page-template-template_admin .admin_container .meta_box > div
+					.admin_container .meta_box > div
 					{
 						padding: .5em;
 					}
 
-						.page-template-template_admin .admin_container .description
+						.admin_container .description
 						{
 							font-size: .8em;
 							font-style: italic;
