@@ -3,7 +3,7 @@
 Plugin Name: MF Front-End Admin
 Plugin URI: 
 Description: 
-Version: 1.2.13
+Version: 1.2.14
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://frostkom.se
@@ -18,11 +18,8 @@ include_once("include/classes.php");
 
 $obj_fea = new mf_fea();
 
-add_action('cron_base', 'activate_fea', mt_rand(1, 10));
-
 if(is_admin())
 {
-	register_activation_hook(__FILE__, 'activate_fea');
 	register_uninstall_hook(__FILE__, 'uninstall_fea');
 
 	add_action('wp_before_admin_bar_render', array($obj_fea, 'wp_before_admin_bar_render'));
@@ -52,11 +49,6 @@ add_filter('edit_profile_url', array($obj_fea, 'edit_profile_url'));
 add_filter('get_page_templates', array($obj_fea, 'get_page_templates'));
 
 load_plugin_textdomain('lang_fea', false, dirname(plugin_basename(__FILE__)).'/lang/');
-
-function activate_fea()
-{
-	replace_option(array('old' => 'setting_base_front_end_admin', 'new' => 'setting_fea_pages'));
-}
 
 function uninstall_fea()
 {
