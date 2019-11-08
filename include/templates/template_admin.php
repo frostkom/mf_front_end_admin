@@ -40,9 +40,9 @@ get_header();
 
 				if(is_user_logged_in())
 				{
-					$setting_fea_user_info = get_option('setting_fea_user_info');
+					$setting_fea_user_info = get_option_or_default('setting_fea_user_info', array());
 
-					if(is_array($setting_fea_user_info) && count($setting_fea_user_info) > 0)
+					if(count($setting_fea_user_info) > 0) //is_array($setting_fea_user_info) && 
 					{
 						$post_pre_content .= "<section class='logged_in'>
 							<p>";
@@ -75,8 +75,22 @@ get_header();
 
 				if(count($arr_views) > 0)
 				{
-					if(get_option('setting_fea_display_menu') != 'no')
+					$setting_fea_display_in_menu = get_option('setting_fea_display_in_menu');
+
+					//if(get_option('setting_fea_display_menu') != 'no')
+					if(count($setting_fea_display_in_menu) > 0) //is_array($setting_fea_display_in_menu) && 
 					{
+						/* Filter those that are not included via settings */
+						#################################
+						foreach($arr_views as $key => $view)
+						{
+							if(!in_array($key, $setting_fea_display_in_menu))
+							{
+								unset($arr_views[$key]);
+							}
+						}
+						#################################
+
 						/* Add Custom Menu */
 						#################################
 						$locations = get_nav_menu_locations();

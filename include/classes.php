@@ -18,15 +18,25 @@ class mf_fea
 		return $arr_data;
 	}
 
-	function get_front_end_views_for_select()
+	function get_front_end_views_for_select($data)
 	{
-		$arr_data = array();
+		$arr_data = $arr_include = array();
+
+		switch($data['type'])
+		{
+			case 'active':
+				$arr_include = get_option('setting_fea_pages');
+			break;
+		}
 
 		$arr_views = apply_filters('init_base_admin', array());
 
 		foreach($arr_views as $key => $view)
 		{
-			$arr_data[$key] = $view['name'];
+			if(count($arr_include) == 0 || in_array($key, $arr_include))
+			{
+				$arr_data[$key] = $view['name'];
+			}
 		}
 
 		return $arr_data;
@@ -85,7 +95,10 @@ class mf_fea
 	{
 		global $wp_admin_bar;
 
-		if(get_option('setting_fea_display_menu') != 'no')
+		$setting_fea_display_in_menu = get_option('setting_fea_display_in_menu');
+
+		//if(get_option('setting_fea_display_menu') != 'no')
+		if(count($setting_fea_display_in_menu) > 0) //is_array($setting_fea_display_in_menu) && 
 		{
 			$post_id = apply_filters('get_front_end_admin_id', 0);
 
@@ -130,12 +143,17 @@ class mf_fea
 		if(apply_filters('get_front_end_admin_id', 0) > 0)
 		{
 			$arr_settings = array(
-				'setting_fea_display_menu' => __("Display Menu", 'lang_fea'),
 				'setting_fea_user_info' => __("User Info", 'lang_fea'),
 				'setting_fea_pages' => __("Pages", 'lang_fea'),
-				'setting_fea_redirect_after_login' => __("Redirect After Login", 'lang_fea'),
-				'setting_fea_content_width' => __("Content Width", 'lang_fea'),
 			);
+
+			if(count(get_option('setting_fea_pages')) > 0)
+			{
+				$arr_settings['setting_fea_display_in_menu'] = __("Display in Menu", 'lang_fea');
+			}
+
+			$arr_settings['setting_fea_redirect_after_login'] = __("Redirect After Login", 'lang_fea');
+			$arr_settings['setting_fea_content_width'] = __("Content Width", 'lang_fea');
 		}
 
 		else
@@ -155,14 +173,6 @@ class mf_fea
 		echo settings_header($setting_key, __("Front-End Admin", 'lang_fea'));
 	}
 
-	function setting_fea_display_menu_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key, 'yes');
-
-		echo show_select(array('data' => get_yes_no_for_select(), 'name' => $setting_key, 'value' => $option));
-	}
-
 	function setting_fea_user_info_callback()
 	{
 		$setting_key = get_setting_key(__FUNCTION__);
@@ -174,10 +184,37 @@ class mf_fea
 	function setting_fea_pages_callback()
 	{
 		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key);
+		$option = get_option_or_default($setting_key, array());
 
-		echo show_select(array('data' => $this->get_front_end_views_for_select(), 'name' => $setting_key."[]", 'value' => $option));
+		echo show_select(array('data' => $this->get_front_end_views_for_select(array('type' => 'all')), 'name' => $setting_key."[]", 'value' => $option));
 	}
+
+	function setting_fea_display_in_menu_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option_or_default($setting_key, array());
+
+		/*$setting_fea_display_menu = get_option('setting_fea_display_menu');
+
+		if($setting_fea_display_menu == 'yes')
+		{
+			$option = get_option('setting_fea_pages');
+
+			update_option('setting_fea_display_in_menu', $option);
+
+			delete_option('setting_fea_display_menu');
+		}*/
+
+		echo show_select(array('data' => $this->get_front_end_views_for_select(array('type' => 'active')), 'name' => $setting_key."[]", 'value' => $option));
+	}
+
+	/*function setting_fea_display_menu_callback()
+	{
+		$setting_key = get_setting_key(__FUNCTION__);
+		$option = get_option($setting_key, 'yes');
+
+		echo show_select(array('data' => get_yes_no_for_select(), 'name' => $setting_key, 'value' => $option));
+	}*/
 
 	function setting_fea_redirect_after_login_callback()
 	{
