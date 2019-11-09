@@ -366,8 +366,10 @@ get_header();
 							{
 								@list($id, $rest) = explode("/", $item['id']);
 
+								$heading = (isset($item['heading']) ? $item['heading'] : $view['name']);
+
 								$post_content .= "<div id='admin_".$key."_".$id."' class='hide'>
-									<".($is_heading_visible ? "h2" : "h1").">".$view['name']."</".($is_heading_visible ? "h2" : "h1").">
+									<".($is_heading_visible ? "h2" : "h1").">".$heading."</".($is_heading_visible ? "h2" : "h1").">
 									<div><i class='fa fa-spinner fa-spin fa-3x'></i></div>
 								</div>";
 							}

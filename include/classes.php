@@ -443,19 +443,22 @@ class mf_fea
 			if(IS_EDITOR)
 			{
 				$templates .= "<script type='text/template' id='template_admin_posts_list'>
-					<form method='post' action='' class='mf_form' data-action='admin/posts/list'>
-						<div class='tablenav-pages'>
-							<span class='displaying-num'>".sprintf(__("%s posts", 'lang_fea'), "<%= pagination.list_amount %>")."</span>
-							<% if(Object.keys(pagination.pages).length > 1)
-							{ %>
-								<span class='pagination-links form_button'>
-									<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> disabled<% } %>' title='".__("Previous", 'lang_fea')."'>&laquo;</a>
-									<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>
-									<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> disabled<% } %>' title='".__("Next", 'lang_fea')."'>&raquo;</a>
-								</span>
-							<% } %>
-						</div>
-					</form>
+					<% if(pagination.list_amount > 0)
+					{ %>
+						<form method='post' action='' class='mf_form' data-action='admin/posts/list'>
+							<div class='tablenav-pages'>
+								<span class='displaying-num'>".sprintf(__("%s posts", 'lang_fea'), "<%= pagination.list_amount %>")."</span>
+								<% if(Object.keys(pagination.pages).length > 1)
+								{ %>
+									<span class='pagination-links form_button'>
+										<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> disabled<% } %>' title='".__("Previous", 'lang_fea')."'>&laquo;</a>
+										<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>
+										<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> disabled<% } %>' title='".__("Next", 'lang_fea')."'>&raquo;</a>
+									</span>
+								<% } %>
+							</div>
+						</form>
+					<% } %>
 					<table class='widefat striped'>
 						<thead>
 							<tr>
@@ -466,34 +469,42 @@ class mf_fea
 							</tr>
 						</thead>
 						<tbody>
-							<% _.each(list, function(posts)
+							<% if(list.length > 0)
+							{
+								_.each(list, function(posts)
+								{ %>
+									<tr id='posts_<%= posts.post_id %>'<% if(posts.post_status == 'draft'){ %> class='inactive'<% } %>>
+										<td>
+											<%= posts.post_title %>
+											<% if(posts.post_status == 'draft')
+											{ %>
+												 (".__("Draft").")
+											<% } %>
+											<div class='row-actions'>"
+												."<a href='#admin/posts/edit/<%= posts.post_id %>'>".__("Edit", 'lang_fea')."</a>"
+												.(IS_ADMIN ? "<a href='".admin_url("post.php?post=<%= posts.post_id %>&action=edit")."'>".__("Edit in Admin", 'lang_fea')."</a>" : "")
+												."<a href='<%= posts.post_url %>'>".__("View", 'lang_fea')."</a>"
+											."</div>
+										</td>
+										<td><%= posts.post_author %></td>
+										<td><%= posts.post_categories %></td>
+										<td>
+											<%= posts.post_date %>
+											<% if(posts.post_modified != posts.post_date)
+											{ %>
+												<div class='row-actions'>
+													".__("Updated", 'lang_fea').": <%= posts.post_modified %>
+												</div>
+											<% } %>
+										</td>
+									</tr>
+								<% });
+							}
+
+							else
 							{ %>
-								<tr id='posts_<%= posts.post_id %>'<% if(posts.post_status == 'draft'){ %> class='inactive'<% } %>>
-									<td>
-										<%= posts.post_title %>
-										<% if(posts.post_status == 'draft')
-										{ %>
-											 (".__("Draft").")
-										<% } %>
-										<div class='row-actions'>"
-											."<a href='#admin/posts/edit/<%= posts.post_id %>'>".__("Edit", 'lang_fea')."</a>"
-											.(IS_ADMIN ? "<a href='".admin_url("post.php?post=<%= posts.post_id %>&action=edit")."'>".__("Edit in Admin", 'lang_fea')."</a>" : "")
-											."<a href='<%= posts.post_url %>'>".__("View", 'lang_fea')."</a>"
-										."</div>
-									</td>
-									<td><%= posts.post_author %></td>
-									<td><%= posts.post_categories %></td>
-									<td>
-										<%= posts.post_date %>
-										<% if(posts.post_modified != posts.post_date)
-										{ %>
-											<div class='row-actions'>
-												".__("Updated", 'lang_fea').": <%= posts.post_modified %>
-											</div>
-										<% } %>
-									</td>
-								</tr>
-							<% }); %>
+								<tr><td colspan='4'>".__("There is nothing to show", 'lang_fea')."</td></tr>
+							<% } %>
 						</tbody>
 					</table>
 				</script>
