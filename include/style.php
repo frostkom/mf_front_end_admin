@@ -149,6 +149,25 @@ echo "@media all
 		position: relative;
 	}
 
+		.admin_container h1 .form_button
+		{
+			display: inline-block;
+			position: relative;
+			top: -.2em;
+		}
+
+			.admin_container h1 .form_button a
+			{
+				display: inline-block;
+				font-size: .5em;
+				margin-left: .5em;
+				font-weight: normal;
+				border-radius: .5em;
+				background: #ccc;
+				padding: .3em .5em;
+				line-height: 1.3;
+			}
+
 		.is_mobile .admin_container form
 		{
 			display: -webkit-box;

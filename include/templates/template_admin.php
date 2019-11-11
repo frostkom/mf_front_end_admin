@@ -259,92 +259,95 @@ get_header();
 
 										foreach($view['items'] as $item)
 										{
-											$item_url = "";
-
-											if(!isset($item['clickable']) || $item['clickable'] == true || $count_temp == 1)
+											if($i == 0 || !isset($item['display_in_menu']) || $item['display_in_menu'] == true)
 											{
-												if(filter_var($key, FILTER_VALIDATE_URL))
+												$item_url = "";
+
+												if(!isset($item['clickable']) || $item['clickable'] == true || $count_temp == 1)
 												{
-													$item_url = $key;
-												}
-
-												else if(filter_var($item['id'], FILTER_VALIDATE_URL))
-												{
-													$item_url = $item['id'];
-												}
-
-												else
-												{
-													$item_url = "#admin/".str_replace("_", "/", $key)."/".$item['id'];
-												}
-											}
-
-											$api_url = (isset($view['api_url']) ? $view['api_url'] : '');
-
-											if($i == 0)
-											{
-												if($item_url != '')
-												{
-													$post_pre_content .= "<a href='".$item_url."'";
-
-														if($api_url != '')
-														{
-															$post_pre_content .= " data-api-url='".$api_url."'";
-														}
-
-													$post_pre_content .= ">";
-												}
-
-												else
-												{
-													$post_pre_content .= "<span>";
-												}
-
-													if(isset($view['icon']) && $view['icon'] != '')
+													if(filter_var($key, FILTER_VALIDATE_URL))
 													{
-														$post_pre_content .= "<i class='".$view['icon']."'></i>";
+														$item_url = $key;
 													}
 
-													$post_pre_content .= "<span>".$view['name']."</span>";
+													else if(filter_var($item['id'], FILTER_VALIDATE_URL))
+													{
+														$item_url = $item['id'];
+													}
 
-												if($item_url != '')
-												{
-													$post_pre_content .= "</a>";
+													else
+													{
+														$item_url = "#admin/".str_replace("_", "/", $key)."/".$item['id'];
+													}
 												}
 
-												else
-												{
-													$post_pre_content .= "</span>";
-												}
-											}
+												$api_url = (isset($view['api_url']) ? $view['api_url'] : '');
 
-											else
-											{
-												if($i == 1)
+												if($i == 0)
 												{
-													$post_pre_content .= "<ul>";
-												}
-
-													$post_pre_content .= "<li>
-														<a href='".$item_url."'";
+													if($item_url != '')
+													{
+														$post_pre_content .= "<a href='".$item_url."'";
 
 															if($api_url != '')
 															{
 																$post_pre_content .= " data-api-url='".$api_url."'";
 															}
 
-														$post_pre_content .= ">
-															<span>".$item['name']."</span>
-														</a>
-													</li>";
+														$post_pre_content .= ">";
+													}
 
-												if($i == ($count_temp - 1))
-												{
-													$post_pre_content .= "</ul>";
+													else
+													{
+														$post_pre_content .= "<span>";
+													}
+
+														if(isset($view['icon']) && $view['icon'] != '')
+														{
+															$post_pre_content .= "<i class='".$view['icon']."'></i>";
+														}
+
+														$post_pre_content .= "<span>".$view['name']."</span>";
+
+													if($item_url != '')
+													{
+														$post_pre_content .= "</a>";
+													}
+
+													else
+													{
+														$post_pre_content .= "</span>";
+													}
 												}
-											}
 
-											$i++;
+												else
+												{
+													if($i == 1)
+													{
+														$post_pre_content .= "<ul>";
+													}
+
+														$post_pre_content .= "<li>
+															<a href='".$item_url."'";
+
+																if($api_url != '')
+																{
+																	$post_pre_content .= " data-api-url='".$api_url."'";
+																}
+
+															$post_pre_content .= ">
+																<span>".$item['name']."</span>
+															</a>
+														</li>";
+
+													if($i == ($count_temp - 1))
+													{
+														$post_pre_content .= "</ul>";
+													}
+												}
+
+												$i++;
+											}
 										}
 
 									$post_pre_content .= "</li>";
@@ -366,11 +369,30 @@ get_header();
 							{
 								@list($id, $rest) = explode("/", $item['id']);
 
-								$heading = (isset($item['heading']) ? $item['heading'] : $view['name']);
-
 								$post_content .= "<div id='admin_".$key."_".$id."' class='hide'>
-									<".($is_heading_visible ? "h2" : "h1").">".$heading."</".($is_heading_visible ? "h2" : "h1").">
-									<div><i class='fa fa-spinner fa-spin fa-3x'></i></div>
+									<".($is_heading_visible ? "h2" : "h1").">";
+
+										if(isset($item['heading']['name']))
+										{
+											$post_content .= $item['heading']['name'];
+										}
+
+										else
+										{
+											$post_content .= $view['name'];
+										}
+
+										if(isset($item['heading']['button']['url']) && isset($item['heading']['button']['name']))
+										{
+											$post_content .= "<div class='form_button'>
+												<a href='".$item['heading']['button']['url']."' class='button'>".$item['heading']['button']['name']."</a>
+											</div>";
+										}
+
+									$post_content .= "</".($is_heading_visible ? "h2" : "h1").">
+									<div>
+										<i class='fa fa-spinner fa-spin fa-3x'></i>
+									</div>
 								</div>";
 							}
 						}

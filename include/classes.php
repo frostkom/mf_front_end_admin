@@ -628,9 +628,15 @@ class mf_fea
 
 	function get_front_end_admin_id($post_id)
 	{
+		global $obj_base;
+
 		if(!($post_id > 0))
 		{
-			$obj_base = new mf_base();
+			if(!isset($obj_base))
+			{
+				$obj_base = new mf_base();
+			}
+
 			$post_id = $obj_base->has_page_template(array('template' => "/plugins/mf_front_end_admin/include/templates/template_admin.php"));
 		}
 
