@@ -95,10 +95,9 @@ class mf_fea
 	{
 		global $wp_admin_bar;
 
-		$setting_fea_display_in_menu = get_option('setting_fea_display_in_menu');
+		$setting_fea_display_in_menu = get_option_or_default('setting_fea_display_in_menu', array());
 
-		//if(get_option('setting_fea_display_menu') != 'no')
-		if(count($setting_fea_display_in_menu) > 0) //is_array($setting_fea_display_in_menu) && 
+		if(count($setting_fea_display_in_menu) > 0)
 		{
 			$post_id = apply_filters('get_front_end_admin_id', 0);
 
@@ -194,27 +193,8 @@ class mf_fea
 		$setting_key = get_setting_key(__FUNCTION__);
 		$option = get_option_or_default($setting_key, array());
 
-		/*$setting_fea_display_menu = get_option('setting_fea_display_menu');
-
-		if($setting_fea_display_menu == 'yes')
-		{
-			$option = get_option('setting_fea_pages');
-
-			update_option('setting_fea_display_in_menu', $option);
-
-			delete_option('setting_fea_display_menu');
-		}*/
-
 		echo show_select(array('data' => $this->get_front_end_views_for_select(array('type' => 'active')), 'name' => $setting_key."[]", 'value' => $option));
 	}
-
-	/*function setting_fea_display_menu_callback()
-	{
-		$setting_key = get_setting_key(__FUNCTION__);
-		$option = get_option($setting_key, 'yes');
-
-		echo show_select(array('data' => get_yes_no_for_select(), 'name' => $setting_key, 'value' => $option));
-	}*/
 
 	function setting_fea_redirect_after_login_callback()
 	{

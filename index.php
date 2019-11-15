@@ -3,7 +3,7 @@
 Plugin Name: MF Front-End Admin
 Plugin URI: 
 Description: 
-Version: 1.3.4
+Version: 1.3.6
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://frostkom.se
@@ -18,8 +18,11 @@ include_once("include/classes.php");
 
 $obj_fea = new mf_fea();
 
+add_action('cron_base', 'activate_fea', mt_rand(1, 10));
+
 if(is_admin())
 {
+	register_activation_hook(__FILE__, 'activate_fea');
 	register_uninstall_hook(__FILE__, 'uninstall_fea');
 
 	add_action('wp_before_admin_bar_render', array($obj_fea, 'wp_before_admin_bar_render'));
@@ -50,9 +53,16 @@ add_filter('get_page_templates', array($obj_fea, 'get_page_templates'));
 
 load_plugin_textdomain('lang_fea', false, dirname(plugin_basename(__FILE__)).'/lang/');
 
+function activate_fea()
+{
+	mf_uninstall_plugin(array(
+		'options' => array('setting_fea_display_menu'),
+	));
+}
+
 function uninstall_fea()
 {
 	mf_uninstall_plugin(array(
-		'options' => array('setting_fea_user_info', 'setting_fea_pages', 'setting_fea_display_in_menu', 'setting_fea_display_menu', 'setting_fea_redirect_after_login', 'setting_fea_content_width', 'setting_fea_get_started'),
+		'options' => array('setting_fea_user_info', 'setting_fea_pages', 'setting_fea_display_in_menu', 'setting_fea_redirect_after_login', 'setting_fea_content_width', 'setting_fea_get_started'),
 	));
 }
