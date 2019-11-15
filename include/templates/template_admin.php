@@ -165,6 +165,7 @@ get_header();
 											$arr_views[$arr_menu_object_url_parts[1]]['items'][] = array(
 												'id' => $arr_menu_object_url_parts[2],
 												'name' => $menu_object_title,
+												'is_custom' => true,
 											);
 										}
 									}
@@ -178,6 +179,7 @@ get_header();
 												array(
 													'id' => $arr_menu_object_url_parts[2],
 													'name' => $menu_object_title,
+													'is_custom' => true,
 												),
 											),
 										);
@@ -203,6 +205,7 @@ get_header();
 											$arr_views[$post_parent]['items'][] = array(
 												'id' => $menu_object_url,
 												'name' => $menu_object_title,
+												'is_custom' => true,
 											);
 										}
 									}
@@ -218,6 +221,7 @@ get_header();
 													array(
 														'id' => $menu_object_url,
 														'name' => $menu_object_title,
+														'is_custom' => true,
 													),
 												),
 											);
@@ -230,6 +234,7 @@ get_header();
 											$arr_views[$post_parent]['items'][] = array(
 												'id' => $menu_object_url,
 												'name' => $menu_object_title,
+												'is_custom' => true,
 											);
 										}
 
@@ -377,33 +382,36 @@ get_header();
 						{
 							foreach($view['items'] as $item)
 							{
-								@list($id, $rest) = explode("/", $item['id']);
+								if(!isset($item['is_custom']) || $item['is_custom'] == false)
+								{
+									@list($id, $rest) = explode("/", $item['id']);
 
-								$post_content .= "<div id='admin_".$key."_".$id."' class='hide'>
-									<".($is_heading_visible ? "h2" : "h1").">";
+									$post_content .= "<div id='admin_".$key."_".$id."' class='hide'>
+										<".($is_heading_visible ? "h2" : "h1").">";
 
-										if(isset($item['heading']['name']))
-										{
-											$post_content .= $item['heading']['name'];
-										}
+											if(isset($item['heading']['name']))
+											{
+												$post_content .= $item['heading']['name'];
+											}
 
-										else
-										{
-											$post_content .= $view['name'];
-										}
+											else
+											{
+												$post_content .= $view['name'];
+											}
 
-										if(isset($item['heading']['button']['url']) && isset($item['heading']['button']['name']))
-										{
-											$post_content .= "<div class='form_button'>
-												<a href='".$item['heading']['button']['url']."' class='button'>".$item['heading']['button']['name']."</a>
-											</div>";
-										}
+											if(isset($item['heading']['button']['url']) && isset($item['heading']['button']['name']))
+											{
+												$post_content .= "<div class='form_button'>
+													<a href='".$item['heading']['button']['url']."' class='button'>".$item['heading']['button']['name']."</a>
+												</div>";
+											}
 
-									$post_content .= "</".($is_heading_visible ? "h2" : "h1").">
-									<div>
-										<i class='fa fa-spinner fa-spin fa-3x'></i>
-									</div>
-								</div>";
+										$post_content .= "</".($is_heading_visible ? "h2" : "h1").">
+										<div>
+											<i class='fa fa-spinner fa-spin fa-3x'></i>
+										</div>
+									</div>";
+								}
 							}
 						}
 
