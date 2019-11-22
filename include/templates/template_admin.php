@@ -386,7 +386,7 @@ get_header();
 								{
 									@list($id, $rest) = explode("/", $item['id']);
 
-									$post_content .= "<div id='admin_".$key."_".$id."' class='hide'>
+									$post_content .= "<div id='admin_".$key."_".$id."' class='admin_container_child hide'>
 										<".($is_heading_visible ? "h2" : "h1").">";
 
 											if(isset($item['heading']['name']))
