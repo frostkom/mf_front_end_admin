@@ -29,7 +29,7 @@ class mf_fea
 			break;
 		}
 
-		$arr_views = apply_filters('init_base_admin', array());
+		$arr_views = apply_filters('init_base_admin', array(), array('include' => 'all'));
 
 		foreach($arr_views as $key => $view)
 		{
@@ -221,7 +221,7 @@ class mf_fea
 	{
 		$admin_url = admin_url();
 
-		// Just in case we have sent this var along with the URL
+		// Just in case we have sent this variable along with the URL
 		$redirect_to = check_var('redirect_to', 'char', true, $redirect_to);
 
 		if($redirect_to == $admin_url)
@@ -638,7 +638,7 @@ class mf_fea
 		return $post_url;
 	}
 
-	function edit_profile_url($url) //, $user_id, $scheme
+	function edit_profile_url($url)
 	{
 		$post_url = apply_filters('get_front_end_admin_url', '');
 
