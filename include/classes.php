@@ -312,7 +312,7 @@ class mf_fea
 
 		if(!is_admin())
 		{
-			mf_enqueue_style('style_base_admin', $plugin_include_url."style.php", $plugin_version);
+			mf_enqueue_style('style_fea', $plugin_include_url."style.php", $plugin_version);
 
 			mf_enqueue_script('underscore');
 			mf_enqueue_script('backbone');
@@ -431,9 +431,9 @@ class mf_fea
 								<% if(Object.keys(pagination.pages).length > 1)
 								{ %>
 									<span class='pagination-links form_button'>
-										<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> disabled<% } %>' title='".__("Previous", 'lang_fea')."'>&laquo;</a>
+										<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> is_disabled<% } %>' title='".__("Previous", 'lang_fea')."'>&laquo;</a>
 										<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>
-										<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> disabled<% } %>' title='".__("Next", 'lang_fea')."'>&raquo;</a>
+										<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> is_disabled<% } %>' title='".__("Next", 'lang_fea')."'>&raquo;</a>
 									</span>
 								<% } %>
 							</div>
