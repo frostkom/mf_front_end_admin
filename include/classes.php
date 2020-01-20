@@ -300,6 +300,43 @@ class mf_fea
 		));
 	}
 
+	function get_pagination_list($data)
+	{
+		if(!isset($data['prefix'])){		$data['prefix'] = "";}
+
+		$out = "<form method='post' action='' class='mf_form' data-action='".$data['action']."'>"
+			.$data['prefix']
+			."<% if(pagination.list_amount > 0)
+			{ %>
+				<div class='tablenav-pages'>
+					<span class='displaying-num'>".sprintf($data['amount_text'], "<%= pagination.list_amount %>")."</span>
+					<% if(Object.keys(pagination.pages).length > 1)
+					{ %>
+						<span class='pagination-links form_button'>
+							<% if(Object.keys(pagination.pages).length > 6)
+							{ %>
+								<a href='#".$data['action']."/1' class='button<% if(pagination.current_page <= 2){ %> is_disabled<% } %>' title='".__("First", 'lang_fea')."'><i class='fas fa-angle-double-left'></i></a>
+							<% } %>
+							<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> is_disabled<% } %>' title='".__("Previous", 'lang_fea')."'><i class='fas fa-angle-left'></i></a>"
+							/*."<% _.each(pagination.pages, function(page_value)
+							{ %>
+								<a href='#' class='button'><%= page_value %></a>
+							<% }); %>"*/
+							."<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>
+							<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> is_disabled<% } %>' title='".__("Next", 'lang_fea')."'><i class='fas fa-angle-right'></i></a>
+							<% if(Object.keys(pagination.pages).length > 6)
+							{ %>
+								<a href='#".$data['action']."/<%= Object.keys(pagination.pages).length %>' class='button<% if(pagination.current_page >= (Object.keys(pagination.pages).length - 1)){ %> is_disabled<% } %>' title='".__("Last", 'lang_fea')."'><i class='fas fa-angle-double-right'></i></a>
+							<% } %>
+						</span>
+					<% } %>
+				</div>
+			<% } %>
+		</form>";
+
+		return $out;
+	}
+
 	function init_base_admin($arr_views)
 	{
 		global $wpdb;
@@ -422,24 +459,12 @@ class mf_fea
 
 			if(IS_EDITOR)
 			{
-				$templates .= "<script type='text/template' id='template_admin_posts_list'>
-					<% if(pagination.list_amount > 0)
-					{ %>
-						<form method='post' action='' class='mf_form' data-action='admin/posts/list'>
-							<div class='tablenav-pages'>
-								<span class='displaying-num'>".sprintf(__("%s posts", 'lang_fea'), "<%= pagination.list_amount %>")."</span>
-								<% if(Object.keys(pagination.pages).length > 1)
-								{ %>
-									<span class='pagination-links form_button'>
-										<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> is_disabled<% } %>' title='".__("Previous", 'lang_fea')."'>&laquo;</a>
-										<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>
-										<a href='#admin/posts/list/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> is_disabled<% } %>' title='".__("Next", 'lang_fea')."'>&raquo;</a>
-									</span>
-								<% } %>
-							</div>
-						</form>
-					<% } %>
-					<table class='widefat striped'>
+				$templates .= "<script type='text/template' id='template_admin_posts_list'>"
+					.$this->get_pagination_list(array(
+						'action' => 'admin/posts/list',
+						'amount_text' => __("%s posts", 'lang_fea'),
+					))
+					."<table class='widefat striped'>
 						<thead>
 							<tr>
 								<th>".__("Name", 'lang_fea')."</th>

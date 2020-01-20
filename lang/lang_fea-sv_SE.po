@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-12 15:11+0100\n"
+"POT-Creation-Date: 2020-01-18 07:32+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -57,6 +57,21 @@ msgstr "Användare med dessa roller kommer att dirigeras efter inloggning"
 msgid "To use this functionality you have to %sAdd a new page%s and set %s as template"
 msgstr "För att använda denna funktionalitet så behöver du %sLägg till en ny sida%s och välja %s som mall"
 
+msgid "First"
+msgstr "Första"
+
+msgid "Previous"
+msgstr "Föregående"
+
+msgid "Page %s of %s"
+msgstr "Sida %s av %s"
+
+msgid "Next"
+msgstr "Nästa"
+
+msgid "Last"
+msgstr "Sista"
+
 msgid "Enter a New Password Here"
 msgstr "Ange ett nytt lösenord här"
 
@@ -71,15 +86,6 @@ msgstr "Skicka"
 
 msgid "%s posts"
 msgstr "%s inlägg"
-
-msgid "Previous"
-msgstr "Föregående"
-
-msgid "Page %s of %s"
-msgstr "Sida %s av %s"
-
-msgid "Next"
-msgstr "Nästa"
 
 msgid "Author"
 msgstr "Författare"

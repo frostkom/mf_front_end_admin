@@ -149,6 +149,17 @@ echo "@media all
 		position: relative;
 	}
 
+		#wrapper .tablenav-pages .displaying-num
+		{
+			margin-right: .5em;
+		}
+
+			#wrapper .tablenav-pages .button i
+			{
+				display: block;
+				margin: .3em 0 .2em;
+			}
+
 		.admin_container h1 .form_button
 		{
 			display: inline-block;

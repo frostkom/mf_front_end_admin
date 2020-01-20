@@ -12,8 +12,8 @@ var AdminView = Backbone.View.extend(
 
 	events:
 	{
-		"click nav li": "toggle_submenu",
-		"click nav a": "change_view",
+		"click article nav li": "toggle_submenu",
+		"click article nav a": "change_view",
 		"click .view_data i": "toggle_data_helper",
 		"submit form": "submit_form",
 	},
@@ -22,7 +22,10 @@ var AdminView = Backbone.View.extend(
 	{
 		var dom_obj = jQuery(e.currentTarget);
 
-		dom_obj.toggleClass('open').siblings("li").removeClass('open');
+		if(dom_obj.is('li'))
+		{
+			dom_obj.toggleClass('open').siblings("li").removeClass('open');
+		}
 	},
 
 	change_view: function(e)
