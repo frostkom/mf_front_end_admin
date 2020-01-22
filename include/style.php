@@ -233,9 +233,8 @@ echo "@media all
 					.admin_container .meta_box h2
 					{
 						border-bottom: 1px solid #ccc;
-						font-size: 1.2em;
 						margin-bottom: 0 !important;
-						padding: .5em;
+						padding: 0 .5em .5em;
 					}
 
 					.admin_container .meta_box > div
