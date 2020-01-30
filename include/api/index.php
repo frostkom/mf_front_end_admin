@@ -249,14 +249,12 @@ switch($arr_type[0])
 
 									if($current_page == $page_number)
 									{
-										$user_data = get_userdata($r->post_author);
-
 										$arr_list[] = array(
 											'post_id' => $r->ID,
 											'post_status' => $r->post_status,
 											'post_title' => $r->post_title,
 											'post_url' => get_permalink($r->ID),
-											'post_author' => $user_data->display_name,
+											'post_author' => get_user_info(array('id' => $r->post_author)),
 											'post_categories' => $obj_fea->get_post_categories(array('output' => 'html', 'post_id' => $r->ID)),
 											'post_date' => format_date($r->post_date),
 											'post_modified' => format_date($r->post_modified),

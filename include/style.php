@@ -27,7 +27,12 @@ echo "@media all
 		margin-bottom: 1em;
 	}
 
-	.page-template-template_admin article nav > ul
+	.aside .widget.fea_menu
+	{
+		font-size: unset;
+	}
+
+	.fea_menu > ul
 	{
 		display: -webkit-box;
 		display: -ms-flexbox;
@@ -40,12 +45,12 @@ echo "@media all
 		list-style: none;
 	}
 
-		.is_tablet.page-template-template_admin article nav > ul, .is_desktop.page-template-template_admin article nav > ul
+		.is_tablet .fea_menu > ul, .is_desktop .fea_menu > ul
 		{
 			font-size: 1.2em;
 		}
 
-		.page-template-template_admin article nav > ul > li
+		.fea_menu > ul > li
 		{
 			background: #eee;
 			border-radius: .5em;
@@ -59,7 +64,7 @@ echo "@media all
 			text-align: center;
 		}
 
-			.is_mobile.page-template-template_admin article nav > ul > li
+			.is_mobile .fea_menu > ul > li
 			{
 				-webkit-box-flex: 0 0 23%;
 				-webkit-flex: 0 0 23%;
@@ -68,43 +73,43 @@ echo "@media all
 				margin: 0 2% 2% 0;
 			}
 
-			.page-template-template_admin article nav > ul > li:last-of-type
+			.fea_menu > ul > li:last-of-type
 			{
 				margin-right: 0;
 			}
 
-			.page-template-template_admin article nav > ul > li.active
+			.fea_menu > ul > li.active
 			{
 				background: #d6d6d6;
 			}
 
-				.page-template-template_admin article nav li a, .page-template-template_admin article nav li > span
+				.fea_menu li a, .fea_menu li > span
 				{
 					border-bottom: 0;
 					display: block;
 					padding: 1em .5em;
 				}
 
-					.page-template-template_admin article nav li a.active, .page-template-template_admin article nav li a:hover
+					.fea_menu li a.active, .fea_menu li a:hover
 					{
 						text-shadow: 0 0 1em rgba(0, 0, 0, .3);
 					}
 
-						.page-template-template_admin article nav li i
+						.fea_menu li i
 						{
 							color: rgba(0, 0, 0, .6);
 							display: block;
 							font-size: 3em;
 						}
 
-							.page-template-template_admin article nav li i + span
+							.fea_menu li i + span
 							{
 								color: rgba(0, 0, 0, .6);
 								display: inline-block;
 								margin-top: .5em;
 							}
 
-			.page-template-template_admin article nav ul ul
+			.fea_menu ul ul
 			{
 				background: #fff;
 				border-radius: .5em;
@@ -116,12 +121,12 @@ echo "@media all
 				z-index: 1;
 			}
 
-				.page-template-template_admin article nav li.open ul/*.page-template-template_admin article nav li:hover ul*/
+				.fea_menu li.open ul
 				{
 					display: block;
 				}
 
-				.page-template-template_admin article nav ul ul:before
+				.fea_menu ul ul:before
 				{
 					border: .7em solid transparent;
 					border-bottom-color: transparent;
@@ -133,12 +138,12 @@ echo "@media all
 					transform: translateX(-50%);
 				}
 
-				.page-template-template_admin article nav ul ul li
+				.fea_menu ul ul li
 				{
 					margin-top: 0;
 				}
 
-					.page-template-template_admin article nav ul ul li + li a
+					.fea_menu ul ul li + li a
 					{
 						padding-top: .5em;
 					}

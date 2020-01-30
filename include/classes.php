@@ -281,6 +281,338 @@ class mf_fea
 		return $sorted_menu_items;
 	}
 
+	function get_menu()
+	{
+		if(!isset($this->post_pre_content))
+		{
+			$this->post_pre_content = "";
+		}
+
+		$setting_fea_display_in_menu = get_option_or_default('setting_fea_display_in_menu', array());
+
+		/* Filter those that are not included via settings */
+		#################################
+		foreach($this->arr_views as $key => $view)
+		{
+			if(!in_array($key, $setting_fea_display_in_menu))
+			{
+				$this->arr_views[$key]['display_in_menu'] = false;
+			}
+		}
+		#################################
+
+		/* Add Custom Menu */
+		#################################
+		$has_custom_menu = false;
+
+		$locations = get_nav_menu_locations();
+
+		if(isset($locations['front_end_admin']))
+		{
+			$post_url = apply_filters('get_front_end_admin_url', '');
+
+			$post_parent = '';
+
+			$arr_menu = wp_get_nav_menu_items($locations['front_end_admin']);
+
+			if(count($arr_menu) > 0)
+			{
+				$obj_font_icons = new mf_font_icons();
+				$arr_icons = $obj_font_icons->get_array();
+
+				$exclude = array("fa-bar-chart-o");
+				$include = array("fa-chart-bar");
+
+				foreach($arr_menu as $menu_object)
+				{
+					$menu_object_id = $menu_object->ID;
+					$menu_object_title = $menu_object->post_title != '' ? $menu_object->post_title : $menu_object->title;
+					$menu_object_url = str_replace($post_url, "", $menu_object->url);
+					$menu_object_parent = $menu_object->menu_item_parent;
+
+					$menu_object_icon = "fas fa-arrow-alt-circle-right";
+
+					$menu_icons = get_post_meta($menu_object_id, 'menu-icons', true);
+
+					if(isset($menu_icons['icon']) && $menu_icons['icon'] != '')
+					{
+						$found_icon = false;
+
+						$menu_icon = str_replace($exclude, $include, $menu_icons['icon']);
+
+						foreach($arr_icons as $key => $value)
+						{
+							if(strpos($value, $menu_icon))
+							{
+								$menu_object_icon = $value;
+
+								$found_icon = true;
+
+								break;
+							}
+						}
+
+						if($found_icon == false)
+						{
+							do_log("No Icon Found: ".var_export($menu_icons, true));
+						}
+					}
+
+					if(substr($menu_object_url, 0, 7) == "#admin/")
+					{
+						$arr_menu_object_url_parts = explode("/", $menu_object_url);
+
+						if(isset($this->arr_views[$arr_menu_object_url_parts[1]]))
+						{
+							if($menu_object_parent == 0)
+							{
+								$post_parent = $arr_menu_object_url_parts[1];
+							}
+
+							else if($post_parent != '')
+							{
+								$this->arr_views[$arr_menu_object_url_parts[1]]['items'][] = array(
+									'id' => $arr_menu_object_url_parts[2],
+									'name' => $menu_object_title,
+									'is_custom' => true,
+								);
+
+								$has_custom_menu = true;
+							}
+						}
+
+						else
+						{
+							$this->arr_views[$arr_menu_object_url_parts[1]] = array(
+								'name' => $menu_object_title,
+								'icon' => $menu_object_icon,
+								'items' => array(
+									array(
+										'id' => $arr_menu_object_url_parts[2],
+										'name' => $menu_object_title,
+										'is_custom' => true,
+									),
+								),
+							);
+
+							$has_custom_menu = true;
+
+							if($menu_object_parent == 0)
+							{
+								$post_parent = $arr_menu_object_url_parts[1];
+							}
+						}
+					}
+
+					else
+					{
+						if(isset($this->arr_views[$menu_object_url]))
+						{
+							if($menu_object_parent == 0)
+							{
+								$post_parent = $menu_object_url;
+							}
+
+							else if($post_parent != '')
+							{
+								$this->arr_views[$post_parent]['items'][] = array(
+									'id' => $menu_object_url,
+									'name' => $menu_object_title,
+									'is_custom' => true,
+								);
+
+								$has_custom_menu = true;
+							}
+						}
+
+						else
+						{
+							if($menu_object_parent == 0)
+							{
+								$this->arr_views[$menu_object_url] = array(
+									'name' => $menu_object_title,
+									'icon' => $menu_object_icon,
+									'items' => array(
+										array(
+											'id' => $menu_object_url,
+											'name' => $menu_object_title,
+											'is_custom' => true,
+										),
+									),
+								);
+
+								$has_custom_menu = true;
+
+								$post_parent = $menu_object_url;
+							}
+
+							else if($post_parent != '')
+							{
+								$this->arr_views[$post_parent]['items'][] = array(
+									'id' => $menu_object_url,
+									'name' => $menu_object_title,
+									'is_custom' => true,
+								);
+
+								$has_custom_menu = true;
+							}
+
+							else
+							{
+								do_log("Nav Menu Item Error: ".var_export($menu_object, true));
+							}
+						}
+					}
+				}
+			}
+		}
+		#################################
+
+		if(count($setting_fea_display_in_menu) > 0 || $has_custom_menu == true)
+		{
+			$this->post_pre_content .= "<nav class='fea_menu'>
+				<ul>";
+
+					if($this->post_content != '')
+					{
+						$this->post_pre_content .= "<li>
+							<a href=''>
+								<i class='fas fa-home'></i>
+								<span>".__("Home", 'lang_fea')."</span>
+							</a>
+						</li>";
+					}
+
+					foreach($this->arr_views as $key => $view)
+					{
+						if(!isset($view['display_in_menu']) || $view['display_in_menu'] == true)
+						{
+							$this->post_pre_content .= "<li>";
+
+								$i = 0;
+
+								$count_temp = $count_temp_displayed = count($view['items']);
+
+								$has_start_ul = false;
+
+								foreach($view['items'] as $item)
+								{
+									if($i == 0 || !isset($item['display_in_menu']) || $item['display_in_menu'] == true)
+									{
+										$item_url = "";
+
+										if(!isset($item['clickable']) || $item['clickable'] == true || $count_temp == 1)
+										{
+											if(filter_var($key, FILTER_VALIDATE_URL))
+											{
+												$item_url = $key;
+											}
+
+											else if(filter_var($item['id'], FILTER_VALIDATE_URL))
+											{
+												$item_url = $item['id'];
+											}
+
+											else if(substr($item['id'], 0, 1) == "/")
+											{
+												$item_url = $item['id'];
+											}
+
+											else
+											{
+												$item_url = "#admin/".str_replace("_", "/", $key)."/".$item['id'];
+											}
+										}
+
+										$api_url = (isset($view['api_url']) ? $view['api_url'] : '');
+
+										if($i == 0)
+										{
+											if($item_url != '')
+											{
+												$this->post_pre_content .= "<a href='".$item_url."'";
+
+													if($api_url != '')
+													{
+														$this->post_pre_content .= " data-api-url='".$api_url."'";
+													}
+
+												$this->post_pre_content .= ">";
+											}
+
+											else
+											{
+												$this->post_pre_content .= "<span>";
+											}
+
+												if(isset($view['icon']) && $view['icon'] != '')
+												{
+													$this->post_pre_content .= "<i class='".$view['icon']."'></i>";
+												}
+
+												$this->post_pre_content .= "<span>".$view['name']."</span>";
+
+											if($item_url != '')
+											{
+												$this->post_pre_content .= "</a>";
+											}
+
+											else
+											{
+												$this->post_pre_content .= "</span>";
+											}
+										}
+
+										else
+										{
+											if($i == 1)
+											{
+												$this->post_pre_content .= "<ul>";
+
+												$has_start_ul = true;
+											}
+
+												$this->post_pre_content .= "<li>
+													<a href='".$item_url."'";
+
+														if($api_url != '')
+														{
+															$this->post_pre_content .= " data-api-url='".$api_url."'";
+														}
+
+													$this->post_pre_content .= ">
+														<span>".$item['name']."</span>
+													</a>
+												</li>";
+
+											/*if($i == ($count_temp - 1))
+											{
+												$this->post_pre_content .= "</ul>";
+
+												$has_start_ul = false;
+											}*/
+										}
+
+										$i++;
+									}
+								}
+
+								if($has_start_ul == true)
+								{
+									$this->post_pre_content .= "</ul>";
+
+									$has_start_ul = false;
+								}
+
+							$this->post_pre_content .= "</li>";
+						}
+					}
+
+				$this->post_pre_content .= "</ul>
+			</nav>";
+		}
+	}
+
 	function get_footer()
 	{
 		global $obj_base;
@@ -298,6 +630,11 @@ class mf_fea
 		register_nav_menus(array(
 			'front_end_admin' => __("Front-End Admin", 'lang_fea'),
 		));
+	}
+
+	function widgets_init()
+	{
+		register_widget('widget_fea_menu');
 	}
 
 	function get_pagination_list($data)
@@ -682,5 +1019,70 @@ class mf_fea
 		$templates[$templates_path.'template_admin.php'] = __("Front-End Admin", 'lang_fea');
 
 		return $templates;
+	}
+}
+
+class widget_fea_menu extends WP_Widget
+{
+	function __construct()
+	{
+		$widget_ops = array(
+			'classname' => 'fea_menu',
+			'description' => __("Display front-end admin menu", 'lang_fea')
+		);
+
+		$this->arr_default = array(
+			'menu_heading' => "",
+		);
+
+		$this->obj_fea = new mf_fea();
+
+		parent::__construct($widget_ops['classname'].'-widget', __("Front-End Admin Menu", 'lang_fea'), $widget_ops);
+	}
+
+	function widget($args, $instance)
+	{
+		extract($args);
+		$instance = wp_parse_args((array)$instance, $this->arr_default);
+
+		$this->obj_fea->arr_views = apply_filters('init_base_admin', array());
+
+		$this->obj_fea->get_menu();
+
+		if($this->obj_fea->post_pre_content != '')
+		{
+			echo $before_widget;
+
+				if($instance['menu_heading'] != '')
+				{
+					$instance['menu_heading'] = apply_filters('widget_title', $instance['menu_heading'], $instance, $this->id_base);
+
+					echo $before_title
+						.$instance['menu_heading']
+					.$after_title;
+				}
+
+				echo $this->obj_fea->post_pre_content
+			.$after_widget;
+		}
+	}
+
+	function update($new_instance, $old_instance)
+	{
+		$instance = $old_instance;
+		$new_instance = wp_parse_args((array)$new_instance, $this->arr_default);
+
+		$instance['menu_heading'] = sanitize_text_field($new_instance['menu_heading']);
+
+		return $instance;
+	}
+
+	function form($instance)
+	{
+		$instance = wp_parse_args((array)$instance, $this->arr_default);
+
+		echo "<div class='mf_form'>"
+			.show_textfield(array('name' => $this->get_field_name('menu_heading'), 'text' => __("Heading", 'lang_fea'), 'value' => $instance['menu_heading'], 'xtra' => " id='form-title'"))
+		."</div>";
 	}
 }
