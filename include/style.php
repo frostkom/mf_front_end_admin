@@ -165,6 +165,24 @@ echo "@media all
 				margin: .3em 0 .2em;
 			}
 
+			#wrapper .tablenav-pages .form_textfield
+			{
+				display: inline-block;
+				width: 3em;
+			}
+
+				#wrapper .tablenav-pages .form_textfield input
+				{
+					border-color: transparent;
+					line-height: 1;
+					text-align: center;
+				}
+
+					#wrapper .tablenav-pages .form_textfield input:hover, #wrapper .tablenav-pages .form_textfield input:focus
+					{
+						border-color: #e1e1e1;
+					}
+
 		.admin_container h1 .form_button
 		{
 			display: inline-block;

@@ -288,6 +288,11 @@ class mf_fea
 			$this->post_pre_content = "";
 		}
 
+		if(!isset($this->post_content))
+		{
+			$this->post_content = "";
+		}
+
 		$setting_fea_display_in_menu = get_option_or_default('setting_fea_display_in_menu', array());
 
 		/* Filter those that are not included via settings */
@@ -649,18 +654,22 @@ class mf_fea
 					<span class='displaying-num'>".sprintf($data['amount_text'], "<%= pagination.list_amount %>")."</span>
 					<% if(Object.keys(pagination.pages).length > 1)
 					{ %>
-						<span class='pagination-links form_button'>
+						<span class='form_button'>
 							<% if(Object.keys(pagination.pages).length > 6)
 							{ %>
 								<a href='#".$data['action']."/1' class='button<% if(pagination.current_page <= 2){ %> is_disabled<% } %>' title='".__("First", 'lang_fea')."'><i class='fas fa-angle-double-left'></i></a>
 							<% } %>
-							<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> is_disabled<% } %>' title='".__("Previous", 'lang_fea')."'><i class='fas fa-angle-left'></i></a>"
-							/*."<% _.each(pagination.pages, function(page_value)
+							<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> is_disabled<% } %>' title='".__("Previous", 'lang_fea')."'><i class='fas fa-angle-left'></i></a>";
+
+							/*$out .= "<% _.each(pagination.pages, function(page_value)
 							{ %>
 								<a href='#' class='button'><%= page_value %></a>
-							<% }); %>"*/
-							."<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>
-							<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> is_disabled<% } %>' title='".__("Next", 'lang_fea')."'><i class='fas fa-angle-right'></i></a>
+							<% }); %>";*/
+
+							$out .= "<span>".sprintf(__("Page %s of %s", 'lang_fea'), show_textfield(array('value' => "<%= pagination.current_page %>", 'xtra' => " data-action='".$data['action']."' data-max='<%= Object.keys(pagination.pages).length %>'")), "<%= Object.keys(pagination.pages).length %>")."</span>"; //'type' => 'number', , 'xtra' => " min='1' max='<%= Object.keys(pagination.pages).length %>'"
+							//$out .= "<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>";
+
+							$out .= "<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> is_disabled<% } %>' title='".__("Next", 'lang_fea')."'><i class='fas fa-angle-right'></i></a>
 							<% if(Object.keys(pagination.pages).length > 6)
 							{ %>
 								<a href='#".$data['action']."/<%= Object.keys(pagination.pages).length %>' class='button<% if(pagination.current_page >= (Object.keys(pagination.pages).length - 1)){ %> is_disabled<% } %>' title='".__("Last", 'lang_fea')."'><i class='fas fa-angle-double-right'></i></a>

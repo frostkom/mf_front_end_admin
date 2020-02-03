@@ -1,3 +1,5 @@
+var pagination_timeout;
+
 var AdminView = Backbone.View.extend(
 {
 	el: jQuery("body"),
@@ -15,6 +17,8 @@ var AdminView = Backbone.View.extend(
 		"click article nav li": "toggle_submenu",
 		"click article nav a": "change_view",
 		"click .view_data i": "toggle_data_helper",
+		"keyup .tablenav-pages .form_button .form_textfield input": "change_page_keyup",
+		"blur .tablenav-pages .form_button .form_textfield input": "change_page_blur",
 		"submit form": "submit_form",
 	},
 
@@ -142,6 +146,43 @@ var AdminView = Backbone.View.extend(
 		}
 
 		this.model.getPage(api_url, action);
+	},
+
+	change_page: function(e, type)
+	{
+		var dom_obj = jQuery(e.currentTarget),
+			dom_action = dom_obj.data('action'),
+			dom_page = parseInt(dom_obj.val()),
+			dom_max = dom_obj.data('max');
+
+		clearTimeout(pagination_timeout);
+
+		if(dom_page > 0 && dom_page <= dom_max)
+		{
+			switch(type)
+			{
+				case 'keyup':
+					pagination_timeout = setTimeout(function()
+					{
+						location.hash = dom_action + "/" + dom_page;
+					}, 1000);
+				break;
+
+				case 'blur':
+					location.hash = dom_action + "/" + dom_page;
+				break;
+			}
+		}
+	},
+
+	change_page_keyup: function(e)
+	{
+		this.change_page(e, 'keyup');		
+	},
+
+	change_page_blur: function(e)
+	{
+		this.change_page(e, 'blur');
 	},
 
 	submit_form: function(e)
