@@ -257,7 +257,7 @@ echo "@media all
 					{
 						border-bottom: 1px solid #ccc;
 						margin-bottom: 0 !important;
-						padding: 0 .5em .5em;
+						padding: .5em;
 					}
 
 					.admin_container .meta_box > div
