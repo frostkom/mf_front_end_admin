@@ -177,7 +177,7 @@ var AdminView = Backbone.View.extend(
 
 	change_page_keyup: function(e)
 	{
-		this.change_page(e, 'keyup');		
+		this.change_page(e, 'keyup');
 	},
 
 	change_page_blur: function(e)
@@ -224,19 +224,10 @@ var AdminView = Backbone.View.extend(
 			break;
 
 			case 'admin_posts_list':
-				var amount = response.list.length,
-					dom_template = jQuery("#template_" + template),
+				var dom_template = jQuery("#template_" + template),
 					dom_container = jQuery("#" + template);
 
-				if(amount > 0)
-				{
-					html = _.template(dom_template.html())(response);
-				}
-
-				else
-				{
-					html = _.template(jQuery("#template_" + template + "_message").html())('');
-				}
+				html = _.template(dom_template.html())(response);
 
 				dom_container.children("div").html(html);
 

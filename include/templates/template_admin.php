@@ -14,8 +14,7 @@ get_header();
 	if(have_posts())
 	{
 		$obj_fea = new mf_fea();
-
-		$obj_fea->arr_views = apply_filters('init_base_admin', array());
+		$obj_fea->arr_views = apply_filters('init_base_admin', array(), array('init' => true));
 
 		if(!isset($obj_theme))
 		{

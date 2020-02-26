@@ -683,9 +683,11 @@ class mf_fea
 		return $out;
 	}
 
-	function init_base_admin($arr_views)
+	function init_base_admin($arr_views, $data = array())
 	{
 		global $wpdb;
+
+		if(!isset($data['init'])){	$data['init'] = false;}
 
 		$templates = "";
 
@@ -693,7 +695,7 @@ class mf_fea
 		$plugin_include_url = plugin_dir_url(__FILE__);
 		$plugin_version = get_plugin_version(__FILE__);
 
-		if(!is_admin())
+		if($data['init'] == true)
 		{
 			mf_enqueue_style('style_fea', $plugin_include_url."style.php", $plugin_version);
 
@@ -701,9 +703,9 @@ class mf_fea
 			mf_enqueue_script('backbone');
 			mf_enqueue_script('script_base_plugins', $plugin_base_include_url."backbone/bb.plugins.js", $plugin_version);
 
-			mf_enqueue_script('script_fea_router', $plugin_include_url."bb.admin.router.js", $plugin_version);
-			mf_enqueue_script('script_fea_models', $plugin_include_url."bb.admin.models.js", array('api_url' => $plugin_include_url), $plugin_version);
-			mf_enqueue_script('script_fea_views', $plugin_include_url."bb.admin.views.js", array('api_url' => $plugin_include_url), $plugin_version);
+			mf_enqueue_script('script_fea_router', $plugin_include_url."backbone/bb.admin.router.js", $plugin_version);
+			mf_enqueue_script('script_fea_models', $plugin_include_url."backbone/bb.admin.models.js", array('api_url' => $plugin_include_url), $plugin_version);
+			mf_enqueue_script('script_fea_views', $plugin_include_url."backbone/bb.admin.views.js", array('api_url' => $plugin_include_url), $plugin_version);
 
 			$templates .= "<script type='text/template' id='template_admin_profile_edit'>
 				<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/profile/save'>
@@ -860,10 +862,6 @@ class mf_fea
 					</table>
 				</script>
 
-				<script type='text/template' id='template_admin_posts_list_message'>
-					<p>".__("You have not added anything yet", 'lang_fea')."</p>
-				</script>
-
 				<script type='text/template' id='template_admin_posts_edit'>
 					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/posts/save'>
 						<div id='".$this->meta_prefix."information' class='meta_box context_normal'>
@@ -892,7 +890,10 @@ class mf_fea
 						</div>
 						<div class='form_button'>"
 							.show_button(array('text' => __("Save", 'lang_fea')))
-							.input_hidden(array('name' => 'post_id', 'value' => "<%= post_id %>"))
+							."<% if(post_id > 0)
+							{ %>"
+								.input_hidden(array('name' => 'post_id', 'value' => "<%= post_id %>"))
+							."<% } %>"
 						."</div>
 					</form>
 				</script>";
