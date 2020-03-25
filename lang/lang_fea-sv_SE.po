@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-17 04:56+0100\n"
+"POT-Creation-Date: 2020-03-25 15:25+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -50,6 +50,9 @@ msgstr "Bredd på innehåll"
 
 msgid "Get Started"
 msgstr "Kom igång"
+
+msgid "Front-End Admin"
+msgstr "Admin på framsida"
 
 msgid "Users with these roles will be redirected after login"
 msgstr "Användare med dessa roller kommer att dirigeras efter inloggning"
@@ -111,9 +114,6 @@ msgstr "Visa"
 msgid "There is nothing to show"
 msgstr "Det finns inget att visa"
 
-msgid "You have not added anything yet"
-msgstr "Du har inte lagt till något ännu"
-
 msgid "Title"
 msgstr "Rubrik"
 
@@ -155,6 +155,12 @@ msgstr "Lista"
 
 msgid "Add New"
 msgstr "Lägg till ny"
+
+msgid "Display front-end admin menu"
+msgstr "Visa meny på framsida"
+
+msgid "Front-End Admin Menu"
+msgstr "Meny på framsida"
 
 msgid "Heading"
 msgstr "Rubrik"
