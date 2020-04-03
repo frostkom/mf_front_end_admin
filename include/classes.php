@@ -217,27 +217,71 @@ class mf_fea
 		echo "<em>".sprintf(__("To use this functionality you have to %sAdd a new page%s and set %s as template", 'lang_fea'), "<a href='".admin_url("post-new.php?post_type=page")."'>", "</a>", __("Front-End Admin", 'lang_fea'))."</em>";
 	}
 
-	function login_redirect($redirect_to, $request, $user)
+	function get_login_redirect($redirect_to, $user_data)
+	{
+		$setting_fea_redirect_after_login = get_option_or_default('setting_fea_redirect_after_login', array());
+
+		if(isset($user_data->roles) && is_array($user_data->roles) && count(array_intersect($setting_fea_redirect_after_login, $user_data->roles)) > 0)
+		{
+			$post_url = apply_filters('get_front_end_admin_url', '');
+
+			if($post_url != '')
+			{
+				$redirect_to = $post_url;
+			}
+		}
+
+		return $redirect_to;
+	}
+
+	function login_init()
+	{
+		$action = check_var('action');
+
+		switch($action)
+		{
+			case 'logout':
+				// Do nothing
+			break;
+
+			default:
+				if(is_user_logged_in())
+				{
+					$redirect_to = (current_user_can('read') ? admin_url() : home_url());
+					$user_data = get_userdata(get_current_user_id());
+
+					//$log_message = "login_init: User: ".$user_data->display_name.", Fallback: ".$redirect_to;
+
+					$redirect_to = $this->get_login_redirect($redirect_to, $user_data);
+
+					//$log_message .= ", Role: ".var_export($user_data->roles, true)." -> ".$redirect_to;
+
+					//do_log($log_message);
+
+					wp_redirect($redirect_to, 302);
+					exit;
+				}
+			break;
+		}
+	}
+
+	function login_redirect($redirect_to, $request, $user_data)
 	{
 		$admin_url = admin_url();
 
 		// Just in case we have sent this variable along with the URL
 		$redirect_to = check_var('redirect_to', 'char', true, $redirect_to);
 
+		//$log_message = "login_redirect: User: ".$user_data->display_name.", Fallback: ".$redirect_to;
+
 		if($redirect_to == $admin_url)
 		{
-			$setting_fea_redirect_after_login = get_option_or_default('setting_fea_redirect_after_login', array());
+			$redirect_to = $this->get_login_redirect($redirect_to, $user_data);
 
-			if(isset($user->roles) && is_array($user->roles) && count(array_intersect($setting_fea_redirect_after_login, $user->roles)) > 0)
-			{
-				$post_url = apply_filters('get_front_end_admin_url', '');
-
-				if($post_url != '')
-				{
-					$redirect_to = $post_url;
-				}
-			}
+			//$log_message .= ", Role: ".var_export($user_data->roles, true)." -> ".$redirect_to;
 		}
+
+		//do_log($log_message);
 
 		return $redirect_to;
 	}
