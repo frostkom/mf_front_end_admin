@@ -532,6 +532,8 @@ class mf_fea
 						</li>";
 					}
 
+					$front_end_admin_url = apply_filters('get_front_end_admin_url', '');
+
 					foreach($this->arr_views as $key => $view)
 					{
 						if(!isset($view['display_in_menu']) || $view['display_in_menu'] == true)
@@ -569,7 +571,7 @@ class mf_fea
 
 											else
 											{
-												$item_url = "#admin/".str_replace("_", "/", $key)."/".$item['id'];
+												$item_url = $front_end_admin_url."#admin/".str_replace("_", "/", $key)."/".$item['id'];
 											}
 										}
 
@@ -579,7 +581,7 @@ class mf_fea
 										{
 											if($item_url != '')
 											{
-												$this->post_pre_content .= "<a href='".$item_url."'";
+												$this->post_pre_content .= "<a href='".$item_url."' rel='test_1, ".$key.", ".$item['id']."'";
 
 													if($api_url != '')
 													{
@@ -739,10 +741,10 @@ class mf_fea
 		$plugin_include_url = plugin_dir_url(__FILE__);
 		$plugin_version = get_plugin_version(__FILE__);
 
+		mf_enqueue_style('style_fea', $plugin_include_url."style.php", $plugin_version);
+
 		if($data['init'] == true)
 		{
-			mf_enqueue_style('style_fea', $plugin_include_url."style.php", $plugin_version);
-
 			mf_enqueue_script('underscore');
 			mf_enqueue_script('backbone');
 			mf_enqueue_script('script_base_plugins', $plugin_base_include_url."backbone/bb.plugins.js", $plugin_version);
