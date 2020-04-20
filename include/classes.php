@@ -325,8 +325,10 @@ class mf_fea
 		return $sorted_menu_items;
 	}
 
-	function get_menu()
+	function get_menu($data = array())
 	{
+		if(!isset($data['is_front_end_page'])){		$data['is_front_end_page'] = true;} // Add a check if we are on the front end page instead?
+
 		if(!isset($this->post_pre_content))
 		{
 			$this->post_pre_content = "";
@@ -358,8 +360,6 @@ class mf_fea
 
 		if(isset($locations['front_end_admin']))
 		{
-			$post_url = apply_filters('get_front_end_admin_url', '');
-
 			$post_parent = '';
 
 			$arr_menu = wp_get_nav_menu_items($locations['front_end_admin']);
@@ -372,11 +372,13 @@ class mf_fea
 				$exclude = array("fa-bar-chart-o");
 				$include = array("fa-chart-bar");
 
+				$front_end_admin_url = apply_filters('get_front_end_admin_url', '');
+
 				foreach($arr_menu as $menu_object)
 				{
 					$menu_object_id = $menu_object->ID;
 					$menu_object_title = $menu_object->post_title != '' ? $menu_object->post_title : $menu_object->title;
-					$menu_object_url = str_replace($post_url, "", $menu_object->url);
+					$menu_object_url = str_replace($front_end_admin_url, "", $menu_object->url);
 					$menu_object_parent = $menu_object->menu_item_parent;
 
 					$menu_object_icon = "fas fa-arrow-alt-circle-right";
@@ -532,7 +534,7 @@ class mf_fea
 						</li>";
 					}
 
-					$front_end_admin_url = apply_filters('get_front_end_admin_url', '');
+					$front_end_admin_url = ($data['is_front_end_page'] ? "" : apply_filters('get_front_end_admin_url', ''));
 
 					foreach($this->arr_views as $key => $view)
 					{
@@ -1103,7 +1105,7 @@ class widget_fea_menu extends WP_Widget
 
 		$this->obj_fea->arr_views = apply_filters('init_base_admin', array());
 
-		$this->obj_fea->get_menu();
+		$this->obj_fea->get_menu(array('is_front_end_page' => false));
 
 		if($this->obj_fea->post_pre_content != '')
 		{
