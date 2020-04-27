@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: MF Front-End Admin
-Plugin URI: 
+Plugin URI: https://github.com/frostkom/mf_front_end_admin
 Description: 
-Version: 1.4.8
+Version: 1.4.9
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://frostkom.se
@@ -11,7 +11,7 @@ Text Domain: lang_fea
 Domain Path: /lang
 
 Depends: MF Base
-GitHub Plugin URI: 
+GitHub Plugin URI: frostkom/mf_front_end_admin
 */
 
 include_once("include/classes.php");
