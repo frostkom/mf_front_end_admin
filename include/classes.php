@@ -25,7 +25,7 @@ class mf_fea
 		switch($data['type'])
 		{
 			case 'active':
-				$arr_include = get_option('setting_fea_pages');
+				$arr_include = get_option('setting_fea_pages', array());
 			break;
 		}
 
@@ -33,7 +33,7 @@ class mf_fea
 
 		foreach($arr_views as $key => $view)
 		{
-			if(count($arr_include) == 0 || in_array($key, $arr_include))
+			if(!is_array($arr_include) || count($arr_include) == 0 || in_array($key, $arr_include))
 			{
 				$arr_data[$key] = $view['name'];
 			}
