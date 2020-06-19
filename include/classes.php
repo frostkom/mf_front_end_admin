@@ -267,14 +267,12 @@ class mf_fea
 
 	function login_redirect($redirect_to, $request, $user_data)
 	{
-		$admin_url = admin_url();
-
 		// Just in case we have sent this variable along with the URL
 		$redirect_to = check_var('redirect_to', 'char', true, $redirect_to);
 
 		//$log_message = "login_redirect: User: ".$user_data->display_name.", Fallback: ".$redirect_to;
 
-		if($redirect_to == $admin_url)
+		if($redirect_to == admin_url())
 		{
 			$redirect_to = $this->get_login_redirect($redirect_to, $user_data);
 
@@ -762,11 +760,11 @@ class mf_fea
 						switch(field.type)
 						{
 							case 'date': %>"
-								.show_textfield(array('type' => 'date', 'name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
+								.show_textfield(array('type' => 'date', 'name' => '<%= field.name %>', 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
 							."<% break;
 
 							case 'email': %>"
-								.show_textfield(array('type' => 'email', 'name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>", 'description' => "<%= field.description %>"))
+								.show_textfield(array('type' => 'email', 'name' => '<%= field.name %>', 'text' => "<%= field.text %>", 'value' => "<%= field.value %>", 'description' => "<%= field.description %>"))
 							."<% break;
 
 							case 'flex_start': %>
@@ -780,16 +778,16 @@ class mf_fea
 							case 'media_image': %>
 								<div>
 									<label for='<%= field.name %>'><%= field.text %></label>"
-									.get_media_library(array('type' => 'image', 'name' => "<%= field.name %>", 'value' => "<%= field.value %>"))
+									.get_media_library(array('type' => 'image', 'name' => '<%= field.name %>', 'value' => "<%= field.value %>"))
 								."</div>
 							<% break;
 
 							case 'number': %>"
-								.show_textfield(array('type' => 'number', 'name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
+								.show_textfield(array('type' => 'number', 'name' => '<%= field.name %>', 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
 							."<% break;
 
 							case 'password': %>"
-								.show_password_field(array('name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'placeholder' => __("Enter a New Password Here", 'lang_fea')))
+								.show_password_field(array('name' => '<%= field.name %>', 'text' => "<%= field.text %>", 'placeholder' => __("Enter a New Password Here", 'lang_fea')))
 								/*."<div class='form_button'>
 									<label><%= field.text %></label>
 									<a href='".admin_url("profile.php")."' class='button'>".__("Change Password", 'lang_fea')."</a></div>
@@ -822,11 +820,11 @@ class mf_fea
 							<% break;
 
 							case 'text': %>"
-								.show_textfield(array('name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
+								.show_textfield(array('name' => '<%= field.name %>', 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
 							."<% break;
 
 							case 'textarea': %>"
-								.show_textarea(array('name' => "<%= field.name %>", 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
+								.show_textarea(array('name' => '<%= field.name %>', 'text' => "<%= field.text %>", 'value' => "<%= field.value %>"))
 							."<% break;
 
 							default: %>
