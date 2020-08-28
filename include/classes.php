@@ -1082,7 +1082,7 @@ class widget_fea_menu extends WP_Widget
 {
 	function __construct()
 	{
-		$widget_ops = array(
+		$this->widget_ops = array(
 			'classname' => 'fea_menu',
 			'description' => __("Display front-end admin menu", 'lang_fea')
 		);
@@ -1093,7 +1093,7 @@ class widget_fea_menu extends WP_Widget
 
 		$this->obj_fea = new mf_fea();
 
-		parent::__construct($widget_ops['classname'].'-widget', __("Front-End Admin Menu", 'lang_fea'), $widget_ops);
+		parent::__construct(str_replace("_", "-", $this->widget_ops['classname']).'-widget', __("Front-End Admin Menu", 'lang_fea'), $this->widget_ops);
 	}
 
 	function widget($args, $instance)
@@ -1138,7 +1138,7 @@ class widget_fea_menu extends WP_Widget
 		$instance = wp_parse_args((array)$instance, $this->arr_default);
 
 		echo "<div class='mf_form'>"
-			.show_textfield(array('name' => $this->get_field_name('menu_heading'), 'text' => __("Heading", 'lang_fea'), 'value' => $instance['menu_heading'], 'xtra' => " id='form-title'"))
+			.show_textfield(array('name' => $this->get_field_name('menu_heading'), 'text' => __("Heading", 'lang_fea'), 'value' => $instance['menu_heading'], 'xtra' => " id='".$this->widget_ops['classname']."-title'"))
 		."</div>";
 	}
 }

@@ -101,7 +101,7 @@ var AdminView = Backbone.View.extend(
 
 			scroll_to_top();
 
-			jQuery(".mf_form button[type='submit']").removeClass('loading is_disabled').removeAttr('disabled');
+			jQuery(".mf_form button[type='submit']").removeClass('loading is_disabled'); /*.removeAttr('disabled')*/
 
 			this.model.set({'message': ''});
 		}
