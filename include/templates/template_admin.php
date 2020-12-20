@@ -21,7 +21,7 @@ get_header();
 			$obj_theme = new mf_theme();
 		}
 
-		echo "<article>";
+		echo "<article".(IS_ADMIN ? " class='template_admin'" : "").">";
 
 			while(have_posts())
 			{
