@@ -4,7 +4,7 @@ class mf_fea
 {
 	function __construct()
 	{
-		$this->meta_prefix = "mf_fea_";
+		$this->meta_prefix = 'mf_fea_';
 	}
 
 	function get_user_info_for_select()
