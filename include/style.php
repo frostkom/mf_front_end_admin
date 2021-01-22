@@ -154,6 +154,11 @@ echo "@media all
 		position: relative;
 	}
 
+		#wrapper .tablenav-pages.no-pages, #wrapper .tablenav-pages.no-pages + br
+		{
+			display: none;
+		}
+
 		#wrapper .tablenav-pages .displaying-num
 		{
 			margin-right: .5em;
@@ -165,23 +170,47 @@ echo "@media all
 				margin: .3em 0 .2em;
 			}
 
+			#wrapper .tablenav-pages .button span + span
+			{
+				margin-left: .3em;
+			}
+
 			#wrapper .tablenav-pages .form_textfield
 			{
 				display: inline-block;
 				width: 3em;
 			}
 
-				#wrapper .tablenav-pages .form_textfield input
+				#wrapper .tablenav-pages .form_textfield input, #wrapper .tablenav-pages #current-page-selector
 				{
 					border-color: transparent;
 					line-height: 1;
 					text-align: center;
 				}
 
-					#wrapper .tablenav-pages .form_textfield input:hover, #wrapper .tablenav-pages .form_textfield input:focus
+					#wrapper .tablenav-pages #current-page-selector
+					{
+						border: 1px solid transparent;
+						border-radius: .3em;
+						box-sizing: border-box;
+						margin-left: .3em;
+						padding: .4em;
+					}
+
+					#wrapper .tablenav-pages .form_textfield input:hover, #wrapper .tablenav-pages .form_textfield input:focus, #wrapper .tablenav-pages #current-page-selector:hover, #wrapper .tablenav-pages #current-page-selector:focus
 					{
 						border-color: #e1e1e1;
 					}
+
+			#wrapper .tablenav-pages #table-paging
+			{
+				margin-right: .3em;
+			}
+
+			#wrapper div + .mf_form
+			{
+				margin-top: 1em;
+			}
 
 		.admin_container h1 .form_button
 		{

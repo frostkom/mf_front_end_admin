@@ -703,17 +703,9 @@ class mf_fea
 							{ %>
 								<a href='#".$data['action']."/1' class='button<% if(pagination.current_page <= 2){ %> is_disabled<% } %>' title='".__("First", 'lang_fea')."'><i class='fas fa-angle-double-left'></i></a>
 							<% } %>
-							<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> is_disabled<% } %>' title='".__("Previous", 'lang_fea')."'><i class='fas fa-angle-left'></i></a>";
-
-							/*$out .= "<% _.each(pagination.pages, function(page_value)
-							{ %>
-								<a href='#' class='button'><%= page_value %></a>
-							<% }); %>";*/
-
-							$out .= "<span>".sprintf(__("Page %s of %s", 'lang_fea'), show_textfield(array('value' => "<%= pagination.current_page %>", 'xtra' => " data-action='".$data['action']."' data-max='<%= Object.keys(pagination.pages).length %>'")), "<%= Object.keys(pagination.pages).length %>")."</span>"; //'type' => 'number', , 'xtra' => " min='1' max='<%= Object.keys(pagination.pages).length %>'"
-							//$out .= "<span>".sprintf(__("Page %s of %s", 'lang_fea'), "<%= pagination.current_page %>", "<%= Object.keys(pagination.pages).length %>")."</span>";
-
-							$out .= "<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> is_disabled<% } %>' title='".__("Next", 'lang_fea')."'><i class='fas fa-angle-right'></i></a>
+							<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) - 1) %>' class='button<% if(pagination.current_page <= 1){ %> is_disabled<% } %>' title='".__("Previous", 'lang_fea')."'><i class='fas fa-angle-left'></i></a>
+							<span>".sprintf(__("Page %s of %s", 'lang_fea'), show_textfield(array('value' => "<%= pagination.current_page %>", 'xtra' => " data-action='".$data['action']."' data-max='<%= Object.keys(pagination.pages).length %>'")), "<%= Object.keys(pagination.pages).length %>")."</span>
+							<a href='#".$data['action']."/<%= (parseInt(pagination.current_page) + 1) %>' class='button<% if(pagination.current_page >= Object.keys(pagination.pages).length){ %> is_disabled<% } %>' title='".__("Next", 'lang_fea')."'><i class='fas fa-angle-right'></i></a>
 							<% if(Object.keys(pagination.pages).length > 6)
 							{ %>
 								<a href='#".$data['action']."/<%= Object.keys(pagination.pages).length %>' class='button<% if(pagination.current_page >= (Object.keys(pagination.pages).length - 1)){ %> is_disabled<% } %>' title='".__("Last", 'lang_fea')."'><i class='fas fa-angle-double-right'></i></a>
