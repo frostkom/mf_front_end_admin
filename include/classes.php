@@ -242,6 +242,36 @@ class mf_fea
 		}
 	}
 
+	function get_page_template($post_id)
+	{
+		global $wpdb;
+
+		return $wpdb->get_var($wpdb->prepare("SELECT meta_value FROM ".$wpdb->posts." INNER JOIN ".$wpdb->postmeta." ON ".$wpdb->posts.".ID = ".$wpdb->postmeta.".post_id WHERE ID = '%d' AND post_type = %s AND meta_key = %s LIMIT 0, 1", $post_id, 'page', '_wp_page_template'));
+	}
+
+	function get_template_path()
+	{
+		return str_replace(WP_CONTENT_DIR, "", plugin_dir_path(__FILE__))."templates/";
+	}
+
+	function display_post_states($post_states, $post)
+	{
+		$page_template = $this->get_page_template($post->ID);
+
+		switch($page_template)
+		{
+			case $this->get_template_path().'template_admin.php':
+				$post_states['template_admin'] = __("Front-End Admin", 'lang_fea');
+			break;
+
+			/*default:
+				$post_states['default'] = $page_template;
+			break;*/
+		}
+
+		return $post_states;
+	}
+
 	function login_init()
 	{
 		$action = check_var('action');
@@ -271,8 +301,6 @@ class mf_fea
 	{
 		// Just in case we have sent this variable along with the URL
 		$redirect_to = check_var('redirect_to', 'char', true, $redirect_to);
-
-		//$log_message = "login_redirect: User: ".$user_data->display_name.", Fallback: ".$redirect_to;
 
 		if($redirect_to == admin_url())
 		{
@@ -1025,7 +1053,7 @@ class mf_fea
 				$obj_base = new mf_base();
 			}
 
-			$post_id = $obj_base->has_page_template(array('template' => "/plugins/mf_front_end_admin/include/templates/template_admin.php"));
+			$post_id = $obj_base->has_page_template(array('template' => $this->get_template_path().'template_admin.php'));
 		}
 
 		return $post_id;
@@ -1060,9 +1088,7 @@ class mf_fea
 
 	function get_page_templates($templates)
 	{
-		$templates_path = str_replace(WP_CONTENT_DIR, "", plugin_dir_path(__FILE__))."templates/";
-
-		$templates[$templates_path.'template_admin.php'] = __("Front-End Admin", 'lang_fea');
+		$templates[$this->get_template_path().'template_admin.php'] = __("Front-End Admin", 'lang_fea');
 
 		return $templates;
 	}
