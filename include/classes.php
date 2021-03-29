@@ -234,14 +234,6 @@ class mf_fea
 		return $redirect_to;
 	}
 
-	function admin_init()
-	{
-		if(!is_plugin_active("mf_base/index.php"))
-		{
-			deactivate_plugins(str_replace("include/classes.php", "index.php", plugin_basename(__FILE__)));
-		}
-	}
-
 	function get_page_template($post_id)
 	{
 		global $wpdb;
