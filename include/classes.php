@@ -382,7 +382,13 @@ class mf_fea
 
 			if(count($arr_menu) > 0)
 			{
-				$obj_font_icons = new mf_font_icons();
+				global $obj_font_icons;
+
+				if(!isset($obj_font_icons))
+				{
+					$obj_font_icons = new mf_font_icons();
+				}
+
 				$arr_icons = $obj_font_icons->get_array();
 
 				$exclude = array("fa-bar-chart-o");
@@ -994,6 +1000,13 @@ class mf_fea
 					array(
 						'id' => 'list',
 						'name' => __("List", 'lang_fea'),
+						'heading' => array(
+							//'name' => __("", 'lang_fea'),
+							'button' => array(
+								'url' => "#admin/posts/edit",
+								'name' => __("Add New", 'lang_fea'),
+							),
+						),
 					),
 					array(
 						'id' => 'edit',
