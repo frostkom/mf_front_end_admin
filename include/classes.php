@@ -146,7 +146,9 @@ class mf_fea
 				'setting_fea_pages' => __("Pages", 'lang_fea'),
 			);
 
-			if(count(get_option('setting_fea_pages')) > 0)
+			$setting_fea_pages = get_option('setting_fea_pages');
+
+			if(is_array($setting_fea_pages) && count($setting_fea_pages) > 0)
 			{
 				$arr_settings['setting_fea_display_in_menu'] = __("Display in Menu", 'lang_fea');
 			}
