@@ -4,7 +4,7 @@ Template Name: Front-End Admin
 */
 
 //Only effective if cache is off, so we need an extra check in the API + possibly to invalidate cache on this page
-if(!is_user_logged_in())
+if(is_user_logged_in() == false)
 {
 	mf_redirect(wp_login_url()."?redirect_to=".$_SERVER['REQUEST_URI']);
 }
@@ -15,6 +15,11 @@ get_header();
 	{
 		$obj_fea = new mf_fea();
 		$obj_fea->arr_views = apply_filters('init_base_admin', array(), array('init' => true));
+
+		if(!isset($obj_theme_core))
+		{
+			$obj_theme_core = new mf_theme_core();
+		}
 
 		if(!isset($obj_theme))
 		{
@@ -147,7 +152,7 @@ get_header();
 					}
 				}
 
-				if(is_active_sidebar('widget_after_heading') && !post_password_required())
+				if(is_active_sidebar('widget_after_heading') && $obj_theme_core->is_post_password_protected() == false)
 				{
 					ob_start();
 
