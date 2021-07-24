@@ -9,7 +9,10 @@ if(!defined('ABSPATH'))
 	require_once($folder."wp-load.php");
 }
 
-$obj_fea = new mf_fea();
+if(!isset($obj_fea))
+{
+	$obj_fea = new mf_fea();
+}
 
 $json_output = array(
 	'success' => false,

@@ -928,37 +928,44 @@ class mf_fea
 
 				<script type='text/template' id='template_admin_posts_edit'>
 					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/posts/save'>
-						<div id='".$this->meta_prefix."information' class='meta_box context_normal'>
-							<h2>".__("Information", 'lang_fea')."</h2>
-							<div>"
-								.show_textfield(array('name' => 'post_title', 'text' => __("Title", 'lang_fea'), 'value' => "<%= post_title %>", 'required' => true))
-								.show_textarea(array('name' => 'post_excerpt', 'text' => __("Excerpt", 'lang_fea'), 'value' => "<%= post_excerpt %>"))
-								.show_textarea(array('name' => 'post_content', 'text' => __("Content", 'lang_fea'), 'value' => "<%= post_content %>", 'required' => true))
-								/*.show_wp_editor(array('name' => 'post_content', 'value' => "<%= post_content %>",
-									//'class' => "hide_media_button hide_tabs",
-									'mini_toolbar' => true,
-									'editor_height' => 400,
-									//'statusbar' => false,
-								))*/
-							."</div>
+						<div class='context_normal'>
+							<div id='".$this->meta_prefix."information' class='meta_box'>
+								<h2>".__("Information", 'lang_fea')."</h2>
+								<div>"
+									.show_textfield(array('name' => 'post_title', 'text' => __("Title", 'lang_fea'), 'value' => "<%= post_title %>", 'required' => true))
+									.show_textarea(array('name' => 'post_excerpt', 'text' => __("Excerpt", 'lang_fea'), 'value' => "<%= post_excerpt %>"))
+									.show_textarea(array('name' => 'post_content', 'text' => __("Content", 'lang_fea'), 'value' => "<%= post_content %>", 'required' => true))
+									/*.show_wp_editor(array('name' => 'post_content', 'value' => "<%= post_content %>",
+										//'class' => "hide_media_button hide_tabs",
+										'mini_toolbar' => true,
+										'editor_height' => 400,
+										//'statusbar' => false,
+									))*/
+								."</div>
+							</div>
 						</div>
-						<div id='".$this->meta_prefix."settings' class='meta_box context_side'>
-							<h2>".__("Settings", 'lang_fea')."</h2>
-							<div>"
-								.show_select(array('data' => $this->get_post_status_for_select(), 'name' => 'post_status', 'text' => __("Status", 'lang_fea'), 'value' => "<%= post_status %>"))
-								.show_select(array('data' => get_users_for_select(array('add_choose_here' => false)), 'name' => 'post_author', 'text' => __("Author", 'lang_fea'), 'value' => "<%= post_author %>"))
-								.show_textfield(array('name' => 'post_name', 'text' => __("Slug", 'lang_fea'), 'value' => "<%= post_name %>"))
-								.show_select(array('data' => get_categories_for_select(array('add_choose_here' => true)), 'name' => 'post_categories', 'text' => __("Category", 'lang_fea'), 'value' => "<%= post_categories %>"))
-								.show_select(array('data' => get_yes_no_for_select(array('add_choose_here' => false)), 'name' => 'comment_status', 'text' => __("Allow Comments", 'lang_fea'), 'value' => "<%= comment_status %>"))
-							."</div>
+						<div class='context_side'>
+							<div id='".$this->meta_prefix."actions' class='meta_box'>
+								<div class='form_button'>"
+									.show_button(array('text' => __("Save", 'lang_fea')))
+									."<a href='#admin/posts/list' class='button'>".__("Cancel", 'lang_fea')."</a>"
+									."<% if(post_id > 0)
+									{ %>"
+										.input_hidden(array('name' => 'post_id', 'value' => "<%= post_id %>"))
+									."<% } %>"
+								."</div>
+							</div>
+							<div id='".$this->meta_prefix."settings' class='meta_box'>"
+								//."<h2>".__("Settings", 'lang_fea')."</h2>"
+								."<div>"
+									.show_select(array('data' => $this->get_post_status_for_select(), 'name' => 'post_status', 'text' => __("Status", 'lang_fea'), 'value' => "<%= post_status %>"))
+									.show_select(array('data' => get_users_for_select(array('add_choose_here' => false)), 'name' => 'post_author', 'text' => __("Author", 'lang_fea'), 'value' => "<%= post_author %>"))
+									.show_textfield(array('name' => 'post_name', 'text' => __("Slug", 'lang_fea'), 'value' => "<%= post_name %>"))
+									.show_select(array('data' => get_categories_for_select(array('add_choose_here' => true)), 'name' => 'post_categories', 'text' => __("Category", 'lang_fea'), 'value' => "<%= post_categories %>"))
+									.show_select(array('data' => get_yes_no_for_select(array('add_choose_here' => false)), 'name' => 'comment_status', 'text' => __("Allow Comments", 'lang_fea'), 'value' => "<%= comment_status %>"))
+								."</div>
+							</div>
 						</div>
-						<div class='form_button'>"
-							.show_button(array('text' => __("Save", 'lang_fea')))
-							."<% if(post_id > 0)
-							{ %>"
-								.input_hidden(array('name' => 'post_id', 'value' => "<%= post_id %>"))
-							."<% } %>"
-						."</div>
 					</form>
 				</script>";
 			}
