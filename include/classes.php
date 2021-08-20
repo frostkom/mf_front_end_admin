@@ -1010,7 +1010,6 @@ class mf_fea
 						'id' => 'list',
 						'name' => __("List", 'lang_fea'),
 						'heading' => array(
-							//'name' => __("", 'lang_fea'),
 							'button' => array(
 								'url' => "#admin/posts/edit",
 								'name' => __("Add New", 'lang_fea'),
