@@ -31,11 +31,24 @@ class mf_fea
 
 		$arr_views = apply_filters('init_base_admin', array(), array('include' => 'all'));
 
-		foreach($arr_views as $key => $view)
+		foreach($arr_views as $key => $arr_view)
 		{
 			if(!is_array($arr_include) || count($arr_include) == 0 || in_array($key, $arr_include))
 			{
-				$arr_data[$key] = $view['name'];
+				$arr_data[$key] = $arr_view['name'];
+
+				foreach($arr_view['items'] as $arr_item)
+				{
+					$key_child = 'internal_'.$arr_item['id'];
+
+					if($key_child != $key)
+					{
+						if(!is_array($arr_include) || count($arr_include) == 0 || in_array($key_child, $arr_include))
+						{
+							$arr_data[$key_child] = " - ".$arr_item['name'];
+						}
+					}
+				}
 			}
 		}
 
@@ -572,32 +585,32 @@ class mf_fea
 
 								$has_start_ul = false;
 
-								foreach($view['items'] as $item)
+								foreach($view['items'] as $arr_item)
 								{
-									if($i == 0 || !isset($item['display_in_menu']) || $item['display_in_menu'] == true)
+									if($i == 0 || !isset($arr_item['display_in_menu']) || $arr_item['display_in_menu'] == true)
 									{
 										$item_url = "";
 
-										if(!isset($item['clickable']) || $item['clickable'] == true || $count_temp == 1)
+										if(!isset($arr_item['clickable']) || $arr_item['clickable'] == true || $count_temp == 1)
 										{
 											if(filter_var($key, FILTER_VALIDATE_URL))
 											{
 												$item_url = $key;
 											}
 
-											else if(filter_var($item['id'], FILTER_VALIDATE_URL))
+											else if(filter_var($arr_item['id'], FILTER_VALIDATE_URL))
 											{
-												$item_url = $item['id'];
+												$item_url = $arr_item['id'];
 											}
 
-											else if(substr($item['id'], 0, 1) == "/")
+											else if(substr($arr_item['id'], 0, 1) == "/")
 											{
-												$item_url = $item['id'];
+												$item_url = $arr_item['id'];
 											}
 
 											else
 											{
-												$item_url = $front_end_admin_url."#admin/".str_replace("_", "/", $key)."/".$item['id'];
+												$item_url = $front_end_admin_url."#admin/".str_replace("_", "/", $key)."/".$arr_item['id'];
 											}
 										}
 
@@ -607,7 +620,7 @@ class mf_fea
 										{
 											if($item_url != '')
 											{
-												$this->post_pre_content .= "<a href='".$item_url."' rel='test_1, ".$key.", ".$item['id']."'";
+												$this->post_pre_content .= "<a href='".$item_url."'";
 
 													if($api_url != '')
 													{
@@ -638,9 +651,11 @@ class mf_fea
 											{
 												$this->post_pre_content .= "</span>";
 											}
+
+											$i++;
 										}
 
-										else
+										else if(in_array('internal_'.$arr_item['id'], $setting_fea_display_in_menu))
 										{
 											if($i == 1)
 											{
@@ -649,28 +664,21 @@ class mf_fea
 												$has_start_ul = true;
 											}
 
-												$this->post_pre_content .= "<li>
-													<a href='".$item_url."'";
+											$this->post_pre_content .= "<li class='sub' rel='".$arr_item['id']."'>
+												<a href='".$item_url."'";
 
-														if($api_url != '')
-														{
-															$this->post_pre_content .= " data-api-url='".$api_url."'";
-														}
+													if($api_url != '')
+													{
+														$this->post_pre_content .= " data-api-url='".$api_url."'";
+													}
 
-													$this->post_pre_content .= ">
-														<span>".$item['name']."</span>
-													</a>
-												</li>";
+												$this->post_pre_content .= ">
+													<span>".$arr_item['name']."</span>
+												</a>
+											</li>";
 
-											/*if($i == ($count_temp - 1))
-											{
-												$this->post_pre_content .= "</ul>";
-
-												$has_start_ul = false;
-											}*/
+											$i++;
 										}
-
-										$i++;
 									}
 								}
 
