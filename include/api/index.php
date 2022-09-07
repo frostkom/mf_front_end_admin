@@ -54,7 +54,8 @@ switch($arr_type[0])
 									if(isset($value['name']))
 									{
 										if(!isset($arr_fields[$key]['class'])){			$arr_fields[$key]['class'] = "";}
-										if(!isset($arr_fields[$key]['attributes'])){	$arr_fields[$key]['attributes'] = "";}
+										//if(!isset($arr_fields[$key]['attributes'])){	$arr_fields[$key]['attributes'] = "";}
+										if(!isset($arr_fields[$key]['attributes'])){	$arr_fields[$key]['attributes'] = array();}
 										if(!isset($arr_fields[$key]['required'])){		$arr_fields[$key]['required'] = false;}
 
 										$arr_fields[$key]['value'] = get_the_author_meta($value['name'], $user_id);
@@ -101,7 +102,8 @@ switch($arr_type[0])
 												if($arr_fields[$key]['multiple'] == true)
 												{
 													$arr_fields[$key]['class'] .= " form_select_multiple";
-													$arr_fields[$key]['attributes'] .= " size='".get_select_size(array('count' => count($arr_fields[$key]['options'])))."'";
+													//$arr_fields[$key]['attributes'] .= " size='".get_select_size(array('count' => count($arr_fields[$key]['options'])))."'";
+													$arr_fields[$key]['attributes']['size'] = get_select_size(array('count' => count($arr_fields[$key]['options'])));
 												}
 											break;
 										}
