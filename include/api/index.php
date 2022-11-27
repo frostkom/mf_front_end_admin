@@ -227,7 +227,7 @@ switch($arr_type[0])
 						switch($arr_type[2])
 						{
 							case 'list':
-								$current_page = isset($arr_type[3]) && is_numeric($arr_type[3]) ? $arr_type[3] : 1;
+								$current_page = (isset($arr_type[3]) && is_numeric($arr_type[3]) ? $arr_type[3] : 1);
 								$edit_page_per_page = get_the_author_meta_or_default('edit_page_per_page', get_current_user_id(), 20);
 
 								$arr_pages = $arr_list = array();
@@ -280,7 +280,7 @@ switch($arr_type[0])
 							break;
 
 							case 'edit':
-								$post_id = isset($arr_type[3]) ? $arr_type[3] : 0;
+								$post_id = (isset($arr_type[3]) ? $arr_type[3] : 0);
 
 								if($post_id > 0)
 								{

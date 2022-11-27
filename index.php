@@ -3,10 +3,10 @@
 Plugin Name: MF Front-End Admin
 Plugin URI: https://github.com/frostkom/mf_front_end_admin
 Description:
-Version: 1.5.10
+Version: 1.5.11
 Licence: GPLv2 or later
 Author: Martin Fors
-Author URI: https://frostkom.se
+Author URI: https://martinfors.se
 Text Domain: lang_fea
 Domain Path: /lang
 
