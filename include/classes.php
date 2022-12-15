@@ -1144,7 +1144,7 @@ class widget_fea_menu extends WP_Widget
 
 		if($this->obj_fea->post_pre_content != '')
 		{
-			echo $before_widget;
+			echo apply_filters('filter_before_widget', $before_widget);
 
 				if($instance['menu_heading'] != '')
 				{
