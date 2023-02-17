@@ -16,12 +16,12 @@ get_header();
 		$obj_fea = new mf_fea();
 		$obj_fea->arr_views = apply_filters('init_base_admin', array(), array('init' => true));
 
-		if(!isset($obj_theme_core))
+		if(!isset($obj_theme_core) && class_exists('mf_theme_core'))
 		{
 			$obj_theme_core = new mf_theme_core();
 		}
 
-		if(!isset($obj_theme))
+		if(!isset($obj_theme) && class_exists('mf_theme'))
 		{
 			$obj_theme = new mf_theme();
 		}
@@ -37,7 +37,7 @@ get_header();
 
 				$obj_fea->post_pre_content = "";
 
-				$is_heading_visible = $obj_theme->is_heading_visible($post);
+				$is_heading_visible = (isset($obj_theme) ? $obj_theme->is_heading_visible($post) : true);
 
 				if($is_heading_visible)
 				{
@@ -152,7 +152,7 @@ get_header();
 					}
 				}
 
-				if(is_active_sidebar('widget_after_heading') && $obj_theme_core->is_post_password_protected() == false)
+				if(is_active_sidebar('widget_after_heading') && isset($obj_theme_core) && $obj_theme_core->is_post_password_protected() == false)
 				{
 					ob_start();
 
