@@ -216,7 +216,7 @@ class mf_fea
 		$setting_key = get_setting_key(__FUNCTION__);
 		$option = get_option($setting_key);
 
-		echo show_select(array('data' => get_roles_for_select(array('add_choose_here' => false, 'use_capability' => false)), 'name' => $setting_key."[]", 'value' => $option, 'description' => __("Users with these roles will be redirected after login", 'lang_fea')));
+		echo show_select(array('data' => get_roles_for_select(array('add_choose_here' => false, 'use_capability' => false)), 'name' => $setting_key."[]", 'value' => $option, 'description' => __("Users with these roles will be redirected after login and to the their front-end profile", 'lang_fea')));
 	}
 
 	function setting_fea_content_width_callback()
@@ -1097,11 +1097,18 @@ class mf_fea
 
 	function edit_profile_url($url)
 	{
-		$post_url = apply_filters('get_front_end_admin_url', '');
+		$user_data = get_userdata(get_current_user_id());
 
-		if($post_url != '' && in_array('profile', get_option_or_default('setting_fea_pages', array())))
+		$setting_fea_redirect_after_login = get_option_or_default('setting_fea_redirect_after_login', array());
+
+		if(isset($user_data->roles) && is_array($user_data->roles) && count(array_intersect($setting_fea_redirect_after_login, $user_data->roles)) > 0)
 		{
-			$url = $post_url."#admin/profile/edit";
+			$post_url = apply_filters('get_front_end_admin_url', '');
+
+			if($post_url != '' && in_array('profile', get_option_or_default('setting_fea_pages', array())))
+			{
+				$url = $post_url."#admin/profile/edit";
+			}
 		}
 
 		return $url;
