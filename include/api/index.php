@@ -163,10 +163,10 @@ switch($arr_type[0])
 												default:
 													$meta_id = update_user_meta($user_id, $value['name'], $user_meta);
 
-													if($meta_id > 0)
-													{
+													/*if($meta_id > 0)
+													{*/
 														$updated = true;
-													}
+													//}
 												break;
 											}
 										}
@@ -183,7 +183,7 @@ switch($arr_type[0])
 								{
 									if(!isset($json_output['message']) || $json_output['message'] == '')
 									{
-										$json_output['message'] = __("I could not update the information for you", 'lang_fea');
+										$json_output['message'] = __("I could not update the information for you because nothing was changed", 'lang_fea');
 									}
 								}
 							break;

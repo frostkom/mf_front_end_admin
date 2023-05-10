@@ -31,6 +31,8 @@ class mf_fea
 
 		$arr_views = apply_filters('init_base_admin', array(), array('include' => 'all'));
 
+		//do_log("FEA views: ".var_export($arr_views, true));
+
 		foreach($arr_views as $key => $arr_view)
 		{
 			if(!is_array($arr_include) || count($arr_include) == 0 || in_array($key, $arr_include))
@@ -208,7 +210,7 @@ class mf_fea
 		$setting_key = get_setting_key(__FUNCTION__);
 		$option = get_option_or_default($setting_key, array());
 
-		echo show_select(array('data' => $this->get_front_end_views_for_select(array('type' => 'active')), 'name' => $setting_key."[]", 'value' => $option));
+		echo show_select(array('data' => $this->get_front_end_views_for_select(array('type' => 'active')), 'name' => $setting_key."[]", 'value' => $option, 'allow_hidden_field' => false));
 	}
 
 	function setting_fea_redirect_after_login_callback()
@@ -823,7 +825,11 @@ class mf_fea
 							case 'select': %>
 								<div class='form_select type_<%= field.type %><%= field.class %>'>
 									<label for='<%= field.name %>'><%= field.text %></label>
-									<select id='<%= field.name %>' name='<%= field.name %><% if(field.multiple == true){ %>[]<% } %>'<% if(field.multiple == true){ %> multiple<% } %><%= field.attributes %>>
+									<select id='<%= field.name %>' name='<%= field.name %><% if(field.multiple == true){ %>[]<% } %>' class='mf_form_field'<% if(field.multiple == true){ %> multiple<% } %>"
+										//."<%= field.attributes %>"
+										."<% _.each(field.attributes, function(attribute_value, attribute_key)
+										{%> <%= attribute_key %>='<%= attribute_value %>'<% }); %>"
+									.">
 										<% _.each(field.options, function(option)
 										{%>
 											<% if(option.key.toString().substr(0, 9) == 'opt_start')
