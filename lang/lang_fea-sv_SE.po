@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-28 04:38+0100\n"
+"POT-Creation-Date: 2023-07-29 08:39+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Fors\n"
 "Language-Team: \n"
@@ -15,224 +15,186 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../include/classes.php:13
 msgid "Name"
 msgstr "Namn"
 
-#: ../include/classes.php:14
 msgid "Role"
 msgstr "Roll"
 
-#: ../include/classes.php:15
-#: ../include/templates/template_admin.php:79
 msgid "Log Out"
 msgstr "Logga ut"
 
-#: ../include/classes.php:64
 msgid "Publish"
 msgstr "Publicerad"
 
-#: ../include/classes.php:65
 msgid "Draft"
 msgstr "Utkast"
 
-#: ../include/classes.php:135
 msgid "Not Published"
 msgstr "Inte publicerad"
 
-#: ../include/classes.php:160
 msgid "User Info"
 msgstr "Användarinfo"
 
-#: ../include/classes.php:161
 msgid "Pages"
 msgstr "Sidor"
 
-#: ../include/classes.php:168
 msgid "Display in Menu"
 msgstr "Visa i meny"
 
-#: ../include/classes.php:171
 msgid "Redirect After Login"
 msgstr "Omdirigera efter inloggning"
 
-#: ../include/classes.php:172
 msgid "Content Width"
 msgstr "Bredd på innehåll"
 
-#: ../include/classes.php:178
 msgid "Get Started"
 msgstr "Kom igång"
 
-#: ../include/classes.php:189
-#: ../include/classes.php:234
-#: ../include/classes.php:273
-#: ../include/classes.php:718
 msgid "Front-End Admin"
 msgstr "Admin på framsida"
 
-#: ../include/classes.php:221
 msgid "Users with these roles will be redirected after login and to the their front-end profile"
 msgstr "Användare med dessa roller kommer att dirigeras om efter inloggning till deras profil på framsidan"
 
-#: ../include/classes.php:234
-#, php-format
 msgid "To use this functionality you have to %sAdd a new page%s and set %s as template"
 msgstr "För att använda denna funktionalitet så behöver du %sLägg till en ny sida%s och välja %s som mall"
 
-#: ../include/classes.php:571
 msgid "Home"
 msgstr "Hem"
 
-#: ../include/classes.php:742
 msgid "First"
 msgstr "Första"
 
-#: ../include/classes.php:744
 msgid "Previous"
 msgstr "Föregående"
 
-#: ../include/classes.php:745
-#, php-format
 msgid "Page %s of %s"
 msgstr "Sida %s av %s"
 
-#: ../include/classes.php:746
 msgid "Next"
 msgstr "Nästa"
 
-#: ../include/classes.php:749
 msgid "Last"
 msgstr "Sista"
 
-#: ../include/classes.php:818
 msgid "Enter a New Password Here"
 msgstr "Ange ett nytt lösenord här"
 
-#: ../include/api/index.php:37
-msgid "First Name"
-msgstr "Förnamn"
+msgid "Change Password"
+msgstr "Ändra lösenord"
 
-#: ../include/api/index.php:38
-msgid "Last Name"
-msgstr "Efternamn"
+msgid "Update"
+msgstr "Uppdatera"
 
-#: ../include/api/index.php:41
-msgid "E-mail"
-msgstr "E-post"
+msgid "Submit"
+msgstr "Skicka"
 
-#: ../include/api/index.php:42
-msgid "Password"
-msgstr "Lösenord"
+msgid "%s posts"
+msgstr "%s inlägg"
 
-#: ../include/api/index.php:71
-#, php-format
-msgid "There is a pending change of your email to %s."
-msgstr "Det finns en väntande ändring av din e-post till %s."
+msgid "Author"
+msgstr "Författare"
 
-#: ../include/api/index.php:72
+msgid "Category"
+msgstr "Kategori"
+
+msgid "Updated"
+msgstr "Uppdaterad"
+
+msgid "Edit"
+msgstr "Redigera"
+
+msgid "Edit in Admin"
+msgstr "Redigera i admin"
+
+msgid "View"
+msgstr "Visa"
+
+msgid "There is nothing to show"
+msgstr "Det finns inget att visa"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Excerpt"
+msgstr "Utdrag"
+
+msgid "Content"
+msgstr "Innehåll"
+
+msgid "Save"
+msgstr "Sara"
+
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: ../include/api/index.php:77
-#, php-format
+msgid "Settings"
+msgstr "Inställningar"
+
+msgid "Slug"
+msgstr "URL"
+
+msgid "Allow Comments"
+msgstr "Tillåt kommentarer"
+
+msgid "Profile"
+msgstr "Profil"
+
+msgid "Edit Profile"
+msgstr "Redigera profil"
+
+msgid "Registration"
+msgstr "Registrering"
+
+msgid "Register User"
+msgstr "Registrera användare"
+
+msgid "Posts"
+msgstr "Inlägg"
+
+msgid "List"
+msgstr "Lista"
+
+msgid "Add New"
+msgstr "Lägg till ny"
+
+msgid "Display front-end admin menu"
+msgstr "Visa meny på framsida"
+
+msgid "Front-End Admin Menu"
+msgstr "Meny på framsida"
+
+msgid "Heading"
+msgstr "Rubrik"
+
+msgid "First Name"
+msgstr "Förnamn"
+
+msgid "Last Name"
+msgstr "Efternamn"
+
+msgid "E-mail"
+msgstr "E-post"
+
+msgid "There is a pending change of your email to %s."
+msgstr "Det finns en väntande ändring av din e-post till %s."
+
 msgid "If you change this we will send you an email at your new address to confirm it. %sThe new address will not become active until confirmed.%s"
 msgstr "Om du ändrar denna så skickar vi ett meddelande till din nya adress för att bekräfta den. %sDen nya adressen kommer att aktiveras först när den är bekräftad.%s"
 
-#: ../include/api/index.php:181
-#: ../include/api/index.php:377
-#: ../include/api/index.php:391
 msgid "I have saved the information for you"
 msgstr "Jag har sparat informationen åt dig"
 
-#: ../include/api/index.php:188
 msgid "I could not update the information for you because nothing was changed"
 msgstr "Jag kunde inte uppdatera informationen åt dig eftersom inget var ändrat"
 
-#: ../include/api/index.php:405
+msgid "I have updated the information for you"
+msgstr "Jag har uppdaterat informationen åt dig"
+
+msgid "I could not update the information for you"
+msgstr "Jag kunde inte uppdatera informationen åt dig"
+
 msgid "I could not save the information for you"
 msgstr "Jag kunde inte spara informationen åt dig"
 
-#~ msgid "Update"
-#~ msgstr "Uppdatera"
-
-#~ msgid "Submit"
-#~ msgstr "Skicka"
-
-#~ msgid "%s posts"
-#~ msgstr "%s inlägg"
-
-#~ msgid "Author"
-#~ msgstr "Författare"
-
-#~ msgid "Category"
-#~ msgstr "Kategori"
-
-#~ msgid "Updated"
-#~ msgstr "Uppdaterad"
-
-#~ msgid "Edit"
-#~ msgstr "Redigera"
-
-#~ msgid "Edit in Admin"
-#~ msgstr "Redigera i admin"
-
-#~ msgid "View"
-#~ msgstr "Visa"
-
-#~ msgid "There is nothing to show"
-#~ msgstr "Det finns inget att visa"
-
-#~ msgid "Title"
-#~ msgstr "Rubrik"
-
-#~ msgid "Excerpt"
-#~ msgstr "Utdrag"
-
-#~ msgid "Content"
-#~ msgstr "Innehåll"
-
-#~ msgid "Settings"
-#~ msgstr "Inställningar"
-
-#~ msgid "Slug"
-#~ msgstr "URL"
-
-#~ msgid "Allow Comments"
-#~ msgstr "Tillåt kommentarer"
-
-#~ msgid "Save"
-#~ msgstr "Spara"
-
-#~ msgid "Profile"
-#~ msgstr "Profil"
-
-#~ msgid "Edit Profile"
-#~ msgstr "Redigera profil"
-
-#~ msgid "Registration"
-#~ msgstr "Registrering"
-
-#~ msgid "Register User"
-#~ msgstr "Registrera användare"
-
-#~ msgid "Posts"
-#~ msgstr "Inlägg"
-
-#~ msgid "List"
-#~ msgstr "Lista"
-
-#~ msgid "Add New"
-#~ msgstr "Lägg till ny"
-
-#~ msgid "Display front-end admin menu"
-#~ msgstr "Visa meny på framsida"
-
-#~ msgid "Front-End Admin Menu"
-#~ msgstr "Meny på framsida"
-
-#~ msgid "Heading"
-#~ msgstr "Rubrik"
-
-#~ msgid "I have updated the information for you"
-#~ msgstr "Jag har uppdaterat informationen åt dig"

@@ -2,9 +2,14 @@
 
 class mf_fea
 {
+	var $meta_prefix = 'mf_fea_';
+	var $arr_views  = array();
+	var $post_content = "";
+	var $post_pre_content = "";
+
 	function __construct()
 	{
-		$this->meta_prefix = 'mf_fea_';
+		//$this->meta_prefix = 'mf_fea_';
 	}
 
 	function get_user_info_for_select()
