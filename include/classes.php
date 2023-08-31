@@ -1135,18 +1135,26 @@ class mf_fea
 
 class widget_fea_menu extends WP_Widget
 {
+	var $obj_fea = "";
+
+	var $widget_ops = array();
+
+	var $arr_default = array(
+		'menu_heading' => "",
+	);
+
 	function __construct()
 	{
+		$this->obj_fea = new mf_fea();
+
 		$this->widget_ops = array(
 			'classname' => 'fea_menu',
-			'description' => __("Display front-end admin menu", 'lang_fea')
+			'description' => __("Display front-end admin menu", 'lang_fea'),
 		);
 
-		$this->arr_default = array(
+		/*$this->arr_default = array(
 			'menu_heading' => "",
-		);
-
-		$this->obj_fea = new mf_fea();
+		);*/
 
 		parent::__construct(str_replace("_", "-", $this->widget_ops['classname']).'-widget', __("Front-End Admin Menu", 'lang_fea'), $this->widget_ops);
 	}
