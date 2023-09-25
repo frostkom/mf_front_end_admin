@@ -7,10 +7,7 @@ class mf_fea
 	var $post_content = "";
 	var $post_pre_content = "";
 
-	function __construct()
-	{
-		//$this->meta_prefix = 'mf_fea_';
-	}
+	function __construct(){}
 
 	function get_user_info_for_select()
 	{
@@ -109,6 +106,21 @@ class mf_fea
 		}
 
 		return $out;
+	}
+
+	function cron_base()
+	{
+		global $wpdb;
+
+		$obj_cron = new mf_cron();
+		$obj_cron->start(__CLASS__);
+
+		if($obj_cron->is_running == false)
+		{
+			$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->postmeta." SET meta_value = %s WHERE meta_key = %s AND meta_value = %s", 'template_admin.php', '_wp_page_template', $this->get_template_path().'template_admin.php'));
+		}
+
+		$obj_cron->end();
 	}
 
 	function wp_before_admin_bar_render()
@@ -266,6 +278,8 @@ class mf_fea
 	function get_template_path()
 	{
 		return str_replace(WP_CONTENT_DIR, "", plugin_dir_path(__FILE__))."templates/";
+		//return str_replace(ABSPATH, "", plugin_dir_path(__FILE__))."templates/";
+		//return plugin_dir_path(__FILE__)."templates/";
 	}
 
 	function display_post_states($post_states, $post)
@@ -274,7 +288,7 @@ class mf_fea
 
 		switch($page_template)
 		{
-			case $this->get_template_path().'template_admin.php':
+			case 'template_admin.php': //$this->get_template_path().
 				$post_states['template_admin'] = __("Front-End Admin", 'lang_fea');
 			break;
 
@@ -284,6 +298,191 @@ class mf_fea
 		}
 
 		return $post_states;
+	}
+
+	function get_template_admin()
+	{
+		global $post, $obj_theme_core, $obj_theme;
+
+		//Only effective if cache is off, so we need an extra check in the API + possibly to invalidate cache on this page
+		if(is_user_logged_in() == false)
+		{
+			mf_redirect(wp_login_url()."?redirect_to=".$_SERVER['REQUEST_URI']);
+		}
+
+		get_header();
+
+			if(IS_ADMIN)
+			{
+				echo "<div rel='".(have_posts() ? "yes" : "no")."'></div>";
+			}
+
+			if(have_posts())
+			{
+				$this->arr_views = apply_filters('init_base_admin', array(), array('init' => true));
+
+				if(!isset($obj_theme_core) && class_exists('mf_theme_core'))
+				{
+					$obj_theme_core = new mf_theme_core();
+				}
+
+				if(!isset($obj_theme) && class_exists('mf_theme'))
+				{
+					$obj_theme = new mf_theme();
+				}
+
+				echo "<article".(IS_ADMIN ? " class='template_admin'" : "").">";
+
+					while(have_posts())
+					{
+						the_post();
+
+						$post_title = $post->post_title;
+						$this->post_content = apply_filters('the_content', $post->post_content);
+
+						$this->post_pre_content = "";
+
+						$is_heading_visible = (isset($obj_theme) ? $obj_theme->is_heading_visible($post) : true);
+
+						if($is_heading_visible)
+						{
+							$this->post_pre_content .= "<h1>".$post_title."</h1>";
+						}
+
+						if(is_user_logged_in())
+						{
+							$setting_fea_user_info = get_option_or_default('setting_fea_user_info', array());
+
+							if(count($setting_fea_user_info) > 0)
+							{
+								$this->post_pre_content .= "<section class='logged_in'>
+									<p>";
+
+										if(in_array('name', $setting_fea_user_info))
+										{
+											$this->post_pre_content .= "<i class='fa fa-user'></i> ".get_user_info();
+										}
+
+										if(in_array('role', $setting_fea_user_info))
+										{
+											$arr_roles = get_roles_for_select(array('add_choose_here' => false, 'use_capability' => false));
+											$user_role = get_current_user_role(get_current_user_id());
+
+											if(isset($arr_roles[$user_role]))
+											{
+												$this->post_pre_content .= " (".$arr_roles[$user_role].")";
+											}
+
+											else
+											{
+												$this->post_pre_content .= " (".$user_role.")";
+											}
+										}
+
+										if(in_array('logout', $setting_fea_user_info))
+										{
+											$this->post_pre_content .= " - <a href='".wp_logout_url()."'>".__("Log Out", 'lang_fea')."</a>";
+										}
+
+									$this->post_pre_content .= "</p>
+								</section>";
+							}
+						}
+
+						if(count($this->arr_views) > 0)
+						{
+							$this->get_menu();
+
+							$this->post_content = "<div class='error hide'><p></p></div>
+							<div class='updated hide'><p></p></div>
+							<div class='admin_container'>
+								<div class='default'>".$this->post_content."</div>
+								<div class='loading hide'><i class='fa fa-spinner fa-spin fa-3x'></i></div>";
+
+								foreach($this->arr_views as $key => $view)
+								{
+									foreach($view['items'] as $item)
+									{
+										if(!isset($item['is_custom']) || $item['is_custom'] == false)
+										{
+											@list($id, $rest) = explode("/", $item['id']);
+
+											$this->post_content .= "<div id='admin_".$key."_".$id."' class='admin_container_child hide'>
+												<".($is_heading_visible ? "h2" : "h1").">";
+
+													if(isset($item['heading']['name']))
+													{
+														$this->post_content .= $item['heading']['name'];
+													}
+
+													else
+													{
+														$this->post_content .= $view['name'];
+													}
+
+													if(isset($item['heading']['button']['url']) && isset($item['heading']['button']['name']))
+													{
+														$this->post_content .= "<div class='form_button'>
+															<a href='".$item['heading']['button']['url']."' class='button'>".$item['heading']['button']['name']."</a>
+														</div>";
+													}
+
+												$this->post_content .= "</".($is_heading_visible ? "h2" : "h1").">
+												<div>
+													<i class='fa fa-spinner fa-spin fa-3x'></i>
+												</div>
+											</div>";
+										}
+									}
+								}
+
+							$this->post_content .= "</div>";
+
+							$arr_templates_id = array();
+
+							foreach($this->arr_views as $key => $view)
+							{
+								if(!isset($view['templates_id']) || !in_array($view['templates_id'], $arr_templates_id))
+								{
+									if(isset($view['templates']))
+									{
+										$this->post_content .= $view['templates'];
+									}
+								}
+
+								if(isset($view['templates_id']))
+								{
+									$arr_templates_id[] = $view['templates_id'];
+								}
+							}
+						}
+
+						if(is_active_sidebar('widget_after_heading') && isset($obj_theme_core) && $obj_theme_core->is_post_password_protected() == false)
+						{
+							ob_start();
+
+							dynamic_sidebar('widget_after_heading');
+
+							$widget_content = ob_get_clean();
+
+							if($widget_content != '')
+							{
+								$this->post_pre_content .= "<div class='aside after_heading'>"
+									.$widget_content
+								."</div>";
+							}
+						}
+
+						echo apply_filters('filter_template_admin_content', $this->post_pre_content
+						."<section>"
+							.$this->post_content
+						."</section>");
+					}
+
+				echo "</article>";
+			}
+
+		get_footer();
 	}
 
 	function login_init()
@@ -1085,7 +1284,7 @@ class mf_fea
 				$obj_base = new mf_base();
 			}
 
-			$post_id = $obj_base->has_page_template(array('template' => $this->get_template_path().'template_admin.php'));
+			$post_id = $obj_base->has_page_template(array('template' => 'template_admin.php')); //$this->get_template_path().
 		}
 
 		return $post_id;
@@ -1127,7 +1326,7 @@ class mf_fea
 
 	function get_page_templates($templates)
 	{
-		$templates[$this->get_template_path().'template_admin.php'] = __("Front-End Admin", 'lang_fea');
+		$templates['template_admin.php'] = __("Front-End Admin", 'lang_fea'); //$this->get_template_path().
 
 		return $templates;
 	}
@@ -1151,10 +1350,6 @@ class widget_fea_menu extends WP_Widget
 			'classname' => 'fea_menu',
 			'description' => __("Display front-end admin menu", 'lang_fea'),
 		);
-
-		/*$this->arr_default = array(
-			'menu_heading' => "",
-		);*/
 
 		parent::__construct(str_replace("_", "-", $this->widget_ops['classname']).'-widget', __("Front-End Admin Menu", 'lang_fea'), $this->widget_ops);
 	}
