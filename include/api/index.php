@@ -235,7 +235,7 @@ switch($arr_type[0])
 
 								$query_where = "";
 
-								/*if(1 == 1 || !IS_ADMIN)
+								/*if(1 == 1 || !IS_ADMINISTRATOR)
 								{
 									$query_where .= " AND post_author = '".get_current_user_id()."'";
 								}*/

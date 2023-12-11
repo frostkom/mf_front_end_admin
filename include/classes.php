@@ -146,7 +146,7 @@ class mf_fea
 					break;
 
 					case 'draft':
-						if(IS_ADMIN)
+						if(IS_ADMINISTRATOR)
 						{
 							$color = "color_yellow";
 							$title = __("Not Published", 'lang_fea');
@@ -312,7 +312,7 @@ class mf_fea
 
 		get_header();
 
-			if(IS_ADMIN)
+			if(IS_ADMINISTRATOR)
 			{
 				echo "<div rel='".(have_posts() ? "yes" : "no")."'></div>";
 			}
@@ -331,7 +331,7 @@ class mf_fea
 					$obj_theme = new mf_theme();
 				}
 
-				echo "<article".(IS_ADMIN ? " class='template_admin'" : "").">";
+				echo "<article".(IS_ADMINISTRATOR ? " class='template_admin'" : "").">";
 
 					while(have_posts())
 					{
@@ -1075,7 +1075,7 @@ class mf_fea
 				</form>
 			</script>";
 
-			/*if(IS_ADMIN)
+			/*if(IS_ADMINISTRATOR)
 			{
 				$templates .= "<script type='text/template' id='template_admin_registration_create'>
 					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/registration/save'>
@@ -1117,7 +1117,7 @@ class mf_fea
 											<% } %>
 											<div class='row-actions'>"
 												."<a href='#admin/posts/edit/<%= posts.post_id %>'>".__("Edit", 'lang_fea')."</a>"
-												.(IS_ADMIN ? "<a href='".admin_url("post.php?post=<%= posts.post_id %>&action=edit")."'>".__("Edit in Admin", 'lang_fea')."</a>" : "")
+												.(IS_ADMINISTRATOR ? "<a href='".admin_url("post.php?post=<%= posts.post_id %>&action=edit")."'>".__("Edit in Admin", 'lang_fea')."</a>" : "")
 												."<a href='<%= posts.post_url %>'>".__("View", 'lang_fea')."</a>"
 											."</div>
 										</td>
@@ -1202,7 +1202,7 @@ class mf_fea
 			'api_url' => $plugin_include_url,
 		);
 
-		/*if(IS_ADMIN)
+		/*if(IS_ADMINISTRATOR)
 		{
 			$arr_views['registration'] = array(
 				'name' => __("Registration", 'lang_fea'),
