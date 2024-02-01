@@ -4,8 +4,8 @@ class mf_fea
 {
 	var $meta_prefix = 'mf_fea_';
 	var $arr_views  = array();
-	var $post_content = "";
 	var $post_pre_content = "";
+	var $post_content = "";
 
 	function __construct(){}
 
@@ -565,16 +565,6 @@ class mf_fea
 	function get_menu($data = array())
 	{
 		if(!isset($data['is_front_end_page'])){		$data['is_front_end_page'] = true;} // Add a check if we are on the front end page instead?
-
-		if(!isset($this->post_pre_content))
-		{
-			$this->post_pre_content = "";
-		}
-
-		if(!isset($this->post_content))
-		{
-			$this->post_content = "";
-		}
 
 		$setting_fea_display_in_menu = get_option_or_default('setting_fea_display_in_menu', array());
 
@@ -1326,7 +1316,7 @@ class mf_fea
 
 	function get_page_templates($templates)
 	{
-		$templates['template_admin.php'] = __("Front-End Admin", 'lang_fea'); //$this->get_template_path().
+		$templates['template_admin.php'] = __("Front-End Admin", 'lang_fea');
 
 		return $templates;
 	}
@@ -1334,10 +1324,8 @@ class mf_fea
 
 class widget_fea_menu extends WP_Widget
 {
-	var $obj_fea = "";
-
-	var $widget_ops = array();
-
+	var $obj_fea;
+	var $widget_ops;
 	var $arr_default = array(
 		'menu_heading' => "",
 	);
