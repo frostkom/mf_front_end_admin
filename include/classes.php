@@ -278,8 +278,6 @@ class mf_fea
 	function get_template_path()
 	{
 		return str_replace(WP_CONTENT_DIR, "", plugin_dir_path(__FILE__))."templates/";
-		//return str_replace(ABSPATH, "", plugin_dir_path(__FILE__))."templates/";
-		//return plugin_dir_path(__FILE__)."templates/";
 	}
 
 	function display_post_states($post_states, $post)
@@ -288,7 +286,7 @@ class mf_fea
 
 		switch($page_template)
 		{
-			case 'template_admin.php': //$this->get_template_path().
+			case 'template_admin.php':
 				$post_states['template_admin'] = __("Front-End Admin", 'lang_fea');
 			break;
 
