@@ -212,14 +212,14 @@ echo "@media all
 				margin-top: 1em;
 			}
 
-		.admin_container h1 .form_button
+		.admin_container h1 .form_button, .admin_container h1 .wp-block-button
 		{
 			display: inline-block;
 			position: relative;
 			top: -.2em;
 		}
 
-			.admin_container h1 .form_button a
+			.admin_container h1 .form_button a, .admin_container h1 .wp-block-button a
 			{
 				display: inline-block;
 				font-size: .5em;

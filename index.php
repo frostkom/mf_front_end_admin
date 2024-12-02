@@ -3,7 +3,7 @@
 Plugin Name: MF Front-End Admin
 Plugin URI: https://github.com/frostkom/mf_front_end_admin
 Description:
-Version: 1.6.11
+Version: 1.6.12
 Licence: GPLv2 or later
 Author: Martin Fors
 Author URI: https://martinfors.se
@@ -47,7 +47,10 @@ if(!function_exists('is_plugin_active') || function_exists('is_plugin_active') &
 
 	add_action('after_setup_theme', array($obj_fea, 'after_setup_theme'));
 
-	add_action('widgets_init', array($obj_fea, 'widgets_init'));
+	if(wp_is_block_theme() == false)
+	{
+		add_action('widgets_init', array($obj_fea, 'widgets_init'));
+	}
 
 	add_filter('init_base_admin', array($obj_fea, 'init_base_admin'), 9, 2);
 	add_filter('init_base_admin', array($obj_fea, 'init_base_admin_2'), 11);

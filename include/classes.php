@@ -420,7 +420,7 @@ class mf_fea
 
 													if(isset($item['heading']['button']['url']) && isset($item['heading']['button']['name']))
 													{
-														$this->post_content .= "<div class='form_button'>
+														$this->post_content .= "<div".get_form_button_classes().">
 															<a href='".$item['heading']['button']['url']."' class='button'>".$item['heading']['button']['name']."</a>
 														</div>";
 													}
@@ -928,7 +928,7 @@ class mf_fea
 					<span class='displaying-num'>".sprintf($data['amount_text'], "<%= pagination.list_amount %>")."</span>
 					<% if(Object.keys(pagination.pages).length > 1)
 					{ %>
-						<span class='form_button'>
+						<span".get_form_button_classes().">
 							<% if(Object.keys(pagination.pages).length > 6)
 							{ %>
 								<a href='#".$data['action']."/1' class='button<% if(pagination.current_page <= 2){ %> is_disabled<% } %>' title='".__("First", 'lang_fea')."'><i class='fas fa-angle-double-left'></i></a>
@@ -1008,10 +1008,6 @@ class mf_fea
 
 							case 'password': %>"
 								.show_password_field(array('name' => '<%= field.name %>', 'text' => "<%= field.text %>", 'placeholder' => __("Enter a New Password Here", 'lang_fea')))
-								/*."<div class='form_button'>
-									<label><%= field.text %></label>
-									<a href='".admin_url("profile.php")."' class='button'>".__("Change Password", 'lang_fea')."</a></div>
-								</div>"*/
 							."<% break;
 
 							case 'select': %>
@@ -1056,7 +1052,7 @@ class mf_fea
 							<% break;
 						}
 					}); %>
-					<div class='form_button'>"
+					<div".get_form_button_classes().">"
 						.show_button(array('text' => __("Update", 'lang_fea')))
 						.input_hidden(array('name' => 'user_id', 'value' => "<%= user_id %>"))
 					."</div>
@@ -1068,7 +1064,7 @@ class mf_fea
 				$templates .= "<script type='text/template' id='template_admin_registration_create'>
 					<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/registration/save'>
 						Test...
-						<div class='form_button'>"
+						<div".get_form_button_classes().">"
 							.show_button(array('text' => __("Submit", 'lang_fea')))
 						."</div>
 					</form>
@@ -1152,7 +1148,7 @@ class mf_fea
 						</div>
 						<div class='context_side'>
 							<div id='".$this->meta_prefix."actions' class='meta_box'>
-								<div class='form_button'>"
+								<div".get_form_button_classes().">"
 									.show_button(array('text' => __("Save", 'lang_fea')))
 									."<a href='#admin/posts/list' class='button'>".__("Cancel", 'lang_fea')."</a>"
 									."<% if(post_id > 0)

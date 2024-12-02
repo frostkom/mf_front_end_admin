@@ -17,8 +17,8 @@ var AdminView = Backbone.View.extend(
 		"click article nav li": "toggle_submenu",
 		"click article nav a": "change_view",
 		"click .view_data i": "toggle_data_helper",
-		"keyup .tablenav-pages .form_button .form_textfield input": "change_page_keyup",
-		"blur .tablenav-pages .form_button .form_textfield input": "change_page_blur",
+		"keyup .tablenav-pages .form_button .form_textfield input, .tablenav-pages .wp-block-button .form_textfield input": "change_page_keyup",
+		"blur .tablenav-pages .form_button .form_textfield input, .tablenav-pages .wp-block-button .form_textfield input": "change_page_blur",
 		"submit form": "submit_form",
 	},
 
