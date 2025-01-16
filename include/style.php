@@ -34,13 +34,7 @@ echo "@media all
 
 	.fea_menu > ul
 	{
-		display: -webkit-box;
-		display: -ms-flexbox;
-		display: -webkit-flex;
 		display: flex;
-		-webkit-box-flex-wrap: wrap;
-		-webkit-flex-wrap: wrap;
-		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
 		list-style: none;
 	}
@@ -55,9 +49,6 @@ echo "@media all
 			background: #eee;
 			border-radius: .5em;
 			display: block;
-			-webkit-box-flex: 0 0 10em;
-			-webkit-flex: 0 0 10em;
-			-ms-flex: 0 0 10em;
 			flex: 0 0 10em;
 			margin: 0 1em 1em 0;
 			position: relative;
@@ -66,9 +57,6 @@ echo "@media all
 
 			.is_mobile .fea_menu > ul > li
 			{
-				-webkit-box-flex: 0 0 23%;
-				-webkit-flex: 0 0 23%;
-				-ms-flex: 0 0 23%;
 				flex: 0 0 23%;
 				margin: 0 2% 2% 0;
 			}
@@ -233,13 +221,7 @@ echo "@media all
 
 		.is_mobile .admin_container form
 		{
-			display: -webkit-box;
-			display: -ms-flexbox;
-			display: -webkit-flex;
 			display: flex;
-			-moz-box-direction: column;
-			-webkit-box-direction: column;
-			-ms-flexbox-direction: column;
 			flex-direction: column;
 		}
 
@@ -259,18 +241,12 @@ echo "@media all
 
 			.is_mobile .admin_container .context_normal, .is_mobile .admin_container .context_side
 			{
-				-webkit-box-ordinal-group: 1;
-				-webkit-order: 1;
-				-ms-flex-order: 1;
 				order: 1;
 				width: 100%;
 			}
 
 				.is_mobile .admin_container .context_normal + .context_side
 				{
-					-webkit-box-ordinal-group: 2;
-					-webkit-order: 2;
-					-ms-flex-order: 2;
 					order: 2;
 				}
 
