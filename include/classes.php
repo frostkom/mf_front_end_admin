@@ -959,19 +959,18 @@ class mf_fea
 
 		$plugin_base_include_url = plugins_url()."/mf_base/include/";
 		$plugin_include_url = plugin_dir_url(__FILE__);
-		$plugin_version = get_plugin_version(__FILE__);
 
-		mf_enqueue_style('style_fea', $plugin_include_url."style.php", $plugin_version);
+		mf_enqueue_style('style_fea', $plugin_include_url."style.php");
 
 		if($data['init'] == true)
 		{
 			mf_enqueue_script('underscore');
 			mf_enqueue_script('backbone');
-			mf_enqueue_script('script_base_plugins', $plugin_base_include_url."backbone/bb.plugins.js", $plugin_version);
+			mf_enqueue_script('script_base_plugins', $plugin_base_include_url."backbone/bb.plugins.js");
 
-			mf_enqueue_script('script_fea_router', $plugin_include_url."backbone/bb.admin.router.js", $plugin_version);
-			mf_enqueue_script('script_fea_models', $plugin_include_url."backbone/bb.admin.models.js", array('api_url' => $plugin_include_url), $plugin_version);
-			mf_enqueue_script('script_fea_views', $plugin_include_url."backbone/bb.admin.views.js", array('api_url' => $plugin_include_url), $plugin_version);
+			mf_enqueue_script('script_fea_router', $plugin_include_url."backbone/bb.admin.router.js");
+			mf_enqueue_script('script_fea_models', $plugin_include_url."backbone/bb.admin.models.js", array('api_url' => $plugin_include_url));
+			mf_enqueue_script('script_fea_views', $plugin_include_url."backbone/bb.admin.views.js", array('api_url' => $plugin_include_url));
 
 			$templates .= "<script type='text/template' id='template_admin_profile_edit'>
 				<form method='post' action='' class='mf_form' data-api-url='".$plugin_include_url."' data-action='admin/profile/save'>
@@ -1236,9 +1235,8 @@ class mf_fea
 		if(!is_admin())
 		{
 			$plugin_base_include_url = plugins_url()."/mf_base/include/";
-			$plugin_version = get_plugin_version(__FILE__);
 
-			mf_enqueue_script('script_base_init', $plugin_base_include_url."backbone/bb.init.js", $plugin_version);
+			mf_enqueue_script('script_base_init', $plugin_base_include_url."backbone/bb.init.js");
 
 			$setting_fea_pages = get_option_or_default('setting_fea_pages', array());
 
