@@ -158,7 +158,7 @@ class mf_fea
 				{
 					$wp_admin_bar->add_node(array(
 						'id' => 'front-end',
-						'title' => "<a href='".get_permalink($post_id)."' class='".$color."'".($title != '' ? " title='".$title."'" : '').">".get_post_title($post_id)."</a>",
+						'title' => "<a href='".get_permalink($post_id)."' class='".$color."'".($title != '' ? " title='".$title."'" : '').">".get_the_title($post_id)."</a>",
 					));
 				}
 			}
