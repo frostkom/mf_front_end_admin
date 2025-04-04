@@ -117,6 +117,10 @@ class mf_fea
 
 		if($obj_cron->is_running == false)
 		{
+			mf_uninstall_plugin(array(
+				'options' => array('setting_fea_display_menu'),
+			));
+
 			$wpdb->query($wpdb->prepare("UPDATE ".$wpdb->postmeta." SET meta_value = %s WHERE meta_key = %s AND meta_value = %s", 'template_admin.php', '_wp_page_template', $this->get_template_path().'template_admin.php'));
 		}
 
