@@ -499,9 +499,7 @@ class mf_fea
 					$redirect_to = (current_user_can('read') ? admin_url() : home_url());
 					$user_data = get_userdata(get_current_user_id());
 
-					$redirect_to = $this->get_login_redirect($redirect_to, $user_data);
-
-					wp_redirect($redirect_to, 302);
+					wp_redirect($this->get_login_redirect($redirect_to, $user_data), 302);
 					exit;
 				}
 			break;
@@ -1336,6 +1334,8 @@ class widget_fea_menu extends WP_Widget
 
 	function widget($args, $instance)
 	{
+		do_log(__CLASS__."->".__FUNCTION__."(): Add a block instead", 'publish', false);
+
 		extract($args);
 		$instance = wp_parse_args((array)$instance, $this->arr_default);
 
