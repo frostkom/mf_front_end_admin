@@ -74,7 +74,7 @@ switch($arr_type[0])
 
 												else
 												{
-													$arr_fields[$key]['description'] = sprintf(__("If you change this we will send you an email at your new address to confirm it. %sThe new address will not become active until confirmed.%s", 'lang_fea'), "<strong>", "</strong>");
+													$arr_fields[$key]['description'] = sprintf(__("If you change this we will send you an email to your new address to confirm it. %sThe new address will not become active until confirmed%s.", 'lang_fea'), "<strong>", "</strong>");
 												}
 											break;
 

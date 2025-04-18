@@ -915,7 +915,10 @@ class mf_fea
 
 	function widgets_init()
 	{
-		register_widget('widget_fea_menu');
+		if(wp_is_block_theme() == false)
+		{
+			register_widget('widget_fea_menu');
+		}
 	}
 
 	function get_pagination_list($data)

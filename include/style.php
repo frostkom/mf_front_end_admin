@@ -39,10 +39,10 @@ echo "@media all
 		list-style: none;
 	}
 
-		.is_tablet .fea_menu > ul, .is_desktop .fea_menu > ul
+		/*.is_tablet .fea_menu > ul, .is_desktop .fea_menu > ul
 		{
 			font-size: 1.2em;
-		}
+		}*/
 
 		.fea_menu > ul > li
 		{
